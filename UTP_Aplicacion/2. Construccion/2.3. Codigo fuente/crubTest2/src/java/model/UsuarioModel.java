@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UsuarioModel {
 
     //read
-    @RequestMapping()
+    /*@RequestMapping()
     public List<TblusuarioUsu> ListarUsuarios() {
         List<TblusuarioUsu> listUsuario = new ArrayList<TblusuarioUsu>();
 
@@ -38,51 +38,38 @@ public class UsuarioModel {
         }
 
         return listUsuario;
-    }
+    }*/
 
-    //create
-    public void create(TblusuarioUsu p) {
-        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
-        try {
-            sesion.beginTransaction();
-            sesion.save(p);
-            sesion.getTransaction().commit();
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-            sesion.getTransaction().rollback();
-        }
-    }
+    
 
     // other funtion
-    public TblusuarioUsu getProfesor(String usuNombre, String usuContrasenhia) {
+    public TblusuarioUsu ValidarUsuarioModel(String usuNombre, String usuContrasenhia) {
 
-        Session s = HibernateUtil.getSessionFactory().getCurrentSession();
-        TblusuarioUsu p = new TblusuarioUsu();
+        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        TblusuarioUsu usuario = new TblusuarioUsu();
         System.out.println("getProfesor");
         try {
-            s.beginTransaction();
+            sesion.beginTransaction();
             //List empList = s.createCriteria(TblusuarioUsu.class).add(Restrictions.eq("usuNombre", usuNombre)).list();
-            Criteria crit = s.createCriteria(TblusuarioUsu.class);
-            crit.add(Restrictions.eq("usuNombre", usuNombre));
-            crit.add(Restrictions.eq("usuContrasenhia", usuContrasenhia));
-            List<TblusuarioUsu> results = crit.list();
-            Iterator iter = results.iterator();
-            while (iter.hasNext()) {
-                p = (TblusuarioUsu) iter.next();
-                System.out.println("Result Name SI:" + p.getUsuNombre()+" "+p.getUsuContrasenhia());
+            Criteria criteria = sesion.createCriteria(TblusuarioUsu.class);
+            criteria.add(Restrictions.eq("usuNombre", usuNombre));
+            criteria.add(Restrictions.eq("usuContrasenhia", usuContrasenhia));
+            List<TblusuarioUsu> results = criteria.list();
+            Iterator iterator = results.iterator();
+            while (iterator.hasNext()) {
+                usuario = (TblusuarioUsu) iterator.next();
+                System.out.println("Result Name SI:" + usuario.getUsuNombre()+" "+usuario.getUsuContrasenhia());
             }
-            s.getTransaction().commit();
+            sesion.getTransaction().commit();
 
         } catch (Exception e) {
             System.out.println("Result Name NO1");
             e.printStackTrace();
-            s.getTransaction().rollback();
+            sesion.getTransaction().rollback();
             System.out.println("Result Name NO2");
         }
 
-        return p;
+        return usuario;
 
     }
 

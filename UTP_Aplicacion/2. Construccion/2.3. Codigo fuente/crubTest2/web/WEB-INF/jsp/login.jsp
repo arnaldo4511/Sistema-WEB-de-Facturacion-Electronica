@@ -13,20 +13,21 @@
         <link href="<c:url value="/resources/font/Lato/fontLato.css"/>" rel="stylesheet" type="text/css">
         <link href="<c:url value="/resources/bootstrap/css/bootstrap.min.css"/>" rel="stylesheet">
         <script type="text/javascript" src="<c:url value="/resources/bootstrap/js/bootstrap.min.js"/>"></script>
+        <link href="http://fonts.googleapis.com/css?family=Lato:100italic,100,300italic,300,400italic,400,700italic,700,900italic,900" rel="stylesheet" type="text/css">
 
     </head>
 
-    <body style="background: url(<c:url value="/resources/img/fondo.png" />) no-repeat center center fixed;">
+    <body style="background: url(<c:url value="/resources/img/fondo3.png" />) no-repeat center center fixed;">
         
     <section class="container">
         <section class="login-form">
-            <form role="login" action="ValidarUsuario.html" method="get">
+            <form role="login" action="ValidarUsuario.html" method="post">
                 <img src="<c:url value="/resources/img/gepp_transmap.png" />" class="img-responsive" alt="" style="
                      height: 121px;
                      "/>
                 <input type="text" name="usuNombre" placeholder="Usuario" required class="form-control input-lg" />
                 <input type="password" name="usuContrasenhia" placeholder="Contraseña" required class="form-control input-lg" />
-                <button type="submit" name="go" class="btn btn-lg btn-primary btn-block">Ingresar</button>
+                <button type="submit" class="btn btn-lg btn-primary btn-block">Ingresar</button>
                 
             </form>
             <div class="form-links">

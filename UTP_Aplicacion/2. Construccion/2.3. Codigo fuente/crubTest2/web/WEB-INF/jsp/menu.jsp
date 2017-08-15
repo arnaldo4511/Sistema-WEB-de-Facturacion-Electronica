@@ -23,6 +23,7 @@
                         <a href="edit.html?id=${p.usuId}">
                             Edit </a>
                         <a href="remove.html?id=${p.usuId}" onclick="return confirm('Are you sure?')">Remove</a>
+                        <a href="usuarioVista.html">Mantenimiento Usuarios</a>
                     </td>
                 </tr>
             </c:forEach>

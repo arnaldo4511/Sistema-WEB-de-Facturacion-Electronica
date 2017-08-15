@@ -32,13 +32,13 @@ public class LoginController {
         return MV;
     }
     
-    @RequestMapping(value = "ValidarUsuario", method = RequestMethod.GET)
+    @RequestMapping(value = "ValidarUsuario", method = RequestMethod.POST)
     public String ValidarUsuario(@ModelAttribute(value = "Usuario") TblusuarioUsu usuarioString,Model m){
         
         System.out.println("usuarioString "+usuarioString.getUsuNombre()+" "+usuarioString.getUsuContrasenhia());
-        UsuarioModel model= new UsuarioModel();
+        UsuarioModel usuarioModel= new UsuarioModel();
         TblusuarioUsu usuario = new TblusuarioUsu();
-        usuario = model.getProfesor(usuarioString.getUsuNombre(),usuarioString.getUsuContrasenhia());
+        usuario = usuarioModel.ValidarUsuarioModel(usuarioString.getUsuNombre(),usuarioString.getUsuContrasenhia());
         
         System.out.println("Result Name SI Controller:" + usuario.getUsuNombre()+" "+usuario.getUsuContrasenhia());
         if(usuario.getUsuNombre().equals(usuarioString.getUsuNombre()) && usuario.getUsuContrasenhia().equals(usuarioString.getUsuContrasenhia())){
