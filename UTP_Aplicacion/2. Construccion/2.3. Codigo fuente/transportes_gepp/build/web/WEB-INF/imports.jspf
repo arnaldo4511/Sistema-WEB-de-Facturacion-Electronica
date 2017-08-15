@@ -1,0 +1,6 @@
+<link href="<%= request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
+<link href="<%= request.getContextPath()%>/css/general.css" rel="stylesheet" type="text/css" />
+<script src="<%= request.getContextPath()%>/js/angular.min.js" type="text/javascript"></script>
+<script src="<%= request.getContextPath()%>/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="<%= request.getContextPath()%>/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="<%= request.getContextPath()%>/js/general.js" type="text/javascript"></script>

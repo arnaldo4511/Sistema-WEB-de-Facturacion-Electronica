@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 14-ago-2017 12:44:12 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pe.modelo.pojo.Operacion" table="operacion" schema="administracion" optimistic-lock="version">
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="menu" class="pe.modelo.pojo.Menu" fetch="select">
+            <column name="id_menu" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usuarioByIdUsuarioCreacion" class="pe.modelo.pojo.Usuario" fetch="select">
+            <column name="id_usuario_creacion" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usuarioByIdUsuarioModificacion" class="pe.modelo.pojo.Usuario" fetch="select">
+            <column name="id_usuario_modificacion" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="50" not-null="true" />
+        </property>
+        <property name="activo" type="boolean">
+            <column name="activo" not-null="true" />
+        </property>
+        <property name="fechaCreacion" type="timestamp">
+            <column name="fecha_creacion" length="29" not-null="true" />
+        </property>
+        <property name="fechaModificacion" type="timestamp">
+            <column name="fecha_modificacion" length="29" />
+        </property>
+        <set name="rolMenuOperacions" table="rol_menu_operacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_operacion" not-null="true" />
+            </key>
+            <one-to-many class="pe.modelo.pojo.RolMenuOperacion" />
+        </set>
+    </class>
+</hibernate-mapping>

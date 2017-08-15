@@ -27,85 +27,85 @@ CREATE TABLE public.ubigeo
 (
 codigo character varying(6) NOT NULL,
 nombre character varying(250) NOT NULL,
-codigodepartamento character varying(2) NOT NULL,
-codigoprovincia character varying(2) NOT NULL,
-codigodistrito character varying(2) NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint,
-fechamodificacion timestamp without time zone
+codigo_departamento character varying(2) NOT NULL,
+codigo_provincia character varying(2) NOT NULL,
+codigo_distrito character varying(2) NOT NULL,
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint,
+fecha_modificacion timestamp without time zone
 );
-CREATE TABLE public.tipodocumentoentidad
+CREATE TABLE public.tipo_documento_entidad
 (
 codigo character varying(1) NOT NULL,
 nombre character varying(50) NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint,
-fechamodificacion timestamp without time zone
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint,
+fecha_modificacion timestamp without time zone
 );
 CREATE TABLE public.entidad
 (
 id bigint NOT NULL,
-codigotipodocumentoentidad character varying(1) NOT NULL,
+codigo_tipo_documento_entidad character varying(1) NOT NULL,
 documento character varying(11) NOT NULL,
 nombre character varying(250) NOT NULL,
-codigopais character varying(3),
-codigoubigeo character varying(6),
+codigo_pais character varying(3),
+codigo_ubigeo character varying(6),
 zona character varying(250),
 direccion character varying(250),
-correoelectronico1 character varying(50),
-correoelectronico2 character varying(50),
-correoelectronico3 character varying(50),
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+correo_electronico1 character varying(50),
+correo_electronico2 character varying(50),
+correo_electronico3 character varying(50),
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
 CREATE TABLE public.empresa
 (
 id bigint NOT NULL,
-identidad bigint NOT NULL,
-correoadmin character varying(250),
-contrasenhiacorreo character varying(250),
+id_entidad bigint NOT NULL,
+correo_admin character varying(250),
+contrasenhia_correo character varying(250),
 logo character varying(50),
 activo boolean NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
 CREATE TABLE public.moneda
 (
 codigo character varying(3) NOT NULL,
 nombre character varying(50) NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
 CREATE TABLE administracion.menu
 (
 id bigint NOT NULL,
-idmenupadre bigint,
+id_menu_padre bigint,
 nombre character varying(50) NOT NULL,
 url character varying(100),
 activo boolean NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
 CREATE TABLE administracion.operacion
 (
 id bigint NOT NULL,
-idmenu bigint NOT NULL,
+id_menu bigint NOT NULL,
 nombre character varying(50) NOT NULL,
 activo boolean NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
 CREATE TABLE administracion.rol
 (
@@ -113,42 +113,42 @@ id bigint NOT NULL,
 nombre character varying(50) NOT NULL,
 descripcion character varying(250) NOT NULL,
 admin boolean NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
 CREATE TABLE administracion.rol_menu
 (
 id bigint NOT NULL,
-idrol bigint NOT NULL,
-idmenu bigint NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+id_rol bigint NOT NULL,
+id_menu bigint NOT NULL,
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
 CREATE TABLE administracion.rol_menu_operacion
 (
 id bigint NOT NULL,
-idoperacion bigint NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+id_operacion bigint NOT NULL,
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
 CREATE TABLE administracion.usuario
 (
 id bigint NOT NULL,
 nombre character varying(50) NOT NULL,
 clave character varying(50) NOT NULL,
-identidad bigint,
-idrol bigint NOT NULL,
-idempresa bigint NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint,
-fechamodificacion timestamp without time zone
+id_entidad bigint,
+id_rol bigint NOT NULL,
+id_empresa bigint NOT NULL,
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint,
+fecha_modificacion timestamp without time zone
 );
 CREATE TABLE administracion.usuario_log
 (
@@ -156,174 +156,174 @@ id bigint NOT NULL,
 descripcion character varying NOT NULL,
 consulta character varying NOT NULL,
 ip character varying(20) NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
 --ALMACEN
 CREATE TABLE almacen.unidad
 (
 codigo character varying(3) NOT NULL,
 nombre character varying(50) NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
 CREATE TABLE almacen.producto
 (
 id bigint NOT NULL,
-codigounidad character varying(3) NOT NULL,
+codigo_unidad character varying(3) NOT NULL,
 nombre character varying(50) NOT NULL,
 descripcion character varying(250) NOT NULL,
-precioventa double precision NOT NULL,
-preciocompra double precision NOT NULL,
-idempresa bigint,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+precio_venta double precision NOT NULL,
+precio_compra double precision NOT NULL,
+id_empresa bigint,
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
 --VENTAS
-CREATE TABLE ventas.tipodocumentoventa
+CREATE TABLE ventas.tipo_documento_venta
 (
 codigo character varying(2) NOT NULL,
 nombre character varying(50) NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
-CREATE TABLE ventas.estadodocumentoventa
+CREATE TABLE ventas.estado_documento_venta
 (
 codigo character varying(3) NOT NULL,
 nombre character varying(50) NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
-CREATE TABLE ventas.puntoventa
+CREATE TABLE ventas.punto_venta
 (
 id bigint NOT NULL,
 nombre character varying(50) NOT NULL,
-idempresa bigint NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+id_empresa bigint NOT NULL,
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
-CREATE TABLE ventas.puntoventa_serie
+CREATE TABLE ventas.punto_venta_serie
 (
 codigo character varying(4) NOT NULL,
-idpuntoventa bigint NOT NULL,
-codigotipodocumentoventa character varying(2) NOT NULL,
-ultimocorrelativo character varying(8) NOT NULL,
+id_punto_venta bigint NOT NULL,
+codigo_tipo_documento_venta character varying(2) NOT NULL,
+ultimo_correlativo character varying(8) NOT NULL,
 activo boolean NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
 CREATE TABLE ventas.cliente
 (
 id bigint NOT NULL,
-identidad bigint NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+id_entidad bigint NOT NULL,
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
-CREATE TABLE ventas.documentoventa
+CREATE TABLE ventas.documento_venta
 (
 id bigint NOT NULL,
-codigotipodocumentoventa character varying(2) NOT NULL,
-codigoestadodocumentoventa character varying(3) NOT NULL,
+codigo_tipo_documento_venta character varying(2) NOT NULL,
+codigo_estado_documento_venta character varying(3) NOT NULL,
 condicion character varying(3) NOT NULL,
-formapago character varying(3) NOT NULL,
+forma_pago character varying(3) NOT NULL,
 banco character varying(3),
-numeropago character varying(20),
-fechaemision date NOT NULL,
-fechavencimiento date,
-guiaremision character varying(20),
+numero_pago character varying(20),
+fecha_emision date NOT NULL,
+fecha_vencimiento date,
+guia_remision character varying(20),
 serie character varying(4) NOT NULL,
 numero character varying(8) NOT NULL,
-idpuntoventa bigint NOT NULL,
-idcliente bigint,
-totalgratuito double precision NOT NULL,
-totaldescuento double precision NOT NULL,
-totalgrabado double precision NOT NULL,
-totaligv double precision NOT NULL,
+id_punto_venta bigint NOT NULL,
+id_cliente bigint,
+total_gratuito double precision NOT NULL,
+total_descuento double precision NOT NULL,
+total_grabado double precision NOT NULL,
+total_igv double precision NOT NULL,
 total double precision NOT NULL,
-codigomoneda character varying(3) NOT NULL,
-idempresa bigint NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+codigo_moneda character varying(3) NOT NULL,
+id_empresa bigint NOT NULL,
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
-CREATE TABLE ventas.documentoventa_detalle
+CREATE TABLE ventas.documento_venta_detalle
 (
 id bigint NOT NULL,
-iddocumentoventa bigint NOT NULL,
-idproducto bigint,
-codigounidad character varying(3),
-preciounitario double precision NOT NULL,
-descuentounitario double precision NOT NULL,
-fleteunitario double precision NOT NULL,
-bonificacionunitario double precision NOT NULL,
-preciofinal double precision NOT NULL,
+id_documento_venta bigint NOT NULL,
+id_producto bigint,
+codigo_unidad character varying(3),
+precio_unitario double precision NOT NULL,
+descuento_unitario double precision NOT NULL,
+flete_unitario double precision NOT NULL,
+bonificacion_unitario double precision NOT NULL,
+precio_final double precision NOT NULL,
 cantidad double precision NOT NULL,
 descuento boolean NOT NULL,
 gratuito boolean NOT NULL,
-totaldescuento double precision NOT NULL,
-totalgrabado double precision NOT NULL,
-totalIGV double precision NOT NULL,
+total_descuento double precision NOT NULL,
+total_grabado double precision NOT NULL,
+total_igv double precision NOT NULL,
 total double precision NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
-CREATE TABLE ventas.resumenventas
+CREATE TABLE ventas.resumen_ventas
 (
 id bigint NOT NULL,
 tipo character varying(3) NOT NULL,
-codigoestadodocumentoventa character varying(3) NOT NULL,
-fechaemision date NOT NULL,
+codigo_estado_documento_venta character varying(3) NOT NULL,
+fecha_emision date NOT NULL,
 numero character varying(8) NOT NULL,
-idempresa bigint NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+id_empresa bigint NOT NULL,
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
-CREATE TABLE ventas.resumenventas_grupo
+CREATE TABLE ventas.resumen_ventas_grupo
 (
 id bigint NOT NULL,
-idresumenventas bigint NOT NULL,
-codigotipodocumentoventa character varying(2) NOT NULL,
-codigopuntoventa_serie character varying(4) NOT NULL,
-iniciodocumentoventa character varying(8) NOT NULL,
-findocumentoventa character varying(8) NOT NULL,
+id_resumen_ventas bigint NOT NULL,
+codigo_tipo_documento_venta character varying(2) NOT NULL,
+codigo_punto_venta_serie character varying(4) NOT NULL,
+inicio_documento_venta character varying(8) NOT NULL,
+fin_documento_venta character varying(8) NOT NULL,
 descripcion character varying(50),
-totalgrabado double precision,
-totalIGV double precision,
+total_grabado double precision,
+total_igv double precision,
 total double precision,
-codigomoneda character varying(3),
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+codigo_moneda character varying(3),
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );
-CREATE TABLE ventas.resumenventas_grupo_venta
+CREATE TABLE ventas.resumen_ventas_grupo_venta
 (
 id bigint NOT NULL,
-idresumenventas_grupo bigint NOT NULL,
-iddocumentoventa bigint NOT NULL,
-idusuariocreacion bigint NOT NULL,
-fechacreacion timestamp without time zone NOT NULL,
-idusuariomodificacion bigint ,
-fechamodificacion timestamp without time zone
+id_resumen_ventas_grupo bigint NOT NULL,
+id_documento_venta bigint NOT NULL,
+id_usuario_creacion bigint NOT NULL,
+fecha_creacion timestamp without time zone NOT NULL,
+id_usuario_modificacion bigint ,
+fecha_modificacion timestamp without time zone
 );

@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 14-ago-2017 12:44:12 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pe.modelo.pojo.DocumentoVentaDetalle" table="documento_venta_detalle" schema="ventas" optimistic-lock="version">
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="usuarioByIdUsuarioModificacion" class="pe.modelo.pojo.Usuario" fetch="select">
+            <column name="id_usuario_modificacion" />
+        </many-to-one>
+        <many-to-one name="usuarioByIdUsuarioCreacion" class="pe.modelo.pojo.Usuario" fetch="select">
+            <column name="id_usuario_creacion" not-null="true" />
+        </many-to-one>
+        <many-to-one name="producto" class="pe.modelo.pojo.Producto" fetch="select">
+            <column name="id_producto" />
+        </many-to-one>
+        <many-to-one name="unidad" class="pe.modelo.pojo.Unidad" fetch="select">
+            <column name="codigo_unidad" length="3" />
+        </many-to-one>
+        <many-to-one name="documentoVenta" class="pe.modelo.pojo.DocumentoVenta" fetch="select">
+            <column name="id_documento_venta" not-null="true" />
+        </many-to-one>
+        <property name="precioUnitario" type="double">
+            <column name="precio_unitario" precision="17" scale="17" not-null="true" />
+        </property>
+        <property name="descuentoUnitario" type="double">
+            <column name="descuento_unitario" precision="17" scale="17" not-null="true" />
+        </property>
+        <property name="fleteUnitario" type="double">
+            <column name="flete_unitario" precision="17" scale="17" not-null="true" />
+        </property>
+        <property name="bonificacionUnitario" type="double">
+            <column name="bonificacion_unitario" precision="17" scale="17" not-null="true" />
+        </property>
+        <property name="precioFinal" type="double">
+            <column name="precio_final" precision="17" scale="17" not-null="true" />
+        </property>
+        <property name="cantidad" type="double">
+            <column name="cantidad" precision="17" scale="17" not-null="true" />
+        </property>
+        <property name="descuento" type="boolean">
+            <column name="descuento" not-null="true" />
+        </property>
+        <property name="gratuito" type="boolean">
+            <column name="gratuito" not-null="true" />
+        </property>
+        <property name="totalDescuento" type="double">
+            <column name="total_descuento" precision="17" scale="17" not-null="true" />
+        </property>
+        <property name="totalGrabado" type="double">
+            <column name="total_grabado" precision="17" scale="17" not-null="true" />
+        </property>
+        <property name="totalIgv" type="double">
+            <column name="total_igv" precision="17" scale="17" not-null="true" />
+        </property>
+        <property name="total" type="double">
+            <column name="total" precision="17" scale="17" not-null="true" />
+        </property>
+        <property name="fechaCreacion" type="timestamp">
+            <column name="fecha_creacion" length="29" not-null="true" />
+        </property>
+        <property name="fechaModificacion" type="timestamp">
+            <column name="fecha_modificacion" length="29" />
+        </property>
+    </class>
+</hibernate-mapping>
