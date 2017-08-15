@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/dao/administracion/RolDao.java</file>
+            <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/pojo/Rol.hbm.xml</file>
+            <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/dao/administracion/IUsuarioDao.java</file>
+            <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/js/ingreso.js</file>
+            <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/pojo/Rol.java</file>
+            <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/js/administracion/rol.js</file>
+            <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/dao/administracion/UsuarioDao.java</file>
+            <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/dao/administracion/IRolDao.java</file>
+            <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/controlador/administracion/RolController.java</file>
+            <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/pojo/Usuario.java</file>
+            <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/controlador/administracion/UsuarioController.java</file>
+        </group>
+    </open-files>
 </project-private>

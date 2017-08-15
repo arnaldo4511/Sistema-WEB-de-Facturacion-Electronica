@@ -8,7 +8,6 @@ package pe.modelo.dao.administracion;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import pe.modelo.dao.HibernateUtil;
 import pe.modelo.pojo.Rol;
 
@@ -17,22 +16,34 @@ import pe.modelo.pojo.Rol;
  * @author octavio
  */
 public class RolDao implements IRolDao {
-    
+
+    @Override
+    public void crear(Rol rol) {
+        try {
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            sesion.save(rol);
+            sesion.getTransaction().commit();
+            sesion.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public List<Rol> listar() {
         List<Rol> lista = null;
         try {
-            Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
             Query query = sesion.createQuery("from Rol");
             lista = query.list();
             sesion.getTransaction().commit();
-            System.out.print("lista:" + lista);
-            //sesion.close();
+            sesion.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return lista;
     }
-    
+
 }

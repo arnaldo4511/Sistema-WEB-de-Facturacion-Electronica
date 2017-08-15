@@ -13,6 +13,9 @@ import pe.modelo.pojo.Rol;
  * @author octavio
  */
 public interface IRolDao {
+
+    public void crear(Rol rol);
+
     public List<Rol> listar();
-    
+
 }

@@ -5,7 +5,7 @@
  */
 
 var IngresoApp = angular.module("IngresoApp", []);
-IngresoApp.controller("IngresoController", ['$scope', '$http','$window', function ($scope, $http,$window) {
+IngresoApp.controller("IngresoController", ['$scope', '$http', '$window', function ($scope, $http, $window) {
         $scope.nombre = "";
         $scope.clave = "";
         $scope.ingresarSistema = function () {
@@ -14,9 +14,10 @@ IngresoApp.controller("IngresoController", ['$scope', '$http','$window', functio
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                url: 'controlador/Usuario/ingresarSistema/' + $scope.nombre + "/" + $scope.clave
+                url: 'controlador/usuario/ingresarSistema/' + $scope.nombre + "/" + $scope.clave
             }).then(function mySucces(response) {
-                if ("OK" === response.data.RSP)
+                console.log(response.data.RSP);
+                if (response.data.RSP)
                 {
                     $window.location.href = 'vista/principal.jsp';
                     //$location.path('configuration/streaming')

@@ -6,23 +6,49 @@
 
 var RolApp = angular.module("RolApp", []);
 RolApp.controller("RolController", ['$scope', '$http', '$window', function ($scope, $http, $window) {
-        $scope.nombre = "";
-        $scope.clave = "";
-        $scope.ingresarSistema = function () {
+        $scope.rol = {};
+        $http({
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            url: '/transportes_gepp/controlador/rol/listar'
+        }).then(function mySucces(response) {
+            $scope.roles = response.data;
+        }, function myError(response) {
+        });
+        $scope.listar = function () {
             $http({
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                url: 'controlador/Usuario/ingresarSistema/' + $scope.nombre + "/" + $scope.clave
+                url: '/transportes_gepp/controlador/rol/listar'
             }).then(function mySucces(response) {
-                if ("OK" === response.data.RSP)
-                {
-                    $window.location.href = 'principal.jsp';
-                    //$location.path('configuration/streaming')
-                }
+                $scope.roles = response.data;
             }, function myError(response) {
             });
-            ;
+        };
+        $scope.guardarRol = function () {
+            $http({
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                url: '/transportes_gepp/controlador/rol/crear',
+                data: $scope.rol
+            }).then(function mySucces(response) {
+                $http({
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    url: '/transportes_gepp/controlador/rol/listar'
+                }).then(function mySucces(response) {
+                    $scope.roles = response.data;
+                }, function myError(response) {
+                });
+            }, function myError(response) {
+            });
         };
     }]);

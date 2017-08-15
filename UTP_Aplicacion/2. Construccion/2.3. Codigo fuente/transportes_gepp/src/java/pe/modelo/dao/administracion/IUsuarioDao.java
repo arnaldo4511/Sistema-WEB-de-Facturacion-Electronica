@@ -5,11 +5,16 @@
  */
 package pe.modelo.dao.administracion;
 
+import pe.modelo.pojo.Usuario;
+
 /**
  *
  * @author octavio
  */
 public interface IUsuarioDao {
-    public boolean ingresarSistema(String nombre,String clave);
-    
+
+    public boolean ingresarSistema(String nombre, String clave);
+
+    public Usuario buscar(long id);
+
 }
