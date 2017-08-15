@@ -19,12 +19,23 @@ import org.springframework.web.portlet.ModelAndView;
 @Controller
 public class UsuarioController {
     
-    @RequestMapping(value="getAll",method = RequestMethod.GET)
+    /*@RequestMapping(value="getAll",method = RequestMethod.GET)
     public String getAll(Model m)
     {
         
-        UsuarioModel model= new UsuarioModel();
-        m.addAttribute("lst",model.ListarUsuarios());
+        UsuarioModel usuarioModel= new UsuarioModel();
+        m.addAttribute("lst",usuarioModel.ListarUsuarios());
         return "data";
+    }*/
+    
+    @RequestMapping(value = "/usuarioVista")
+    public String listarUsuariosCtll(Model model, Integer offset, Integer maxResults) {
+        System.out.println("listtttt"+offset);
+        UsuarioService usuarioService=new UsuarioService();
+        model.addAttribute("persons", usuarioService.listarUsuarioServ(offset, maxResults));
+        model.addAttribute("count", usuarioService.count());
+        model.addAttribute("offset", offset);
+        System.out.println("model "+model);
+        return "/usuarioVista";
     }
 }
