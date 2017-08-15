@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 14-ago-2017 12:44:12 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pe.modelo.pojo.Empresa" table="empresa" schema="public" optimistic-lock="version">
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="usuarioByIdUsuarioModificacion" class="pe.modelo.pojo.Usuario" fetch="select">
+            <column name="id_usuario_modificacion" />
+        </many-to-one>
+        <many-to-one name="usuarioByIdUsuarioCreacion" class="pe.modelo.pojo.Usuario" fetch="select">
+            <column name="id_usuario_creacion" not-null="true" />
+        </many-to-one>
+        <many-to-one name="entidad" class="pe.modelo.pojo.Entidad" fetch="select">
+            <column name="id_entidad" not-null="true" unique="true" />
+        </many-to-one>
+        <property name="correoAdmin" type="string">
+            <column name="correo_admin" length="250" />
+        </property>
+        <property name="contrasenhiaCorreo" type="string">
+            <column name="contrasenhia_correo" length="250" />
+        </property>
+        <property name="logo" type="string">
+            <column name="logo" length="50" />
+        </property>
+        <property name="activo" type="boolean">
+            <column name="activo" not-null="true" />
+        </property>
+        <property name="fechaCreacion" type="timestamp">
+            <column name="fecha_creacion" length="29" not-null="true" />
+        </property>
+        <property name="fechaModificacion" type="timestamp">
+            <column name="fecha_modificacion" length="29" />
+        </property>
+        <set name="resumenVentases" table="resumen_ventas" schema="ventas" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_empresa" not-null="true" />
+            </key>
+            <one-to-many class="pe.modelo.pojo.ResumenVentas" />
+        </set>
+        <set name="usuarios" table="usuario" schema="administracion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_empresa" not-null="true" />
+            </key>
+            <one-to-many class="pe.modelo.pojo.Usuario" />
+        </set>
+        <set name="productos" table="producto" schema="almacen" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_empresa" />
+            </key>
+            <one-to-many class="pe.modelo.pojo.Producto" />
+        </set>
+        <set name="puntoVentas" table="punto_venta" schema="ventas" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_empresa" not-null="true" />
+            </key>
+            <one-to-many class="pe.modelo.pojo.PuntoVenta" />
+        </set>
+        <set name="documentoVentas" table="documento_venta" schema="ventas" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_empresa" not-null="true" />
+            </key>
+            <one-to-many class="pe.modelo.pojo.DocumentoVenta" />
+        </set>
+    </class>
+</hibernate-mapping>
