@@ -15,17 +15,17 @@
     </head>
     <body ng-app='PrincipalApp' ng-controller='PrincipalController'>
         <div class="container">
-            <div class='row'>
+            <div class='row bg-success'>
                 <ng-include src="'<%= request.getContextPath()%>/vista/cabecera.jsp'"></ng-include>
             </div>
             <div class='row'>
-                <div class="col-sm-3">
+                <div class="col-sm-3 bg-success">
                     <ng-include src="'<%= request.getContextPath()%>/vista/menu.jsp'"></ng-include>
                 </div>
                 <div class="col-sm-9">
                 </div>
             </div>
-            <div class='row'>
+            <div class='row bg-success'>
                 <ng-include src="'<%= request.getContextPath()%>/vista/pie.jsp'"></ng-include>
             </div>
         </div>

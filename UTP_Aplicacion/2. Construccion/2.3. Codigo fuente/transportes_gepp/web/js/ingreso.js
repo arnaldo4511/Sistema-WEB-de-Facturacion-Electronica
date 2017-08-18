@@ -14,7 +14,7 @@ IngresoApp.controller("IngresoController", ['$scope', '$http', '$window', functi
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                url: 'controlador/usuario/ingresarSistema/' + $scope.nombre + "/" + $scope.clave
+                url: 'controlador/usuario/ingresarsistema/' + $scope.nombre + "/" + $scope.clave
             }).then(function mySucces(response) {
                 console.log(response.data.RSP);
                 if (response.data.RSP)

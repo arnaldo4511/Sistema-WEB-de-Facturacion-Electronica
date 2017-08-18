@@ -16,11 +16,11 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse"  href="#collapseAdministracion">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseAdministracion" >
                     Administración</a>
             </h4>
         </div>
-        <div id="collapseAdministracion" class="panel-collapse collapse">
+        <div id="collapseAdministracion" class="panel-collapse collapse in">
             <div class="panel-body">
                 <table class="table">
                     <tr>
@@ -30,7 +30,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <span class="glyphicon glyphicon-pencil text-primary"></span><a href="region.jsp"> Usuarios</a>
+                            <span class="glyphicon glyphicon-pencil text-primary"></span><a href="<%= request.getContextPath()%>/vista/administracion/usuario.jsp"> Usuarios</a>
                         </td>
                     </tr>
                 </table>

@@ -5,6 +5,7 @@
  */
 package pe.modelo.dao.administracion;
 
+import java.util.List;
 import pe.modelo.pojo.Usuario;
 
 /**
@@ -13,8 +14,16 @@ import pe.modelo.pojo.Usuario;
  */
 public interface IUsuarioDao {
 
-    public boolean ingresarSistema(String nombre, String clave);
+    public void crear(Usuario usuario);
+
+    public void editar(Usuario usuario);
 
     public Usuario buscar(long id);
+
+    public void eliminar(long id);
+
+    public List<Usuario> listar();
+
+    public long ingresarSistema(String nombre, String clave);
 
 }

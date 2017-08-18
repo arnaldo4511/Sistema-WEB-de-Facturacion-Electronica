@@ -1,5 +1,5 @@
 package pe.modelo.pojo;
-// Generated 15-ago-2017 17:21:31 by Hibernate Tools 4.3.1
+// Generated 17-ago-2017 14:14:43 by Hibernate Tools 4.3.1
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,7 +39,9 @@ public class Rol  implements java.io.Serializable {
      private String nombre;
      private String descripcion;
      private boolean admin;
+     @JsonIgnore
      private Date fechaCreacion;
+     @JsonIgnore
      private Date fechaModificacion;
      @JsonIgnore
      private Set<Usuario> usuarios = new HashSet<Usuario>(0);
@@ -71,7 +73,7 @@ public class Rol  implements java.io.Serializable {
        this.rolMenus = rolMenus;
     }
    
-     @Id  @GeneratedValue(strategy = GenerationType.IDENTITY)
+     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     
     @Column(name="id", unique=true, nullable=false)

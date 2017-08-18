@@ -5,6 +5,8 @@
  */
 package pe.modelo.dao.administracion;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
@@ -21,22 +23,35 @@ import pe.modelo.pojo.Usuario;
 public class UsuarioDao implements IUsuarioDao {
 
     @Override
-    public boolean ingresarSistema(String nombre, String clave) {
-        boolean valido = false;
+    public void crear(Usuario usuario) {
         try {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
-            Criteria criteria = sesion.createCriteria(Usuario.class);
-            List<Usuario> usuarios = criteria.add(Restrictions.eq("nombre", nombre)).add(Restrictions.eq("clave", clave)).list();
             sesion.beginTransaction();
+            sesion.save(usuario);
             sesion.getTransaction().commit();
             sesion.close();
-            if (usuarios.size() > 0) {
-                valido = true;
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return valido;
+    }
+
+    @Override
+    public void editar(Usuario usuario) {
+        try {
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            String hqlUpdate = "update Usuario set nombre = :nombre,clave = :clave,id_rol = :id_rol where id = :id";
+            sesion.createQuery(hqlUpdate)
+                    .setString("nombre", usuario.getNombre())
+                    .setString("clave", usuario.getClave())
+                    .setLong("id_rol", usuario.getRol().getId())
+                    .setLong("id", usuario.getId())
+                    .executeUpdate();
+            sesion.getTransaction().commit();
+            sesion.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -53,6 +68,52 @@ public class UsuarioDao implements IUsuarioDao {
             e.printStackTrace();
         }
         return usuario;
+    }
+
+    @Override
+    public void eliminar(long id) {
+        try {
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            String hql = "delete from Usuario where id= :id";
+            sesion.createQuery(hql).setLong("id", id).executeUpdate();
+            sesion.getTransaction().commit();
+            sesion.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public List<Usuario> listar() {
+        List<Usuario> lista = null;
+        try {
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            Query query = sesion.createQuery("from Usuario order by id");
+            lista = query.list();
+            sesion.getTransaction().commit();
+            sesion.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
+    @Override
+    public long ingresarSistema(String nombre, String clave) {
+        Usuario usuario = new Usuario();
+        try {
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Criteria criteria = sesion.createCriteria(Usuario.class);
+            usuario = (Usuario) criteria.add(Restrictions.eq("nombre", nombre)).add(Restrictions.eq("clave", clave)).uniqueResult();
+            sesion.beginTransaction();
+            sesion.getTransaction().commit();
+            sesion.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return usuario.getId();
     }
 
 }

@@ -16,6 +16,12 @@ public interface IRolDao {
 
     public void crear(Rol rol);
 
+    public void editar(Rol rol);
+
+    public Rol buscar(long id);
+
+    public void eliminar(long id);
+
     public List<Rol> listar();
 
 }
