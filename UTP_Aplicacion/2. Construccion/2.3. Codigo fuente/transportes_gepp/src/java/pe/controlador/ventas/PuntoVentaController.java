@@ -1,4 +1,4 @@
-package pe.controlador.administracion;
+package pe.controlador.ventas;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,91 +15,57 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import pe.controlador.BussinessException;
+import pe.controlador.BussinessMessage;
 import pe.controlador.JsonTransformer;
-import pe.modelo.dao.administracion.ICargaSesionDao;
-import pe.modelo.dao.administracion.IUsuarioDao;
-import pe.modelo.pojo.CargaSesion;
+import pe.modelo.dao.administracion.IRolDao;
+import pe.modelo.pojo.Rol;
 import pe.modelo.pojo.Usuario;
 
 @Controller
-public class UsuarioController {
+public class PuntoVentaController {
 
     @Autowired
     JsonTransformer jsonTransformer;
 
     @Autowired
-    IUsuarioDao usuarioDao;
+    IRolDao rolDao;
 
-    @Autowired
-    ICargaSesionDao cargaSesionDao;
-
-    @RequestMapping(value = "/usuario/ingresarsistema/{nombre}/{clave}", method = RequestMethod.GET, produces = "application/json")
-    public void ingresarSistema(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("nombre") String nombre, @PathVariable("clave") String clave) throws IOException {
-        PrintWriter out = httpServletResponse.getWriter();
-        try {
-            Long id = usuarioDao.ingresarSistema(nombre, clave);
-            if (id > 0) {
-                HttpSession session = httpServletRequest.getSession();
-                session.setAttribute("idUsuario", id);
-            }
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
-            out.println("{\"RSP\":" + id + "}");
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
-            out.println("{\"RSP\":\"ERROR\",\"MSG\":\"" + ex.getMessage() + "\"}");
-        }
-    }
-
-    @RequestMapping(value = "/usuario/cerrarsesion", method = RequestMethod.GET, produces = "application/json")
-    public void cerrarSesion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
-        HttpSession session = httpServletRequest.getSession();
-        session.invalidate();
-        httpServletResponse.sendRedirect(httpServletRequest.getContextPath());
-    }
-
-    @RequestMapping(value = "/usuario/buscarsesion", method = RequestMethod.GET, produces = "application/json")
-    public void buscarsesion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
-        HttpSession session = httpServletRequest.getSession();
-        Long id = Long.parseLong(session.getAttribute("idUsuario").toString());
-        CargaSesion cargaSesion = cargaSesionDao.crear(id);
-        httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-        httpServletResponse.setContentType("application/json; charset=UTF-8");
-        httpServletResponse.getWriter().println(jsonTransformer.toJson(cargaSesion));
-    }
-
-    @RequestMapping(value = "/usuario/listar", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/puntoventa/listar", method = RequestMethod.GET, produces = "application/json")
     public void listar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
         PrintWriter out = httpServletResponse.getWriter();
         try {
-            List<Usuario> lista = usuarioDao.listar();
+            List<Rol> lista = rolDao.listar();
             String jsonSalida = jsonTransformer.toJson(lista);
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
             out.println(jsonSalida);
+
         } catch (Exception ex) {
             ex.printStackTrace();
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
             out.println("{\"RSP\":\"ERROR\",\"MSG\":\"" + ex.getMessage() + "\"}");
         }
+
     }
 
-    @RequestMapping(value = "/usuario/crear", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    @RequestMapping(value = "/puntoventa/crear", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void crear(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) {
         try {
-            Usuario usuario = (Usuario) jsonTransformer.fromJson(jsonEntrada, Usuario.class);
-            usuarioDao.crear(usuario);
-            if (usuario.getId() > 0) {
-                String jsonSalida = jsonTransformer.toJson(usuario);
+            Rol rol = (Rol) jsonTransformer.fromJson(jsonEntrada, Rol.class);
+            HttpSession session = httpServletRequest.getSession();
+            Usuario usuario = (Usuario) jsonTransformer.fromJson(session.getAttribute("session_usuario").toString(), Usuario.class);
+            rol.setUsuarioByIdUsuarioCreacion(usuario);
+            rol.setFechaCreacion(new Date());
+            rolDao.crear(rol);
+            if (rol.getId() > 0) {
+                String jsonSalida = jsonTransformer.toJson(rol);
                 httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                 httpServletResponse.setContentType("application/json; charset=UTF-8");
                 httpServletResponse.getWriter().println(jsonSalida);
             } else {
-                String jsonSalida = jsonTransformer.toJson(usuario);
+                String jsonSalida = jsonTransformer.toJson(rol);
                 httpServletResponse.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
                 httpServletResponse.setContentType("application/json; charset=UTF-8");
                 httpServletResponse.getWriter().println(jsonSalida);
@@ -111,18 +77,22 @@ public class UsuarioController {
             try {
                 ex.printStackTrace(httpServletResponse.getWriter());
             } catch (IOException ex1) {
-                Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex1);
+                Logger.getLogger(PuntoVentaController.class.getName()).log(Level.SEVERE, null, ex1);
             }
         }
     }
 
-    @RequestMapping(value = "/usuario/editar", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    @RequestMapping(value = "/puntoventa/editar", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void editar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) throws IOException {
         PrintWriter out = httpServletResponse.getWriter();
         try {
-            Usuario usuario = (Usuario) jsonTransformer.fromJson(jsonEntrada, Usuario.class);
-            usuarioDao.editar(usuario);
-            String jsonSalida = jsonTransformer.toJson(usuario);
+            Rol rol = (Rol) jsonTransformer.fromJson(jsonEntrada, Rol.class);
+            HttpSession session = httpServletRequest.getSession();
+            Usuario usuario = (Usuario) jsonTransformer.fromJson(session.getAttribute("session_usuario").toString(), Usuario.class);
+            rol.setUsuarioByIdUsuarioModificacion(usuario);
+            rol.setFechaModificacion(new Date());
+            rolDao.editar(rol);
+            String jsonSalida = jsonTransformer.toJson(rol);
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
             out.println(jsonSalida);
@@ -134,11 +104,11 @@ public class UsuarioController {
         }
     }
 
-    @RequestMapping(value = "/usuario/eliminar/{id}", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/puntoventa/eliminar/{id}", method = RequestMethod.POST, produces = "application/json")
     public void eliminar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") long id) throws IOException {
         PrintWriter out = httpServletResponse.getWriter();
         try {
-            usuarioDao.eliminar(id);
+            rolDao.eliminar(id);
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
             out.println(id);

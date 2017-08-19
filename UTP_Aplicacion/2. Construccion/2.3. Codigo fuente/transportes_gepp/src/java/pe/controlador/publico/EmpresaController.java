@@ -1,4 +1,4 @@
-package pe.controlador.administracion;
+package pe.controlador.publico;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import pe.controlador.BussinessException;
 import pe.controlador.BussinessMessage;
 import pe.controlador.JsonTransformer;
-import pe.modelo.dao.administracion.IEmpresaDao;
+import pe.modelo.dao.publico.IEmpresaDao;
 import pe.modelo.pojo.Empresa;
 
 @Controller

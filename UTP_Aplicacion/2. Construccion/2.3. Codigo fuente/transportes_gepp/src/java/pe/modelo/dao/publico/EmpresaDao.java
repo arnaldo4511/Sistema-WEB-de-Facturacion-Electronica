@@ -3,76 +3,76 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pe.modelo.dao.administracion;
+package pe.modelo.dao.publico;
 
-import java.util.AbstractList;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 import pe.modelo.dao.HibernateUtil;
-import pe.modelo.pojo.Usuario;
+import pe.modelo.pojo.Empresa;
 
 /**
  *
  * @author octavio
  */
-public class UsuarioDao implements IUsuarioDao {
-    
+public class EmpresaDao implements IEmpresaDao {
+
     @Override
-    public void crear(Usuario usuario) {
+    public void crear(Empresa empresa) {
         try {
-            usuario.setFechaCreacion(new Date());
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            sesion.save(usuario);
+            sesion.save(empresa);
             sesion.getTransaction().commit();
             sesion.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     @Override
-    public void editar(Usuario usuario) {
+    public void editar(Empresa empresa) {
         try {
-            usuario.setFechaModificacion(new Date());
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            sesion.update(usuario);
+            String hqlUpdate = "update Empresa set nombre = :nombre,descripcion = :descripcion,admin = :admin where id = :id";
+            /*sesion.createQuery(hqlUpdate)
+                    .setString("nombre", empresa.getNombre())
+                    .setString("descripcion", empresa.getDescripcion())
+                    .setBoolean("admin", empresa.isAdmin())
+                    .setLong("id", empresa.getId())
+                    .executeUpdate();*/
             sesion.getTransaction().commit();
             sesion.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     @Override
-    public Usuario buscar(long id) {
-        Usuario usuario = null;
+    public Empresa buscar(long id) {
+        Empresa empresa = null;
         try {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            usuario = (Usuario) sesion.load(Usuario.class, id);
-            Hibernate.initialize(usuario);
+            empresa = (Empresa) sesion.load(Empresa.class, id);
+            Hibernate.initialize(empresa);
             sesion.getTransaction().commit();
             sesion.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return usuario;
+        return empresa;
     }
-    
+
     @Override
     public void eliminar(long id) {
         try {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            String hql = "delete from Usuario where id= :id";
+            String hql = "delete from Empresa where id= :id";
             sesion.createQuery(hql).setLong("id", id).executeUpdate();
             sesion.getTransaction().commit();
             sesion.close();
@@ -80,14 +80,14 @@ public class UsuarioDao implements IUsuarioDao {
             e.printStackTrace();
         }
     }
-    
+
     @Override
-    public List<Usuario> listar() {
-        List<Usuario> lista = null;
+    public List<Empresa> listar() {
+        List<Empresa> lista = null;
         try {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            Query query = sesion.createQuery("from Usuario order by id");
+            Query query = sesion.createQuery("from Empresa order by id");
             lista = query.list();
             sesion.getTransaction().commit();
             sesion.close();
@@ -96,21 +96,4 @@ public class UsuarioDao implements IUsuarioDao {
         }
         return lista;
     }
-    
-    @Override
-    public long ingresarSistema(String nombre, String clave) {
-        Usuario usuario = new Usuario();
-        try {
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
-            Criteria criteria = sesion.createCriteria(Usuario.class);
-            usuario = (Usuario) criteria.add(Restrictions.eq("nombre", nombre)).add(Restrictions.eq("clave", clave)).uniqueResult();
-            sesion.beginTransaction();
-            sesion.getTransaction().commit();
-            sesion.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return usuario.getId();
-    }
-    
 }

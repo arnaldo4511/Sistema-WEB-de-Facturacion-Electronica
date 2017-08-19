@@ -28,10 +28,13 @@ public class CargaSesionDao implements ICargaSesionDao {
             Hibernate.initialize(usuario);
             Query query = sesion.createQuery("from Rol order by id");
             List<Rol> roles = query.list();
+            Query query2 = sesion.createQuery("from PuntoVenta order by id");
+            List<PuntoVenta> puntoVentas = query2.list();
             sesion.getTransaction().commit();
             sesion.close();
             cargaSesion.setUsuario(usuario);
             cargaSesion.setRoles(roles);
+            cargaSesion.setPuntoVentas(puntoVentas);
         } catch (Exception e) {
             e.printStackTrace();
         }

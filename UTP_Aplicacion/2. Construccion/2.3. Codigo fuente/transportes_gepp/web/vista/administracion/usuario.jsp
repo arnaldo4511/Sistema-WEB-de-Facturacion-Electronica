@@ -23,61 +23,142 @@
                     <ng-include src="'<%= request.getContextPath()%>/vista/menu.jsp'"></ng-include>
                 </div>
                 <div class="col-sm-9">
-                    <form>
-                        <fieldset>
-                            <legend>USUARIOS</legend>
-                            <div class="row">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>
-                                                Nombre
-                                                <br>
-                                                <input type="text" class="form-control" ng-model="search.nombre" tabindex="1">
-                                            </th>
-                                            <th>
-                                                clave
-                                                <br>
-                                                <input type="text" class="form-control" ng-model="search.clave" tabindex="2">
-                                            </th>
-                                            <th>
-                                                Rol
-                                                <br>
-                                                <select class="form-control" ng-model="search.rol" ng-options="rol.nombre for rol in roles track by rol.id" tabindex="3">
-                                                    <option value="">Todos</option>
-                                                </select>
-                                            </th>
-                                            <th class="text-center">
-                                                <button class="btn btn-default btn-lg" data-toggle="modal" data-target="#modalItem" tabindex="4" >
-                                                    <span class="glyphicon glyphicon-plus" ng-click="nuevo()"> Nuevo</span>
-                                                </button>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="item in usuarios.slice(((currentPage - 1) * itemsPerPage), ((currentPage) * itemsPerPage))| filter:search ">
-                                            <td>{{$index + 1}}</td>
-                                            <td>{{item.nombre}}</td>
-                                            <td>{{item.clave}}</td>
-                                            <td>{{item.rol.nombre}}</td>
-                                            <td class="text-center">
-                                                <button class="btn btn-default btn-xs " data-toggle="modal" data-target="#modalItem" ng-click="seleccionarItem(item)">
-                                                    <span class="glyphicon glyphicon-pencil"></span>
-                                                </button>
 
-                                                <button class="btn btn-default btn-xs " data-toggle="modal" data-target="#modalEliminarItem" ng-click="seleccionarItem(item)">
-                                                    <span class="glyphicon glyphicon-trash"></span>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <ul  uib-pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm " items-per-page="itemsPerPage" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-                                </ul>
-                            </div>
-                        </fieldset>
+                    <form>
+                        <div class="row">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th colspan="9" >
+                                            <h1>USUARIOS
+                                                <button style="float:right" class="btn btn-default btn-lg " data-toggle="modal" data-target="#modalNuevoItem" tabindex="4" >
+                                                <span class="glyphicon glyphicon-plus" ng-click="nuevo()"> Nuevo</span>
+                                            </button>
+                                            </h1>
+                                            <label class="label-primary"></label>
+                                            
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>
+                                            Nombre Completo
+                                        </th>
+                                        <th>
+                                            Nombre
+                                            <br>
+                                            <input type="text" class="form-control" ng-model="search.nombre" tabindex="1">
+                                        </th>
+                                        <th>
+                                            clave
+                                            <br>
+                                            <input type="text" class="form-control" ng-model="search.clave" tabindex="2">
+                                        </th>
+                                        <th>
+                                            Rol
+                                            <br>
+                                            <select class="form-control" ng-model="search.rol" ng-options="rol.nombre for rol in roles track by rol.id" tabindex="3">
+                                                <option value="">Todos</option>
+                                            </select>
+                                        </th>
+                                        <th>
+                                            Punto de Venta
+                                            <br>
+                                            <select class="form-control" ng-model="search.puntoVenta" ng-options="puntoVenta.nombre for puntoVenta in puntoVentas track by puntoVenta.nombre" tabindex="3">
+                                                <option value="">Todos</option>
+                                            </select>
+                                        </th>
+                                        <th>
+                                            Estado
+                                            <br>
+                                            <select class="form-control" ng-model="search.activo" tabindex="4">
+                                                <option value="" selected>Todos</option>
+                                                <option value="true">Activo</option>
+                                                <option value="false">Desactivo</option>
+                                            </select>
+                                        </th>
+                                        <th colspan="2">
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in usuarios.slice(((currentPage - 1) * itemsPerPage), ((currentPage) * itemsPerPage))| filter:search ">
+                                        <td>{{$index + 1}}</td>
+                                        <td>{{item.entidad.nombre}}</td>
+                                        <td>{{item.nombre}}</td>
+                                        <td>{{item.clave}}</td>
+                                        <td>{{item.rol.nombre}}</td>
+                                        <td>{{item.puntoVenta.nombre}}</td>
+                                        <td>{{item.activo?'Activo':'Desactivo'}}</td>
+                                        <td class="text-center">
+                                            <button class="btn btn-default btn-xs " data-toggle="modal" data-target="#modalItem" ng-click="seleccionarItem(item)">
+                                                <span class="glyphicon glyphicon-pencil"></span>
+                                            </button>
+                                    </td><td>
+                                            <button class="btn btn-default btn-xs " data-toggle="modal" data-target="#modalEliminarItem" ng-click="seleccionarItem(item)">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <ul  uib-pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm " items-per-page="itemsPerPage" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                            </ul>
+                        </div>
                     </form>
+                    <!-- Modal -->
+                    <div class="modal fade" id="modalNuevoItem" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">{{mensajeTitulo}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal" role="form" name="formNuevoItem">
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-3" >Nombre</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="nombre" ng-model="usuarioNuevo.nombre" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-3" >Clave</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" name="clave"  ng-model="usuarioNuevo.clave" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-3" >Rol</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" name="rol" ng-model="usuarioNuevo.rol" ng-options="rol.nombre for rol in roles track by rol.id"  requerid>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-3" >Punto de Venta</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" name="puntoVenta" ng-model="usuarioNuevo.puntoVenta" ng-options="puntoVenta.nombre for puntoVenta in puntoVentas track by puntoVenta.id"  requerid>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-3" >Estado</label>
+                                            <div class="col-sm-9">
+                                                <input type="checkbox" class="form-control" name="activo"  ng-model="usuarioNuevo.activo" >
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formNuevoItem.$invalid" ng-click="guardar(usuarioNuevo)">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <!-- Modal -->
                     <div class="modal fade" id="modalItem" role="dialog">
                         <div class="modal-dialog">
@@ -90,22 +171,35 @@
                                 <div class="modal-body">
                                     <form class="form-horizontal" role="form" name="formItem">
                                         <div class="form-group">
-                                            <label class="control-label col-sm-2" >Nombre</label>
-                                            <div class="col-sm-10">
+                                            <label class="control-label col-sm-3" >Nombre</label>
+                                            <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="nombre" ng-model="usuario.nombre" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-sm-2" >Clave</label>
-                                            <div class="col-sm-10">
+                                            <label class="control-label col-sm-3" >Clave</label>
+                                            <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="clave"  ng-model="usuario.clave" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-sm-2" >Rol</label>
-                                            <div class="col-sm-10">
+                                            <label class="control-label col-sm-3" >Rol</label>
+                                            <div class="col-sm-9">
                                                 <select class="form-control" name="rol" ng-model="usuario.rol" ng-options="rol.nombre for rol in roles track by rol.id"  requerid>
                                                 </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-3" >Punto de Venta</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" name="puntoVenta" ng-model="usuario.puntoVenta" ng-options="puntoVenta.nombre for puntoVenta in puntoVentas track by puntoVenta.id"  requerid>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-3" >Estado</label>
+                                            <div class="col-sm-9">
+                                                <input type="checkbox" class="form-control" name="activo"  ng-model="usuario.activo" >
                                             </div>
                                         </div>
                                     </form>

@@ -5,10 +5,8 @@
         </a>
     </div>
     <div class="col-md-6  text-center">
-        <!--    
         <label>Punto de Venta:</label>
             <label class="text-primary">{{sesion.usuario.puntoVenta.nombre}}</label>
-        -->
         <label>Empresa:</label>
         <label class="text-primary">{{sesion.usuario.empresa.entidad.nombre}}</label>
     </div>
