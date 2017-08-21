@@ -39,6 +39,8 @@ public class RolController {
             String jsonSalida = jsonTransformer.toJson(lista);
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
+            System.out.println("listaRol "+lista);
+            System.out.println("jsonSalida "+jsonSalida);
             out.println(jsonSalida);
 
         } catch (Exception ex) {

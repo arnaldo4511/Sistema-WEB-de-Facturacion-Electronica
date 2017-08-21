@@ -10,8 +10,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%@include file="/WEB-INF/imports.jspf" %>
-        <script src="<%= request.getContextPath()%>/js/principal.js" type="text/javascript"></script>
+
+
+        <!-- Font Awesome -->
+        <link href="<%= request.getContextPath()%>/js/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        
+
+        
         <title>Transportes :: Inicio</title>
+        <script src="<%= request.getContextPath()%>/js/principal.js" type="text/javascript"></script>
+        <script src="<%= request.getContextPath()%>/js/custom.min.js" type="text/javascript"></script>
+        <link href="<%= request.getContextPath()%>/css/custom.min.css" rel="stylesheet">
     </head>
     <body ng-app='PrincipalApp' ng-controller='PrincipalController'>
         <div class="container">
@@ -19,7 +28,7 @@
                 <ng-include src="'<%= request.getContextPath()%>/vista/cabecera.jsp'"></ng-include>
             </div>
             <div class='row'>
-                <div class="col-sm-3 bg-success">
+                <div class="col-sm-3 left_col">
                     <ng-include src="'<%= request.getContextPath()%>/vista/menu.jsp'"></ng-include>
                 </div>
                 <div class="col-sm-9">

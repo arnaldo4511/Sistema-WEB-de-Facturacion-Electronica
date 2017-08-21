@@ -64,6 +64,7 @@ public class UsuarioController {
     @RequestMapping(value = "/usuario/buscarsesion", method = RequestMethod.GET, produces = "application/json")
     public void buscarsesion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
         HttpSession session = httpServletRequest.getSession();
+        System.out.println("session.getAttribute(\"idUsuario\").toString() "+session.getAttribute("idUsuario").toString());
         Long id = Long.parseLong(session.getAttribute("idUsuario").toString());
         CargaSesion cargaSesion = cargaSesionDao.crear(id);
         httpServletResponse.setStatus(HttpServletResponse.SC_OK);

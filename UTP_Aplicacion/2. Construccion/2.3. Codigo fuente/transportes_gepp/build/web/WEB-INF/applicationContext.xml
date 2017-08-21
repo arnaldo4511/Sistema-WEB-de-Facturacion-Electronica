@@ -12,6 +12,7 @@
     <bean class="pe.modelo.dao.administracion.RolDao" />
     <bean class="pe.modelo.dao.administracion.EmpresaDao" />
     <bean class="pe.modelo.dao.administracion.CargaSesionDao" />
+    <bean class="pe.modelo.dao.mantenimiento.ProductoDao" />
     <!--bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
           p:location="/WEB-INF/jdbc.properties" />

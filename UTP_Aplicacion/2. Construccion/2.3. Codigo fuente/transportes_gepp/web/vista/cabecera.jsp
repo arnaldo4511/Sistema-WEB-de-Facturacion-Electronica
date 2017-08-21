@@ -1,23 +1,36 @@
-<div>
-    <div class="col-md-3 pull-left">
-        <a href="<%= request.getContextPath()%>/vista/principal.jsp">
-            <img  class="center-block" src="<%= request.getContextPath()%>/images/gepp_transmap_logo.png" class="img-rounded" alt="Cinque Terre" width="75" height="60">
-        </a>
-    </div>
-    <div class="col-md-6  text-center">
-        <!--    
-        <label>Punto de Venta:</label>
-            <label class="text-primary">{{sesion.usuario.puntoVenta.nombre}}</label>
-        -->
-        <label>Empresa:</label>
-        <label class="text-primary">{{sesion.usuario.empresa.entidad.nombre}}</label>
+<div class="top_nav">
+    <div class="nav_menu">
+        <nav>
+            <ul class="nav navbar-nav navbar-left">
+                <li class="">
+                    <a href="<%= request.getContextPath()%>/vista/principal.jsp">
+                        <img  class="center-block" src="<%= request.getContextPath()%>/images/imagotipo (1).png" class="img-rounded" style="
+                              width: 128px;
+                              ">
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <img src="<%= request.getContextPath()%>/images/imagen_usuario.png" alt="">{{sesion.usuario.nombre}}
+                        <span class=" fa fa-angle-down"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-usermenu pull-right">
+                        <li><a href="<%= request.getContextPath()%>/controlador/usuario/cerrarsesion"><i class="fa fa-sign-out pull-right"></i> Cerrar Sesión</a></li>
+                    </ul>
+                </li>
+                <li role="presentation" class="dropdown">
+                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-building"></i>
+                    <label>Empresa:</label>
+                    <label class="text-primary">{{sesion.usuario.empresa.entidad.nombre || 'Ninguna'}}</label>
+                  </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
-<div class="col-md-3 text-right">
-    <div>
-        <label>Usuario:</label>
-        <label class="text-primary">{{sesion.usuario.nombre}}</label>
-    </div>
-    <a href="<%= request.getContextPath()%>/controlador/usuario/cerrarsesion">Cerrar Sesión</a>
-</div>
-</div>
+
+
+
