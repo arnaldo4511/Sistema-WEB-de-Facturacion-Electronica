@@ -13,7 +13,7 @@
 
 
         <!-- Font Awesome -->
-        <link href="<%= request.getContextPath()%>/js/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link href="<%= request.getContextPath()%>/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         
 
         
