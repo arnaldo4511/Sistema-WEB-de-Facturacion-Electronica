@@ -9,12 +9,16 @@ UsuarioApp.controller("UsuarioController", ['$scope', '$http', function ($scope,
         $scope.sesion = {};
         $scope.rol = {};
         $scope.usuario = {};
+        $scope.usuarioNuevo = {};
+
         $scope.usuarios = [];
         $scope.roles = [];
+        $scope.puntoVentas = [];
         $http({method: 'GET', url: '/transportes_gepp/controlador/usuario/buscarsesion'}).then(function success(response) {
             console.log(response.data);
             $scope.sesion = response.data;
             $scope.roles = $scope.sesion.roles;
+            $scope.puntoVentas = $scope.sesion.puntoVentas;
         }, function myError(response) {
         });
         $scope.setPage = function (pageNo) {
@@ -47,6 +51,8 @@ UsuarioApp.controller("UsuarioController", ['$scope', '$http', function ($scope,
             });
         };
         $scope.crear = function (usuario) {
+            usuario.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
+            usuario.empresa = $scope.sesion.usuario.empresa;
             $http({
                 method: 'POST',
                 url: '/transportes_gepp/controlador/usuario/crear',
@@ -59,6 +65,7 @@ UsuarioApp.controller("UsuarioController", ['$scope', '$http', function ($scope,
             });
         };
         $scope.editar = function (usuario) {
+            usuario.usuarioByIdUsuarioModificacion = $scope.sesion.usuario;
             $http({
                 method: 'POST',
                 url: '/transportes_gepp/controlador/usuario/editar',
@@ -83,8 +90,10 @@ UsuarioApp.controller("UsuarioController", ['$scope', '$http', function ($scope,
         };
         $scope.nuevo = function () {
             $scope.mensajeTitulo = "Crear Usuario";
-            $scope.usuario = {};
-            $scope.usuario.id = 0;
+            $scope.usuarioNuevo = {};
+            $scope.usuarioNuevo.id = 0;
+            $scope.usuarioNuevo.rol=$scope.sesion.usuario.rol;
+            $scope.usuarioNuevo.puntoVenta= $scope.sesion.usuario.puntoVenta;
         };
         $scope.seleccionarItem = function (item) {
             $scope.mensajeTitulo = "Editar Usuario";

@@ -10,6 +10,7 @@ import java.util.List;
 //import pe.modelo.pojo.Empresa;
 import pe.modelo.pojo.Rol;
 import pe.modelo.pojo.Usuario;
+import pe.modelo.pojo.PuntoVenta;
 
 /**
  *
@@ -19,13 +20,15 @@ public class CargaSesion {
 
     private Usuario usuario;
     private List<Rol> roles;
+    private List<PuntoVenta> puntoVentas;
 
     public CargaSesion() {
     }
 
-    public CargaSesion(Usuario usuario, List<Rol> roles, List<Empresa> empresas) {
+    public CargaSesion(Usuario usuario, List<Rol> roles, List<PuntoVenta> puntoVentas) {
         this.usuario = usuario;
         this.roles = roles;
+        this.puntoVentas = puntoVentas;
     }
 
     public Usuario getUsuario() {
@@ -42,5 +45,13 @@ public class CargaSesion {
 
     public void setRoles(List<Rol> roles) {
         this.roles = roles;
+    }
+
+    public List<PuntoVenta> getPuntoVentas() {
+        return this.puntoVentas;
+    }
+
+    public void setPuntoVentas(List<PuntoVenta> puntoVentas) {
+        this.puntoVentas = puntoVentas;
     }
 }

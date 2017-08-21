@@ -21,16 +21,21 @@
                     </ul>
                 </li>
                 <li role="presentation" class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-building"></i>
-                    <label>Empresa:</label>
-                    <label class="text-primary">{{sesion.usuario.empresa.entidad.nombre || 'Ninguna'}}</label>
-                  </a>
+                    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-building"></i>
+                        <label>Empresa:</label>
+                        <label class="text-primary">{{sesion.usuario.empresa.entidad.nombre || 'Ninguna'}}</label>
+                    </a>
+                    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-building"></i>
+                        <label>Punto de Venta:</label>
+                        <label class="text-primary">{{sesion.usuario.puntoVenta.nombre || 'Ninguna'}}</label>
+                    </a>
                 </li>
             </ul>
         </nav>
     </div>
-</div>
+
 
 
 

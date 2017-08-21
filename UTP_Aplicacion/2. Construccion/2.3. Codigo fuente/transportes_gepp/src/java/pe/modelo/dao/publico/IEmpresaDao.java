@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pe.modelo.dao.administracion;
+package pe.modelo.dao.publico;
 
 import java.util.List;
 import pe.modelo.pojo.Empresa;

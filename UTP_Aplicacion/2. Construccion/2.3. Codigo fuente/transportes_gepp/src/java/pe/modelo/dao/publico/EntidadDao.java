@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pe.modelo.dao.administracion;
+package pe.modelo.dao.publico;
 
 import java.util.Date;
 import java.util.List;
@@ -11,20 +11,20 @@ import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import pe.modelo.dao.HibernateUtil;
-import pe.modelo.pojo.Empresa;
+import pe.modelo.pojo.Entidad;
 
 /**
  *
  * @author octavio
  */
-public class EmpresaDao implements IEmpresaDao {
+public class EntidadDao implements IEntidadDao {
 
     @Override
-    public void crear(Empresa empresa) {
+    public void crear(Entidad entidad) {
         try {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            sesion.save(empresa);
+            sesion.save(entidad);
             sesion.getTransaction().commit();
             sesion.close();
         } catch (Exception e) {
@@ -33,17 +33,12 @@ public class EmpresaDao implements IEmpresaDao {
     }
 
     @Override
-    public void editar(Empresa empresa) {
+    public void editar(Entidad entidad) {
         try {
+            entidad.setFechaModificacion(new Date());
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            String hqlUpdate = "update Empresa set nombre = :nombre,descripcion = :descripcion,admin = :admin where id = :id";
-            /*sesion.createQuery(hqlUpdate)
-                    .setString("nombre", empresa.getNombre())
-                    .setString("descripcion", empresa.getDescripcion())
-                    .setBoolean("admin", empresa.isAdmin())
-                    .setLong("id", empresa.getId())
-                    .executeUpdate();*/
+            sesion.update(entidad);
             sesion.getTransaction().commit();
             sesion.close();
         } catch (Exception e) {
@@ -52,19 +47,19 @@ public class EmpresaDao implements IEmpresaDao {
     }
 
     @Override
-    public Empresa buscar(long id) {
-        Empresa empresa = null;
+    public Entidad buscar(long id) {
+        Entidad entidad = null;
         try {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            empresa = (Empresa) sesion.load(Empresa.class, id);
-            Hibernate.initialize(empresa);
+            entidad = (Entidad) sesion.load(Entidad.class, id);
+            Hibernate.initialize(entidad);
             sesion.getTransaction().commit();
             sesion.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return empresa;
+        return entidad;
     }
 
     @Override
@@ -72,7 +67,7 @@ public class EmpresaDao implements IEmpresaDao {
         try {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            String hql = "delete from Empresa where id= :id";
+            String hql = "delete from Entidad where id= :id";
             sesion.createQuery(hql).setLong("id", id).executeUpdate();
             sesion.getTransaction().commit();
             sesion.close();
@@ -82,12 +77,12 @@ public class EmpresaDao implements IEmpresaDao {
     }
 
     @Override
-    public List<Empresa> listar() {
-        List<Empresa> lista = null;
+    public List<Entidad> listar() {
+        List<Entidad> lista = null;
         try {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            Query query = sesion.createQuery("from Empresa order by id");
+            Query query = sesion.createQuery("from Entidad order by id");
             lista = query.list();
             sesion.getTransaction().commit();
             sesion.close();
