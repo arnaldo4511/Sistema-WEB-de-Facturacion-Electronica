@@ -12,25 +12,16 @@
         <%@include file="/WEB-INF/imports.jspf" %>
         <script src="<%= request.getContextPath()%>/js/mantenimiento/cliente.js" type="text/javascript"></script>
         <title>Transportes :: Cliente</title>
-        
-
     </head>
-
     <body ng-app='ClienteApp' ng-controller='ClienteController'>
         <div class="container">
-            <div class='row'>
                 <ng-include src="'<%= request.getContextPath()%>/vista/cabecera.jsp'"></ng-include>
-            </div>
-            <div class='row'>
-                <div class="col-sm-3">
+            <div id="rowMenu" class='row'>
+                <div id="colMenu" class="col-sm-3">
                     <ng-include src="'<%= request.getContextPath()%>/vista/menu.jsp'"></ng-include>
                 </div>
-                <div class="col-sm-9">
+                <div id="divForm" class="col-sm-9">
                     <form>
-
-
-                        
-
                         <fieldset>
                             <legend>CLIENTES</legend>
                             <div class="row">
@@ -138,7 +129,7 @@
                     </div>
                 </div>
             </div>
-            <div class='row'>
+            <div id="rowPie" class='row'>
                 <ng-include src="'<%= request.getContextPath()%>/vista/pie.jsp'"></ng-include>
             </div>
         </div>

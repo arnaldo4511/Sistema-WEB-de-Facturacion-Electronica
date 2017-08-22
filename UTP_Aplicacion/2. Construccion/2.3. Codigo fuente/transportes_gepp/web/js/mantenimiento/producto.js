@@ -49,7 +49,7 @@ ProductoApp.controller("ProductoController", ['$scope', '$http', '$window', func
             }, function myError(response) {
             });
         };
-        /*$scope.crearProducto = function (producto) {
+        $scope.crearProducto = function (producto) {
             $http({
                 method: 'POST',
                 url: '/transportes_gepp/controlador/producto/crear',
@@ -61,7 +61,7 @@ ProductoApp.controller("ProductoController", ['$scope', '$http', '$window', func
                 console.log(response.data);
             });
         };
-        $scope.editarProducto = function (producto) {
+        /*$scope.editarProducto = function (producto) {
             $http({
                 method: 'POST',
                 url: '/transportes_gepp/controlador/producto/editar',
@@ -93,7 +93,7 @@ ProductoApp.controller("ProductoController", ['$scope', '$http', '$window', func
         $scope.seleccionarProducto = function (producto) {
             $scope.mensajeTituloProducto = "Editar Producto";
             $scope.productoTmp = producto;
-        };
+        };*/
 
         $scope.guardarProducto = function (producto) {
             console.log(producto.id);
@@ -102,7 +102,7 @@ ProductoApp.controller("ProductoController", ['$scope', '$http', '$window', func
             } else {
                 $scope.editarProducto(producto);
             }
-        };*/
+        };
         //Autocomplete-Inicio
         $scope.complete = function (string) {
             console.log("string " + string);

@@ -12,9 +12,7 @@
     <bean class="pe.modelo.dao.administracion.RolDao" />
     <bean class="pe.modelo.dao.publico.EmpresaDao" />
     <bean class="pe.modelo.dao.administracion.CargaSesionDao" />
-
     <bean class="pe.modelo.dao.mantenimiento.ProductoDao" />
-
     <bean class="pe.modelo.dao.ventas.PuntoVentaDao" />
 
     <!--bean id="propertyConfigurer"

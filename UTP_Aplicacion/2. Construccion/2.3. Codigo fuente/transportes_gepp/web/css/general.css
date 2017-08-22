@@ -8,3 +8,15 @@ and open the template in the editor.
     Author     : octavio
 */
 
+#rowMenu{
+    height: 644px;
+}
+#colMenu{
+    width: 301px;
+}
+#rowPie{
+    background-color: #ededed;
+}
+#divForm{
+    margin: 27px 0px 0px 41px;
+}

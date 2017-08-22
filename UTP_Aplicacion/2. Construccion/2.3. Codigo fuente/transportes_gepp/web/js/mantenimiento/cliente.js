@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 
-var ProductoApp = angular.module("ProductoApp", ['ngAnimate', 'ngSanitize', 'ui.bootstrap']);
-ProductoApp.filter('startFrom', function () {
+var ClienteApp = angular.module("ClienteApp", ['ngAnimate', 'ngSanitize', 'ui.bootstrap']);
+ClienteApp.filter('startFrom', function () {
     return function (input, start) {
         if (!input || !input.length) {
             return;
@@ -14,7 +14,7 @@ ProductoApp.filter('startFrom', function () {
         return input.slice(start);
     }
 });
-ProductoApp.controller("ProductoController", ['$scope', '$http', '$window', function ($scope, $http, $window) {
+ClienteApp.controller("ClienteController", ['$scope', '$http', '$window', function ($scope, $http, $window) {
         $scope.sesion = {};
         $scope.productoTmp = {};
         $scope.productos = [];
