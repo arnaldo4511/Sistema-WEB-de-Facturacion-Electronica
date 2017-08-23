@@ -22,11 +22,11 @@
                 </div>
                 <div id="divForm" class="col-sm-9">
                     <form>
-                        <label>Nombre</label>  
+                        <!--label>Nombre</label>  
                         <input type="text" name="country" id="country" ng-model="country" ng-keyup="complete(country)" class="form-control" />  
                         <ul class="list-group" ng-model="hidethis" ng-hide="hidethis">  
                             <li class="list-group-item" ng-repeat="countrydata in filterCountry" ng-click="fillTextbox(countrydata)">{{countrydata}}</li>  
-                        </ul> 
+                        </ul--> 
                         <fieldset>
                             <legend>PRODUCTOS</legend>
                             <div class="row">
@@ -59,7 +59,7 @@
                                             <td>{{$index + 1}}</td>
                                             <td>{{producto.nombre}}</td>
                                             <td>{{producto.descripcion}}</td>
-                                            <td>{{producto.unidad}}</td>
+                                            <td>{{producto.unidad.codigo}}</td>
                                             <td>{{producto.precioVenta}}</td>
                                             <td>{{producto.precioCompra}}</td>
                                             <td class="text-center">

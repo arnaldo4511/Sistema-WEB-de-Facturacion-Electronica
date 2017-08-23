@@ -24,7 +24,7 @@
 
                     <li role="presentation" class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-building"></i>
+                            <i class="fa fa-map-marker"></i>
                             <label>Punto de Venta:</label>
                             <label class="text-primary">{{sesion.usuario.puntoVenta.nombre || 'Ninguna'}}</label>
                         </a>

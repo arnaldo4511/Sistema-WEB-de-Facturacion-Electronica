@@ -92,7 +92,10 @@ public class UsuarioController {
     @RequestMapping(value = "/usuario/crear", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void crear(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) {
         try {
+            System.out.println("jsonEntrada "+jsonEntrada);
             Usuario usuario = (Usuario) jsonTransformer.fromJson(jsonEntrada, Usuario.class);
+            usuario.setFechaCreacion(new Date());
+            System.out.println("usuarioTransform "+usuario);
             usuarioDao.crear(usuario);
             if (usuario.getId() > 0) {
                 String jsonSalida = jsonTransformer.toJson(usuario);

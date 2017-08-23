@@ -15,14 +15,12 @@
     </head>
     <body ng-app='RolApp' ng-controller='RolController'>
         <div class="container">
-            <div class='row bg-success'>
-                <ng-include src="'<%= request.getContextPath()%>/vista/cabecera.jsp'"></ng-include>
-            </div>
-            <div class='row'>
-                <div class="col-sm-3 bg-success">
+            <ng-include src="'<%= request.getContextPath()%>/vista/cabecera.jsp'"></ng-include>
+            <div id="rowMenu" class='row'>
+                <div id="colMenu" class="col-sm-3">
                     <ng-include src="'<%= request.getContextPath()%>/vista/menu.jsp'"></ng-include>
                 </div>
-                <div class="col-sm-9">
+                <div id="divForm" class="col-sm-9">
                     <form>
                         <fieldset>
                             <legend>ROLES</legend>
@@ -143,7 +141,7 @@
                     </div>
                 </div>
             </div>
-            <div class='row bg-success'>
+            <div id="rowPie" class='row'>
                 <ng-include src="'<%= request.getContextPath()%>/vista/pie.jsp'"></ng-include>
             </div>
         </div>

@@ -40,6 +40,7 @@ ProductoApp.controller("ProductoController", ['$scope', '$http', '$window', func
                 method: 'GET',
                 url: '/transportes_gepp/controlador/producto/listar'
             }).then(function mySucces(response) {
+                console.log(response.data);
                 $scope.productos = response.data;
                 $scope.viewby = 5;
                 $scope.totalItems = $scope.productos.length;
@@ -50,6 +51,8 @@ ProductoApp.controller("ProductoController", ['$scope', '$http', '$window', func
             });
         };
         $scope.crearProducto = function (producto) {
+            producto.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
+            producto.empresa = $scope.sesion.usuario.empresa;
             $http({
                 method: 'POST',
                 url: '/transportes_gepp/controlador/producto/crear',
@@ -61,7 +64,8 @@ ProductoApp.controller("ProductoController", ['$scope', '$http', '$window', func
                 console.log(response.data);
             });
         };
-        /*$scope.editarProducto = function (producto) {
+        $scope.editarProducto = function (producto) {
+            producto.usuarioByIdUsuarioModificacion = $scope.sesion.usuario;
             $http({
                 method: 'POST',
                 url: '/transportes_gepp/controlador/producto/editar',
@@ -93,9 +97,10 @@ ProductoApp.controller("ProductoController", ['$scope', '$http', '$window', func
         $scope.seleccionarProducto = function (producto) {
             $scope.mensajeTituloProducto = "Editar Producto";
             $scope.productoTmp = producto;
-        };*/
+        };
 
         $scope.guardarProducto = function (producto) {
+            console.log(producto);
             console.log(producto.id);
             if (producto.id === 0) {
                 $scope.crearProducto(producto);
