@@ -12,30 +12,21 @@
         <%@include file="/WEB-INF/imports.jspf" %>
         <script src="<%= request.getContextPath()%>/js/mantenimiento/producto.js" type="text/javascript"></script>
         <title>Transportes :: Productos</title>
-        
-
     </head>
-
     <body ng-app='ProductoApp' ng-controller='ProductoController'>
         <div class="container">
-            <div class='row'>
-                <ng-include src="'<%= request.getContextPath()%>/vista/cabecera.jsp'"></ng-include>
-            </div>
-            <div class='row'>
-                <div class="col-sm-3">
+            <ng-include src="'<%= request.getContextPath()%>/vista/cabecera.jsp'"></ng-include>
+            <div id="rowMenu" class='row'>
+                <div id="colMenu" class="col-sm-3">
                     <ng-include src="'<%= request.getContextPath()%>/vista/menu.jsp'"></ng-include>
                 </div>
-                <div class="col-sm-9">
+                <div id="divForm" class="col-sm-9">
                     <form>
-
-                        
-                        <label>Nombre</label>  
-                            <input type="text" name="country" id="country" ng-model="country" ng-keyup="complete(country)" class="form-control" />  
-                            <ul class="list-group" ng-model="hidethis" ng-hide="hidethis">  
-                                <li class="list-group-item" ng-repeat="countrydata in filterCountry" ng-click="fillTextbox(countrydata)">{{countrydata}}</li>  
-                            </ul> 
-
-
+                        <!--label>Nombre</label>  
+                        <input type="text" name="country" id="country" ng-model="country" ng-keyup="complete(country)" class="form-control" />  
+                        <ul class="list-group" ng-model="hidethis" ng-hide="hidethis">  
+                            <li class="list-group-item" ng-repeat="countrydata in filterCountry" ng-click="fillTextbox(countrydata)">{{countrydata}}</li>  
+                        </ul--> 
                         <fieldset>
                             <legend>PRODUCTOS</legend>
                             <div class="row">
@@ -68,14 +59,13 @@
                                             <td>{{$index + 1}}</td>
                                             <td>{{producto.nombre}}</td>
                                             <td>{{producto.descripcion}}</td>
-                                            <td>{{producto.unidad}}</td>
+                                            <td>{{producto.unidad.codigo}}</td>
                                             <td>{{producto.precioVenta}}</td>
                                             <td>{{producto.precioCompra}}</td>
                                             <td class="text-center">
                                                 <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalProducto" ng-click="seleccionarProducto(producto)">
                                                     <span class="glyphicon glyphicon-pencil"></span>
                                                 </button>
-                                                
                                                 <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalEliminarProducto" ng-click="seleccionarProducto(producto)">
                                                     <span class="glyphicon glyphicon-trash"></span>
                                                 </button>
@@ -136,7 +126,6 @@
                                     <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formProducto.$invalid" ng-click="guardarProducto(productoTmp)">Guardar</button>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div class="modal fade" id="modalEliminarProducto" role="dialog">
@@ -159,7 +148,7 @@
                     </div>
                 </div>
             </div>
-            <div class='row'>
+            <div id="rowPie" class='row'>
                 <ng-include src="'<%= request.getContextPath()%>/vista/pie.jsp'"></ng-include>
             </div>
         </div>

@@ -13,28 +13,25 @@
 
 
         <!-- Font Awesome -->
-        <link href="<%= request.getContextPath()%>/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-        
-
-        
-        <title>Transportes :: Inicio</title>
         <script src="<%= request.getContextPath()%>/js/principal.js" type="text/javascript"></script>
-        <script src="<%= request.getContextPath()%>/js/custom.min.js" type="text/javascript"></script>
-        <link href="<%= request.getContextPath()%>/css/custom.min.css" rel="stylesheet">
+
+
+        <title>Transportes :: Inicio</title>
+
     </head>
     <body ng-app='PrincipalApp' ng-controller='PrincipalController'>
         <div class="container">
-            <div class='row bg-success'>
+            <div class='row'>
                 <ng-include src="'<%= request.getContextPath()%>/vista/cabecera.jsp'"></ng-include>
             </div>
-            <div class='row'>
-                <div class="col-sm-3 left_col">
+            <div id="rowMenu" class='row'>
+                <div id="colMenu" class="col-sm-3">
                     <ng-include src="'<%= request.getContextPath()%>/vista/menu.jsp'"></ng-include>
                 </div>
                 <div class="col-sm-9">
                 </div>
             </div>
-            <div class='row bg-success'>
+            <div id="rowPie" class='row'>
                 <ng-include src="'<%= request.getContextPath()%>/vista/pie.jsp'"></ng-include>
             </div>
         </div>

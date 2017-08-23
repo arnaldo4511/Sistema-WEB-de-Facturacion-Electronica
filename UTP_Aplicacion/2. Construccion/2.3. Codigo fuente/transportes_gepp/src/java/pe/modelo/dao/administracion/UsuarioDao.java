@@ -26,7 +26,8 @@ public class UsuarioDao implements IUsuarioDao {
     @Override
     public void crear(Usuario usuario) {
         try {
-            usuario.setFechaCreacion(new Date());
+            System.out.println("usuarioDaoCrear "+usuario);
+            
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
             sesion.save(usuario);

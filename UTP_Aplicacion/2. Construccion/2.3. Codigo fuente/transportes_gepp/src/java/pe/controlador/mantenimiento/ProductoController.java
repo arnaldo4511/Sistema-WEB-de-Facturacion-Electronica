@@ -39,10 +39,12 @@ public class ProductoController {
         try {
             List<Producto> lista = productoDao.listar();
             String jsonSalida = jsonTransformer.toJson(lista);
+            
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
-            System.out.println("listaProducto "+lista);
             System.out.println("jsonSalida "+jsonSalida);
+            System.out.println("listaProducto "+lista);
+            
             out.println(jsonSalida);
             
         } catch (Exception ex) {
@@ -58,14 +60,9 @@ public class ProductoController {
     public void crear(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) {
         try {
             System.out.println("insertttttttttttttttttttt");
-            System.out.println("producto "+jsonEntrada);
+            System.out.println("jsonEntrada "+jsonEntrada);
             Producto producto = (Producto) jsonTransformer.fromJson(jsonEntrada, Producto.class);
             System.out.println("Producto "+producto);
-            HttpSession session = httpServletRequest.getSession();
-            System.out.println("session.getAttribute(\"session_usuario\").toString() "+session.getAttribute("session_usuario").toString());
-            Usuario usuario = (Usuario) jsonTransformer.fromJson(session.getAttribute("session_usuario").toString(), Usuario.class);
-            System.out.println("Productooo0 "+producto);
-            producto.setUsuarioByIdUsuarioCreacion(usuario);
             producto.setFechaCreacion(new Date());
             System.out.println("Productooooooo "+producto);
             productoDao.crear(producto);

@@ -11,4 +11,5 @@ PrincipalApp.controller("PrincipalController", ['$scope', '$http', '$window', fu
             $scope.sesion = response.data;
         }, function myError(response) {
         });
+        
     }]);

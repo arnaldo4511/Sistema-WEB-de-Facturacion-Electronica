@@ -2,6 +2,7 @@ package pe.modelo.pojo;
 // Generated 17-ago-2017 14:14:43 by Hibernate Tools 4.3.1
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,6 +35,7 @@ public class Unidad  implements java.io.Serializable {
      private String nombre;
      private Date fechaCreacion;
      private Date fechaModificacion;
+     @JsonIgnore
      private Set<Producto> productos = new HashSet<Producto>(0);
      private Set<DocumentoVentaDetalle> documentoVentaDetalles = new HashSet<DocumentoVentaDetalle>(0);
 
