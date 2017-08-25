@@ -1,6 +1,7 @@
-<div>
-    <div class="text-center">
-        <img src="<%= request.getContextPath()%>/images/gepp_logo.png">
-        <label>© Copyright 2017 | DERECHOS RESERVADOS. DESARROLLADO POR EL DEPARTAMENTO DE SISTEMAS</label>
-    </div>
-</div>
+<footer class="text-center">
+    © 2017 Copyright, 
+    <a href="http://gepp.pe/"  target="_blank" >
+        GEPP
+    </a>
+    (Grupo Empresarial Poma Pacheco)
+</footer>

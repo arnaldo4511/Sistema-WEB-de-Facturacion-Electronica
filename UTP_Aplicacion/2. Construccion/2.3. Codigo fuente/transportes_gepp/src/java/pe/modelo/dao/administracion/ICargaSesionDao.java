@@ -5,8 +5,8 @@
  */
 package pe.modelo.dao.administracion;
 
+import java.util.List;
 import pe.modelo.pojo.CargaSesion;
-
 /**
  *
  * @author octavio
@@ -14,4 +14,5 @@ import pe.modelo.pojo.CargaSesion;
 public interface ICargaSesionDao {
 
     public CargaSesion crear(long idUsuario);
+
 }

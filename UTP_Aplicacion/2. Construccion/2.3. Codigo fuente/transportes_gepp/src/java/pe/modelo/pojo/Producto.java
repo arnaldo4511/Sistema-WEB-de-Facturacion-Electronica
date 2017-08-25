@@ -2,6 +2,7 @@ package pe.modelo.pojo;
 // Generated 17-ago-2017 14:14:43 by Hibernate Tools 4.3.1
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,7 +30,9 @@ public class Producto  implements java.io.Serializable {
 
 
      private long id;
+     @JsonIgnore
      private Usuario usuarioByIdUsuarioModificacion;
+     @JsonIgnore
      private Usuario usuarioByIdUsuarioCreacion;
      private Unidad unidad;
      private Empresa empresa;
@@ -39,6 +42,7 @@ public class Producto  implements java.io.Serializable {
      private double precioCompra;
      private Date fechaCreacion;
      private Date fechaModificacion;
+     @JsonIgnore
      private Set<DocumentoVentaDetalle> documentoVentaDetalles = new HashSet<DocumentoVentaDetalle>(0);
 
     public Producto() {

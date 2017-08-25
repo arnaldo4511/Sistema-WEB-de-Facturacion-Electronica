@@ -75,7 +75,7 @@
                 <table class="table">
                     <tr>
                         <td>
-                            <span class="glyphicon glyphicon-pencil text-primary"></span><a href="docente.jsp"> Ventas</a>
+                            <span class="glyphicon glyphicon-pencil text-primary"></span><a href="<%= request.getContextPath()%>/vista/ventas/documentoventas.jsp"> Ventas</a>
                         </td>
                     </tr>
                     <tr>

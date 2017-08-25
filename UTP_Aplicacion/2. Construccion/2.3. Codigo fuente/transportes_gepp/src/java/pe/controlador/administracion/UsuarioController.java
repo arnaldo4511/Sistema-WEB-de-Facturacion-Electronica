@@ -64,11 +64,16 @@ public class UsuarioController {
     @RequestMapping(value = "/usuario/buscarsesion", method = RequestMethod.GET, produces = "application/json")
     public void buscarsesion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
         HttpSession session = httpServletRequest.getSession();
-        Long id = Long.parseLong(session.getAttribute("idUsuario").toString());
-        CargaSesion cargaSesion = cargaSesionDao.crear(id);
-        httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-        httpServletResponse.setContentType("application/json; charset=UTF-8");
-        httpServletResponse.getWriter().println(jsonTransformer.toJson(cargaSesion));
+        if (session.getAttribute("idUsuario") == null) {
+            session.invalidate();
+            httpServletResponse.sendRedirect(httpServletRequest.getContextPath());
+        } else {
+            Long id = Long.parseLong(session.getAttribute("idUsuario").toString());
+            CargaSesion cargaSesion = cargaSesionDao.crear(id);
+            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+            httpServletResponse.setContentType("application/json; charset=UTF-8");
+            httpServletResponse.getWriter().println(jsonTransformer.toJson(cargaSesion));
+        }
     }
 
     @RequestMapping(value = "/usuario/listar", method = RequestMethod.GET, produces = "application/json")

@@ -9,11 +9,15 @@ UsuarioApp.controller("UsuarioController", ['$scope', '$http', function ($scope,
         $scope.sesion = {};
         $scope.rol = {};
         $scope.usuario = {};
-        $scope.usuarioNuevo = {};
 
         $scope.usuarios = [];
         $scope.roles = [];
         $scope.puntoVentas = [];
+        
+        
+        $scope.entidades = [];
+        $scope.nombreEntidad = "";
+        
         $http({method: 'GET', url: '/transportes_gepp/controlador/usuario/buscarsesion'}).then(function success(response) {
             console.log(response.data);
             $scope.sesion = response.data;
@@ -90,22 +94,39 @@ UsuarioApp.controller("UsuarioController", ['$scope', '$http', function ($scope,
         };
         $scope.nuevo = function () {
             $scope.mensajeTitulo = "Crear Usuario";
-            $scope.usuarioNuevo = {};
-            $scope.usuarioNuevo.id = 0;
-            $scope.usuarioNuevo.rol=$scope.sesion.usuario.rol;
-            $scope.usuarioNuevo.puntoVenta= $scope.sesion.usuario.puntoVenta;
+            $scope.usuario = {};
+            $scope.usuario.id = 0;
+            $scope.usuario.rol = $scope.sesion.usuario.rol;
+            $scope.usuario.puntoVenta = $scope.sesion.usuario.puntoVenta;
         };
         $scope.seleccionarItem = function (item) {
             $scope.mensajeTitulo = "Editar Usuario";
             $scope.usuario = item;
         };
         $scope.guardar = function (usuario) {
-            console.log(usuario);
+            $scope.usuario = {};
             if (usuario.id === 0) {
                 $scope.crear(usuario);
             } else {
                 $scope.editar(usuario);
             }
+        };
+        $scope.completarEntidad = function (criterio) {
+            if (criterio === undefined || criterio.trim() === "")
+            {
+                $scope.entidades = [];
+                return;
+            }
+            $http({method: 'GET', url: '/transportes_gepp/controlador/entidad/autocompletar/' + criterio
+            }).then(function mySucces(response) {
+                $scope.entidades = response.data;
+                $scope.ocultarEntidadesAuto = false;
+            }, function myError(response) {
+            });
+        };
+        $scope.seleccionarEntidad = function (item) {
+            $scope.usuario.entidad = item;
+            $scope.ocultarEntidadesAuto = true;
         };
         $scope.listar();
     }]);

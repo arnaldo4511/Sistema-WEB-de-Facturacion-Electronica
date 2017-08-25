@@ -22,7 +22,7 @@ import pe.modelo.pojo.Usuario;
  * @author octavio
  */
 public class UsuarioDao implements IUsuarioDao {
-    
+
     @Override
     public void crear(Usuario usuario) {
         try {
@@ -36,7 +36,7 @@ public class UsuarioDao implements IUsuarioDao {
             e.printStackTrace();
         }
     }
-    
+
     @Override
     public void editar(Usuario usuario) {
         try {
@@ -50,7 +50,7 @@ public class UsuarioDao implements IUsuarioDao {
             e.printStackTrace();
         }
     }
-    
+
     @Override
     public Usuario buscar(long id) {
         Usuario usuario = null;
@@ -66,7 +66,7 @@ public class UsuarioDao implements IUsuarioDao {
         }
         return usuario;
     }
-    
+
     @Override
     public void eliminar(long id) {
         try {
@@ -80,7 +80,7 @@ public class UsuarioDao implements IUsuarioDao {
             e.printStackTrace();
         }
     }
-    
+
     @Override
     public List<Usuario> listar() {
         List<Usuario> lista = null;
@@ -96,7 +96,7 @@ public class UsuarioDao implements IUsuarioDao {
         }
         return lista;
     }
-    
+
     @Override
     public long ingresarSistema(String nombre, String clave) {
         Usuario usuario = new Usuario();
@@ -112,5 +112,5 @@ public class UsuarioDao implements IUsuarioDao {
         }
         return usuario.getId();
     }
-    
+
 }
