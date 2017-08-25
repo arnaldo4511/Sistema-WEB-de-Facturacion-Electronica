@@ -15,7 +15,7 @@
     </head>
     <body ng-app='ClienteApp' ng-controller='ClienteController'>
         <div class="container">
-                <ng-include src="'<%= request.getContextPath()%>/vista/cabecera.jsp'"></ng-include>
+            <ng-include src="'<%= request.getContextPath()%>/vista/cabecera.jsp'"></ng-include>
             <div id="rowMenu" class='row'>
                 <div id="colMenu" class="col-sm-3">
                     <ng-include src="'<%= request.getContextPath()%>/vista/menu.jsp'"></ng-include>
@@ -30,6 +30,10 @@
                                         <tr>
                                             <th>#</th>
                                             <th>
+                                                Tipo de Documento
+                                                <br>
+                                            </th>
+                                            <th>
                                                 Documento
                                                 <br>
                                                 <input type="text" class="form-control" ng-model="search.documento" tabindex="1">
@@ -41,8 +45,8 @@
                                             </th>
                                             <th>Direccion</th>
                                             <th class="text-center">
-                                                <button class="btn btn-default btn-lg" data-toggle="modal" data-target="#modalProducto" tabindex="4">
-                                                    <span class="glyphicon glyphicon-plus" ng-click="nuevoProducto()">Nuevo</span>
+                                                <button class="btn btn-default btn-lg" data-toggle="modal" data-target="#modalItem" tabindex="4">
+                                                    <span class="glyphicon glyphicon-plus" ng-click="nuevoCliente()">Nuevo</span>
                                                 </button>
                                             </th>
                                         </tr>
@@ -50,9 +54,10 @@
                                     <tbody>
                                         <tr ng-repeat="item in clientes.slice(((currentPage - 1) * itemsPerPage), ((currentPage) * itemsPerPage))| filter:search ">
                                             <td>{{$index + 1}}</td>
-                                            <td>{{item.documento}}</td>
-                                            <td>{{item.nombre}}</td>
-                                            <td>{{item.direccion}}</td>
+                                            <td>{{item.entidad.tipoDocumentoEntidad.nombre}}</td>
+                                            <td>{{item.entidad.documento}}</td>
+                                            <td>{{item.entidad.nombre}}</td>
+                                            <td>{{item.entidad.direccion}}</td>
                                             <td class="text-center">
                                                 <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalItem" ng-click="seleccionarItem(item)">
                                                     <span class="glyphicon glyphicon-pencil"></span>
@@ -82,34 +87,59 @@
                                 <div class="modal-body">
                                     <form class="form-horizontal" role="form" name="formItem">
                                         <div class="form-group">
+                                            <label class="control-label col-sm-2" >Tipo Documento</label>
+                                            <div class="col-sm-10">
+                                                <select type="text" class="form-control" ng-model="entidadTmp.entidad.tipoDocumentoEntidad" ng-options="tipoDocumentoEntidad.nombre for tipoDocumentoEntidad in tiposDocumentosEntidades track by tipoDocumentoEntidad.nombre" required>
+                                                </select>    
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="control-label col-sm-2" >Documento</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="username" ng-model="cliente.idEntidad" ng-options="entidad.documento for entidad in entidades track by entidad.id" required>
+                                                <input type="text" class="form-control" name="username" ng-model="entidadTmp.entidad.documento"  required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-sm-2" >Nombre</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="username" ng-model="cliente.idEntidad" required>
+                                                <input type="text" class="form-control" name="username" ng-model="entidadTmp.entidad.nombre" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-sm-2" >Direccion</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" ng-model="cliente.idEntidad" required>
+                                                <input type="text" class="form-control" ng-model="entidadTmp.entidad.direccion" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2" >E-mail 1</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" ng-model="entidadTmp.entidad.correoElectronico1" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2" >E-mail 2</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" ng-model="entidadTmp.entidad.correoElectronico2">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2" >E-mail 3</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" ng-model="entidadTmp.entidad.correoElectronico3">
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formItem.$invalid" ng-click="guardar(cliente)">Guardar</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formItem.$invalid" ng-click="guardar(entidadTmp)">Guardar</button>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-                    <div class="modal fade" id="modalEliminarProducto" role="dialog">
+                    <div class="modal fade" id="modalEliminarItem" role="dialog">
                         <div class="modal-dialog">
                             <!-- Modal content-->
                             <div class="modal-content">
@@ -122,7 +152,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="eliminar(cliente)">Eliminar</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="eliminar(entidadTmp)">Eliminar</button>
                                 </div>
                             </div>
                         </div>

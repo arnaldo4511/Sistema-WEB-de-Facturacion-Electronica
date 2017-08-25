@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 
-var ProductoApp = angular.module("ProductoApp", ['ngAnimate', 'ngSanitize', 'ui.bootstrap']);
-ProductoApp.filter('startFrom', function () {
+var ResumenVentaApp = angular.module("ResumenVentaApp", ['ngAnimate', 'ngSanitize', 'ui.bootstrap']);
+ResumenVentaApp.filter('startFrom', function () {
     return function (input, start) {
         if (!input || !input.length) {
             return;
@@ -14,15 +14,14 @@ ProductoApp.filter('startFrom', function () {
         return input.slice(start);
     }
 });
-ProductoApp.controller("ProductoController", ['$scope', '$http', '$window', function ($scope, $http, $window) {
+ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$window', function ($scope, $http, $window) {
         $scope.sesion = {};
         $scope.productoTmp = {};
-        $scope.productos = [];
+        $scope.resumenVentas = [];
         $scope.unidades = [];
         $http({method: 'GET', url: '/transportes_gepp/controlador/usuario/buscarsesion'}).then(function success(response) {
-            console.log(response.data);
+            console.log("response.data "+response.data);
             $scope.sesion = response.data;
-            $scope.unidades = $scope.sesion.unidades;
         }, function myError(response) {
         });
         $scope.setPage = function (pageNo) {
@@ -40,20 +39,20 @@ ProductoApp.controller("ProductoController", ['$scope', '$http', '$window', func
         $scope.listar = function () {
             $http({
                 method: 'GET',
-                url: '/transportes_gepp/controlador/producto/listar'
+                url: '/transportes_gepp/controlador/resumenventa/listar'
             }).then(function success(response) {
                 console.log(response);
                 console.log("response.data "+response.data);
-                $scope.productos = response.data;
+                $scope.resumenVentas = response.data;
                 $scope.viewby = 5;
-                $scope.totalItems = $scope.productos.length;
+                $scope.totalItems = $scope.resumenVentas.length;
                 $scope.currentPage = 1;
                 $scope.itemsPerPage = $scope.viewby;
                 $scope.maxSize = 5; //Number of pager buttons to show
             }, function myError(response) {
             });
         };
-        $scope.crearProducto = function (producto) {
+        /*$scope.crearProducto = function (producto) {
             producto.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
             producto.empresa = $scope.sesion.usuario.empresa;
             producto.unidad={'codigo':'NIU'}
@@ -114,7 +113,7 @@ ProductoApp.controller("ProductoController", ['$scope', '$http', '$window', func
                 $scope.editarProducto(producto);
             }
             console.log("producto.id "+producto.id);
-        };
+        };*/
         //Autocomplete-Inicio
         $scope.complete = function (string) {
             console.log("string " + string);

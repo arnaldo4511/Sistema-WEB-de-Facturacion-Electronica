@@ -31,6 +31,7 @@ public class DocumentoVenta  implements java.io.Serializable {
      private Usuario usuarioByIdUsuarioCreacion;
      private Empresa empresa;
      private Moneda moneda;
+     //private Cliente cliente;
      private EstadoDocumentoVenta estadoDocumentoVenta;
      private PuntoVenta puntoVenta;
      private PuntoVentaSerie puntoVentaSerie;
@@ -84,6 +85,7 @@ public class DocumentoVenta  implements java.io.Serializable {
        this.usuarioByIdUsuarioCreacion = usuarioByIdUsuarioCreacion;
        this.empresa = empresa;
        this.moneda = moneda;
+       //this.cliente = cliente;
        this.estadoDocumentoVenta = estadoDocumentoVenta;
        this.puntoVenta = puntoVenta;
        this.puntoVentaSerie = puntoVentaSerie;
@@ -160,6 +162,16 @@ public class DocumentoVenta  implements java.io.Serializable {
         this.moneda = moneda;
     }
 
+/*@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="id_cliente")
+    public Cliente getCliente() {
+        return this.cliente;
+    }
+    
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }*/
+    
 @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="codigo_estado_documento_venta", nullable=false)
     public EstadoDocumentoVenta getEstadoDocumentoVenta() {

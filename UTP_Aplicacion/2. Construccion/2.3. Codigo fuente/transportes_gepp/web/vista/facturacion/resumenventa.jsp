@@ -10,10 +10,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%@include file="/WEB-INF/imports.jspf" %>
-        <script src="<%= request.getContextPath()%>/js/mantenimiento/producto.js" type="text/javascript"></script>
-        <title>Transportes :: Productos</title>
+        <script src="<%= request.getContextPath()%>/js/facturacion/resumenventa.js" type="text/javascript"></script>
+        <title>Transportes :: Resumenes/Comunicaciones</title>
     </head>
-    <body ng-app='ProductoApp' ng-controller='ProductoController'>
+    <body ng-app='ResumenVentaApp' ng-controller='ResumenVentaController'>
         <div class="container">
             <ng-include src="'<%= request.getContextPath()%>/vista/cabecera.jsp'"></ng-include>
             <div id="rowMenu" class='row'>
@@ -28,48 +28,45 @@
                             <li class="list-group-item" ng-repeat="countrydata in filterCountry" ng-click="fillTextbox(countrydata)">{{countrydata}}</li>  
                         </ul--> 
                         <fieldset>
-                            <legend>PRODUCTOS</legend>
+                            <legend>Resumenes / Comunicaciones</legend>
                             <div class="row">
+                                <button type="button" class="btn btn-default"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-default"><i class="fa fa-share-square-o" aria-hidden="true"></i> Enviar a SUNAT</button>
+                                <button type="button" class="btn btn-default"><i class="fa fa-share-square-o" aria-hidden="true"></i> Consultar Ticket SUNAT</button>
+                                <button type="button" class="btn btn-default"><i class="fa fa-ban" aria-hidden="true"></i> Anular</button>
+                                <button type="button" class="btn btn-default"><i class="fa fa-plus" aria-hidden="true"></i> Crear Resumen</button>
+                                <button type="button" class="btn btn-default"><i class="fa fa-plus" aria-hidden="true"></i> Crear Comunicaciones</button>
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>
-                                                Nombre
-                                                <br>
-                                                <input type="text" class="form-control" ng-model="search.nombre" tabindex="1">
-                                            </th>
-                                            <th>
-                                                Descripción
-                                                <br>
-                                                <input type="text" class="form-control" ng-model="search.descripcion" tabindex="2">
-                                            </th>
-                                            <th>Unidad</th>
-                                            <th>Precio Venta</th>
-                                            <th>Precio Compra</th>
-                                            <th class="text-center">
-                                                <button class="btn btn-default btn-lg" data-toggle="modal" data-target="#modalProducto" tabindex="4">
-                                                    <span class="glyphicon glyphicon-plus" ng-click="nuevoProducto()">Nuevo</span>
-                                                </button>
-                                            </th>
+                                            <th>Tipo</th>
+                                            <th>Estado</th>
+                                            <th>Descripcion Estado</th>
+                                            <th>Numero</th>
+                                            <th>Fecha</th>
+                                            <th>Ticket</th>
+                                            <th>Estado Proceso en SUNAT</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="producto in productos.slice(((currentPage - 1) * itemsPerPage), ((currentPage) * itemsPerPage))| filter:search ">
+                                        <tr ng-repeat="resumenVenta in resumenVentas.slice(((currentPage - 1) * itemsPerPage), ((currentPage) * itemsPerPage))| filter:search ">
                                             <td>{{$index + 1}}</td>
-                                            <td>{{producto.nombre}}</td>
-                                            <td>{{producto.descripcion}}</td>
-                                            <td>{{producto.unidad.codigo}}</td>
-                                            <td>{{producto.precioVenta}}</td>
-                                            <td>{{producto.precioCompra}}</td>
-                                            <td class="text-center">
+                                            <td>{{resumenVenta.tipo}}</td>
+                                            <td>{{resumenVenta.estadoDocumentoVenta}}</td>
+                                            <td></td>
+                                            <td>{{resumenVenta.numero}}</td>
+                                            <td>{{resumenVenta.fechaEmision}}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <!--td class="text-center">
                                                 <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalProducto" ng-click="seleccionarProducto(producto)">
                                                     <span class="glyphicon glyphicon-pencil"></span>
                                                 </button>
                                                 <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalEliminarProducto" ng-click="seleccionarProducto(producto)">
                                                     <span class="glyphicon glyphicon-trash"></span>
                                                 </button>
-                                            </td>
+                                            </td-->
                                         </tr>
                                     </tbody>
                                 </table>
