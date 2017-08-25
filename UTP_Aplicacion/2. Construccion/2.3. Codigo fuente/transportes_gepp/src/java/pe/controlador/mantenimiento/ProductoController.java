@@ -39,11 +39,10 @@ public class ProductoController {
         try {
             List<Producto> lista = productoDao.listar();
             String jsonSalida = jsonTransformer.toJson(lista);
-            
-            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
             System.out.println("jsonSalida "+jsonSalida);
             System.out.println("listaProducto "+lista);
+            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+            httpServletResponse.setContentType("application/json; charset=UTF-8");
             
             out.println(jsonSalida);
             
@@ -95,10 +94,6 @@ public class ProductoController {
         PrintWriter out = httpServletResponse.getWriter();
         try {
             Producto producto = (Producto) jsonTransformer.fromJson(jsonEntrada, Producto.class);
-            HttpSession session = httpServletRequest.getSession();
-            Usuario usuario = (Usuario) jsonTransformer.fromJson(session.getAttribute("session_usuario").toString(), Usuario.class);
-            producto.setUsuarioByIdUsuarioModificacion(usuario);
-            producto.setFechaModificacion(new Date());
             productoDao.editar(producto);
             String jsonSalida = jsonTransformer.toJson(producto);
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);

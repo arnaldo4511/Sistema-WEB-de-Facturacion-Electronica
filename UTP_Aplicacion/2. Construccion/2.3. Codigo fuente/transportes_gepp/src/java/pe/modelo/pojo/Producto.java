@@ -34,11 +34,11 @@ public class Producto  implements java.io.Serializable {
      private long id;
      @JsonIgnore
      private Usuario usuarioByIdUsuarioModificacion;
-     @JsonIgnore
+     //@JsonIgnore
      private Usuario usuarioByIdUsuarioCreacion;
      //@JsonIgnore
      private Unidad unidad;
-     @JsonIgnore
+     //@JsonIgnore
      private Empresa empresa;
      private String nombre;
      private String descripcion;
@@ -115,7 +115,7 @@ public class Producto  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="codigo_unidad"/*, nullable=false*/)
+    @JoinColumn(name="codigo_unidad", nullable=false)
     public Unidad getUnidad() {
         return this.unidad;
     }

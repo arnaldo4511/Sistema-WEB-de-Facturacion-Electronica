@@ -16,11 +16,14 @@ ClienteApp.filter('startFrom', function () {
 });
 ClienteApp.controller("ClienteController", ['$scope', '$http', '$window', function ($scope, $http, $window) {
         $scope.sesion = {};
-        $scope.productoTmp = {};
-        $scope.productos = [];
+        //$scope.clienteTmp = {};
+        $scope.entidadTmp = {};
+        $scope.clientes = [];
+        $scope.tiposDocumentosEntidades = [];
         $http({method: 'GET', url: '/transportes_gepp/controlador/usuario/buscarsesion'}).then(function success(response) {
-            console.log(response.data);
+            console.log("response.data "+response.data);
             $scope.sesion = response.data;
+            $scope.tiposDocumentosEntidades = $scope.sesion.tiposDocumentosEntidades;
         }, function myError(response) {
         });
         $scope.setPage = function (pageNo) {
@@ -38,104 +41,86 @@ ClienteApp.controller("ClienteController", ['$scope', '$http', '$window', functi
         $scope.listar = function () {
             $http({
                 method: 'GET',
-                url: '/transportes_gepp/controlador/producto/listar'
+                url: '/transportes_gepp/controlador/cliente/listar'
             }).then(function mySucces(response) {
-                $scope.productos = response.data;
+                console.log('response ' + response);
+                console.log('response.data ' + response.data);
+                $scope.clientes = response.data;
                 $scope.viewby = 5;
-                $scope.totalItems = $scope.productos.length;
+                $scope.totalItems = $scope.clientes.length;
                 $scope.currentPage = 1;
                 $scope.itemsPerPage = $scope.viewby;
                 $scope.maxSize = 5; //Number of pager buttons to show
+                console.log('$scope.clientes ' + $scope.clientes);
             }, function myError(response) {
             });
         };
-        $scope.crearProducto = function (producto) {
-            $http({
-                method: 'POST',
-                url: '/transportes_gepp/controlador/producto/crear',
-                data: producto
-            }).then(function success(response) {
-                console.log(response.data);
-                $scope.listar();
-            }, function error(response) {
-                console.log(response.data);
-            });
+        $scope.nuevoCliente = function () {
+            $scope.mensajeTituloCliente = "Crear Cliente";
+            $scope.entidadTmp = {};
+            $scope.entidadTmp.id = 0;
+            console.log("$scope.entidadTmp.id "+$scope.entidadTmp.id);
         };
-        $scope.editarProducto = function (producto) {
-            $http({
-                method: 'POST',
-                url: '/transportes_gepp/controlador/producto/editar',
-                data: producto
-            }).then(function success(response) {
-                console.log(response);
-                $scope.listar();
-            }, function error(response) {
-                console.log(response.data);
-            });
-        };
-        $scope.eliminarProducto = function (producto) {
-            $http({
-                method: 'POST',
-                url: '/transportes_gepp/controlador/producto/eliminar/' + producto.id
-            }).then(function success(response) {
-                console.log(response);
-                $scope.listar();
-            }, function error(response) {
-                console.log(response.data);
-            });
-        };
-        $scope.nuevoProducto = function () {
-            $scope.mensajeTituloProducto = "Crear Producto";
-            $scope.productoTmp = {};
-            $scope.productoTmp.id = 0;
-            console.log($scope.productoTmp.id);
-        };
-        $scope.seleccionarProducto = function (producto) {
-            $scope.mensajeTituloProducto = "Editar Producto";
-            $scope.productoTmp = producto;
-        };
-
-        $scope.guardarProducto = function (producto) {
-            console.log(producto.id);
-            if (producto.id === 0) {
-                $scope.crearProducto(producto);
+        $scope.guardar = function (entidad) {
+            console.log("entidad "+entidad);
+            
+            if (entidad.id === 0) {
+                $scope.crearEntidad(entidad);
             } else {
-                $scope.editarProducto(producto);
+                $scope.editarEntidad(entidad);
             }
+            console.log("entidad.id "+entidad.id);
         };
-        //Autocomplete-Inicio
-        $scope.complete = function (string) {
-            console.log("string " + string);
-            console.log("$scope.countryList " + $scope.country);
+        $scope.crearEntidad = function (entidad) {
+            entidad.entidad.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
+            //entidad.empresa = $scope.sesion.usuario.empresa;
+            //entidad.unidad={'codigo':'NIU'}
+            console.log("crearEntidad "+entidad.usuarioByIdUsuarioCreacion);
+            console.log("$scope.sesion.usuario "+$scope.sesion.usuario);
             $http({
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                url: '/transportes_gepp/controlador/producto/autocomplete',
-                data: $scope.country
-            }).then(function mySucces(response) {
-                $scope.countryList = response.data;
-
-                $scope.hidethis = false;
-                var output = [];
-                angular.forEach($scope.countryList, function (country) {
-                    /*if(country.toLowerCase().indexOf(string.toLowerCase()) >= 0)  
-                     { */
-                    output.push(country);
-                    //}  
-                });
-                $scope.filterCountry = output;
-            }, function myError(response) {
+                url: '/transportes_gepp/controlador/cliente/crear',
+                data: entidad
+            }).then(function success(response) {
+                console.log(response.data);
+                $scope.listar();
+            }, function error(response) {
+                console.log(response.data);
             });
         };
-        $scope.fillTextbox = function (string) {
-            $scope.country = string;
-            $scope.hidethis = true;
+        $scope.seleccionarItem = function (item) {
+            
+            $scope.mensajeTituloCliente = "Editar Cliente";
+            $scope.entidadTmp = item;
+            console.log("item "+item);
+            console.log("entidadTmp "+$scope.entidadTmp);
         };
-        $scope.onBlur = function() {
-            $scope.hidethis = true;
-        }
-        //Autocomplete-Fin
+        $scope.eliminar = function (entidad) {
+            console.log("entidad "+entidad);
+            $http({
+                method: 'POST',
+                url: '/transportes_gepp/controlador/cliente/eliminar/' + entidad.id
+            }).then(function success(response) {
+                console.log(response);
+                $scope.listar();
+            }, function error(response) {
+                console.log(response.data);
+            });
+        };
+        $scope.editarEntidad = function (entidad) {
+            console.log("entidad "+entidad);
+            entidad.usuarioByIdUsuarioModificacion = $scope.sesion.usuario;
+            console.log("editarEntidad "+entidad);
+            $http({
+                method: 'POST',
+                url: '/transportes_gepp/controlador/cliente/editar',
+                data: entidad
+            }).then(function success(response) {
+                console.log(response);
+                $scope.listar();
+            }, function error(response) {
+                console.log(response.data);
+            });
+        };
         $scope.listar();
     }]);

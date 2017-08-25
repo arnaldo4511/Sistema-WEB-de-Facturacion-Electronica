@@ -13,7 +13,9 @@
     <bean class="pe.modelo.dao.publico.EmpresaDao" />
     <bean class="pe.modelo.dao.administracion.CargaSesionDao" />
     <bean class="pe.modelo.dao.mantenimiento.ProductoDao" />
+    <bean class="pe.modelo.dao.mantenimiento.ClienteDao" />
     <bean class="pe.modelo.dao.ventas.PuntoVentaDao" />
+    <bean class="pe.modelo.dao.facturacion.ResumenVentaDao" />
 
     <!--bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"

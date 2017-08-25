@@ -37,7 +37,7 @@
                 <li>
                     <a><i class="fa fa-table fa-lg"></i>Ventas</a>
                 </li>
-                <li>
+                <li onclick='window.location.href="<%= request.getContextPath()%>/vista/facturacion/resumenventa.jsp"'>
                     <a><i class="fa fa-table fa-lg"></i>Resumenes/Comunicaciones</a>
                 </li>
             </ul>

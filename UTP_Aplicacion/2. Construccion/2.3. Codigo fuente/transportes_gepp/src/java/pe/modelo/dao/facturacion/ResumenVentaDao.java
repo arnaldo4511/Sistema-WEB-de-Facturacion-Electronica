@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pe.modelo.dao.mantenimiento;
+package pe.modelo.dao.facturacion;
 
+import pe.modelo.dao.mantenimiento.*;
 import pe.modelo.dao.mantenimiento.*;
 import java.util.List;
 import org.hibernate.Hibernate;
@@ -13,14 +14,15 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import pe.modelo.dao.HibernateUtil;
 import pe.modelo.pojo.Producto;
+import pe.modelo.pojo.ResumenVentas;
 
 /**
  *
  * @author HP
  */
-public class ProductoDao implements IProductoDao {
+public class ResumenVentaDao implements IResumenVentaDao {
 
-    @Override
+    /*@Override
     public void crear(Producto producto) {
         try {
             System.out.println("ProductoCrear " + producto);
@@ -83,15 +85,15 @@ public class ProductoDao implements IProductoDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     @Override
-    public List<Producto> listar() {
-        List<Producto> lista = null;
+    public List<ResumenVentas> listar() {
+        List<ResumenVentas> lista = null;
         try {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            Query query = sesion.createQuery("from Producto order by id");
+            Query query = sesion.createQuery("from ResumenVentas order by id");
             lista = query.list();
             sesion.getTransaction().commit();
             sesion.close();
@@ -103,27 +105,5 @@ public class ProductoDao implements IProductoDao {
         return lista;
     }
 
-    @Override
-    public List<String> autocomplete(String nombre) {
-        System.out.println("nombre " + nombre);
-        List<String> listaAuto = null;
-        try {
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
-            sesion.beginTransaction();
-            Query query = sesion.createQuery("select nombre from Producto where nombre like :nombre");
-            query.setString("nombre","%"+nombre+"%");
-            listaAuto = query.list();
-            /*listaAuto = sesion.createCriteria(Producto.class)
-                    .add(Restrictions.like("nombre", "%"+nombre+"%"))
-                    .list();*/
-            sesion.getTransaction().commit();
-            sesion.close();
-            System.out.println("query " + query);
-            System.out.println("autocomplete " + listaAuto);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return listaAuto;
-    }
 
 }

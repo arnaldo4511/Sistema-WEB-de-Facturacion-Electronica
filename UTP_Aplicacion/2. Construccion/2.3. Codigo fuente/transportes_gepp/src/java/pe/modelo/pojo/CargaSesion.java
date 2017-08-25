@@ -21,14 +21,18 @@ public class CargaSesion {
     private Usuario usuario;
     private List<Rol> roles;
     private List<PuntoVenta> puntoVentas;
+    private List<Unidad> unidades;
+    private List<TipoDocumentoEntidad> tiposDocumentosEntidades;
 
     public CargaSesion() {
     }
 
-    public CargaSesion(Usuario usuario, List<Rol> roles, List<PuntoVenta> puntoVentas) {
+    public CargaSesion(Usuario usuario, List<Rol> roles, List<PuntoVenta> puntoVentas, List<Unidad> unidades, List<TipoDocumentoEntidad> tiposDocumentosEntidades) {
         this.usuario = usuario;
         this.roles = roles;
         this.puntoVentas = puntoVentas;
+        this.unidades = unidades;
+        this.tiposDocumentosEntidades = tiposDocumentosEntidades;
     }
 
     public Usuario getUsuario() {
@@ -53,5 +57,21 @@ public class CargaSesion {
 
     public void setPuntoVentas(List<PuntoVenta> puntoVentas) {
         this.puntoVentas = puntoVentas;
+    }
+    
+    public List<Unidad> getUnidades() {
+        return this.unidades;
+    }
+
+    public void setUnidades(List<Unidad> unidades) {
+        this.unidades = unidades;
+    }
+    
+    public List<TipoDocumentoEntidad> getTiposDocumentosEntidades() {
+        return this.tiposDocumentosEntidades;
+    }
+
+    public void setTiposDocumentosEntidades(List<TipoDocumentoEntidad> tiposDocumentosEntidades) {
+        this.tiposDocumentosEntidades = tiposDocumentosEntidades;
     }
 }

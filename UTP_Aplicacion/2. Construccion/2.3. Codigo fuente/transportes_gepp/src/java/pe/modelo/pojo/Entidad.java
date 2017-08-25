@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -35,6 +37,7 @@ public class Entidad  implements java.io.Serializable {
      @JsonIgnore
      private Usuario usuarioByIdUsuarioCreacion;
      private TipoDocumentoEntidad tipoDocumentoEntidad;
+     @JsonIgnore
      private Ubigeo ubigeo;
      private String documento;
      private String nombre;
@@ -52,6 +55,8 @@ public class Entidad  implements java.io.Serializable {
      private Set<Usuario> usuarios = new HashSet<Usuario>(0);
      @JsonIgnore
      private Set<Empresa> empresas = new HashSet<Empresa>(0);
+     @JsonIgnore
+     private Set<Cliente> clientes = new HashSet<Cliente>(0);
 
     public Entidad() {
     }
@@ -85,7 +90,7 @@ public class Entidad  implements java.io.Serializable {
        this.empresas = empresas;
     }
    
-     @Id 
+     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     
     @Column(name="id", unique=true, nullable=false)
@@ -255,7 +260,14 @@ public class Entidad  implements java.io.Serializable {
         this.empresas = empresas;
     }
 
-
+@OneToMany(fetch=FetchType.LAZY, mappedBy="entidad")
+    public Set<Cliente> getClientes() {
+        return this.clientes;
+    }
+    
+    public void setClientes(Set<Cliente> clientes) {
+        this.clientes = clientes;
+    }
 
 
 }
