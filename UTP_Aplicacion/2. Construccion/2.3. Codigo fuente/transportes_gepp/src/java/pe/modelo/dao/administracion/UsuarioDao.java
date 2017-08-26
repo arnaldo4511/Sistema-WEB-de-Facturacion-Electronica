@@ -27,6 +27,7 @@ public class UsuarioDao implements IUsuarioDao {
     public void crear(Usuario usuario) {
         try {
             usuario.setFechaCreacion(new Date());
+            usuario.setClave("md5(" + usuario.getClave() + ")");
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
             sesion.save(usuario);

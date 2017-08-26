@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%@include file="/WEB-INF/imports.jspf" %>
         <script src="<%= request.getContextPath()%>/js/ventas/documentoventa.js" type="text/javascript"></script>
-        <title>Transportes :: Rol</title>
+        <title>Transportes :: Venta</title>
     </head>
     <body ng-app='DocumentoVentaApp' ng-controller='DocumentoVentaController'>
         <div class="container-fluid">
