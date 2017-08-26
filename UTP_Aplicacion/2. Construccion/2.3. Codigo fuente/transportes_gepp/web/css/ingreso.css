@@ -180,7 +180,11 @@ fieldset{
 	outline: none;
 }
 body {
+<<<<<<< HEAD
     background: url(../images/scania.jpg) repeat center center fixed;
+=======
+    background: url(../images/bg.jpg) no-repeat center center fixed;
+>>>>>>> master
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -189,7 +193,11 @@ body {
 
 .login-form {
     font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
+<<<<<<< HEAD
 	margin: 50px auto;
+=======
+	margin: 150px auto;
+>>>>>>> master
 	max-width: 400px;
 }
 

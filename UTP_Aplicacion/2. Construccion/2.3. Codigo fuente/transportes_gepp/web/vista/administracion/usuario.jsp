@@ -11,9 +11,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%@include file="/WEB-INF/imports.jspf" %>
         <script src="<%= request.getContextPath()%>/js/administracion/usuario.js" type="text/javascript"></script>
-        <title>Transportes :: Rol</title>
+        <title>Transportes :: Usuarios</title>
     </head>
     <body ng-app='UsuarioApp' ng-controller='UsuarioController'>
+<<<<<<< HEAD
         <div class="container-fluid">
             <div class='row clearfix'>
                 <aside>
@@ -29,6 +30,17 @@
                 <div class="col-sm-9">
                     <section>
                         <form>
+=======
+        <div class="container">
+            <ng-include src="'<%= request.getContextPath()%>/vista/cabecera.jsp'"></ng-include>
+            <div id="rowMenu" class='row'>
+                <div id="colMenu" class="col-sm-3">
+                    <ng-include src="'<%= request.getContextPath()%>/vista/menu.jsp'"></ng-include>
+                </div>
+                <div id="divForm" class="col-sm-9">
+                    <form>
+                        <div class="row">
+>>>>>>> master
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -190,12 +202,17 @@
                     </section>
                 </div>
             </div>
+<<<<<<< HEAD
             <div class='row clearfix'>
                 <div class="col-sm-12">
                     <aside>
                         <ng-include src="'<%= request.getContextPath()%>/vista/pie.jsp'"></ng-include>
                     </aside>
                 </div>
+=======
+            <div id="rowPie" class='row'>
+                <ng-include src="'<%= request.getContextPath()%>/vista/pie.jsp'"></ng-include>
+>>>>>>> master
             </div>
         </div>
     </body>

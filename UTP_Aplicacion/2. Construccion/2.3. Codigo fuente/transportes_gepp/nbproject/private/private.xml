@@ -3,11 +3,44 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/vista/ingreso.jsp</file>
             <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/WEB-INF/applicationContext.xml</file>
             <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/nbproject/build-impl.xml</file>
             <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/hibernate.cfg.xml</file>
+=======
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/WEB-INF/dispatcher-servlet.xml</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/pojo/Unidad.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/js/administracion/rol.js</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/hibernate.cfg.xml</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/pojo/Producto.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/js/mantenimiento/cliente.js</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/pojo/CargaSesion.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/dao/mantenimiento/IClienteDao.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/vista/administracion/rol.jsp</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/controlador/administracion/RolController.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/pojo/Cliente.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/dao/administracion/IRolDao.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/WEB-INF/applicationContext.xml</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/vista/mantenimiento/cliente.jsp</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/dao/administracion/IUsuarioDao.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/js/mantenimiento/producto.js</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/dao/mantenimiento/IProductoDao.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/vista/mantenimiento/producto.jsp</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/vista/administracion/usuario.jsp</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/pojo/Entidad.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/dao/administracion/CargaSesionDao.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/controlador/mantenimiento/ProductoController.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/js/administracion/usuario.js</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/controlador/mantenimiento/ClienteController.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/controlador/administracion/UsuarioController.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/pojo/Rol.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/dao/administracion/UsuarioDao.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/dao/administracion/RolDao.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/dao/mantenimiento/ProductoDao.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/dao/mantenimiento/ClienteDao.java</file>
+>>>>>>> master
         </group>
     </open-files>
 </project-private>

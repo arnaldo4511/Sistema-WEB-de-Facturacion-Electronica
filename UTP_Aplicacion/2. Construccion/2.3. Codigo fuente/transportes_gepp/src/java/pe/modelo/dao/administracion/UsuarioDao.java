@@ -27,11 +27,16 @@ public class UsuarioDao implements IUsuarioDao {
     @Override
     public void crear(Usuario usuario) {
         try {
+<<<<<<< HEAD
             MessageDigest digest = MessageDigest.getInstance("MD5");
             digest.update(usuario.getClave().getBytes());
             byte hash[] = digest.digest();
             System.out.println(hash);
             usuario.setFechaCreacion(new Date());
+=======
+            System.out.println("usuarioDaoCrear "+usuario);
+            
+>>>>>>> master
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
             sesion.save(usuario);

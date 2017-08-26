@@ -39,6 +39,8 @@ public class RolController {
             String jsonSalida = jsonTransformer.toJson(lista);
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
+            System.out.println("listaRol "+lista);
+            System.out.println("jsonSalida "+jsonSalida);
             out.println(jsonSalida);
 
         } catch (Exception ex) {
@@ -53,11 +55,14 @@ public class RolController {
     @RequestMapping(value = "/rol/crear", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void crear(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) {
         try {
+            System.out.println("jsonEntrada "+jsonEntrada);
             Rol rol = (Rol) jsonTransformer.fromJson(jsonEntrada, Rol.class);
+            System.out.println("jsonEntradaTransform "+rol);
             HttpSession session = httpServletRequest.getSession();
             Usuario usuario = (Usuario) jsonTransformer.fromJson(session.getAttribute("session_usuario").toString(), Usuario.class);
             rol.setUsuarioByIdUsuarioCreacion(usuario);
             rol.setFechaCreacion(new Date());
+            System.out.println("rol "+rol);
             rolDao.crear(rol);
             if (rol.getId() > 0) {
                 String jsonSalida = jsonTransformer.toJson(rol);
