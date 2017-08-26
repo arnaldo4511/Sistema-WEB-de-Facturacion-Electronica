@@ -1,110 +1,53 @@
-<div class="panel-group" id="accordion">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a href="<%= request.getContextPath()%>/vista/principal.jsp">
-                    Inicio</a>
-            </h4>
-        </div>
-        <div id="collapseThree" class="panel-collapse collapse">
-            <div class="panel-body">
-                <table class="table">
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseAdministracion" >
-                    Administración</a>
-            </h4>
-        </div>
-        <div id="collapseAdministracion" class="panel-collapse collapse in">
-            <div class="panel-body">
-                <table class="table">
-                    <tr>
-                        <td>
-                            <span class="glyphicon glyphicon-pencil text-primary"></span><a href="<%= request.getContextPath()%>/vista/administracion/rol.jsp"> Roles</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="glyphicon glyphicon-pencil text-primary"></span><a href="<%= request.getContextPath()%>/vista/administracion/usuario.jsp"> Usuarios</a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
+<div class="nav-side-menu">
+    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse"  href="#collapseMantenimientos">
-                    Mantenimientos</a>
-            </h4>
-        </div>
-        <div id="collapseMantenimientos" class="panel-collapse collapse">
-            <div class="panel-body">
-                <table class="table">
-                    <tr>
-                        <td>
-                            <span class="glyphicon glyphicon-pencil text-primary"></span><a href="docente.jsp"> Productos</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="glyphicon glyphicon-pencil text-primary"></span><a href="region.jsp"> Clientes</a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
+    <div class="menu-list">
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse"  href="#collapseFacturacion">
-                    Facturación</a>
-            </h4>
-        </div>
-        <div id="collapseFacturacion" class="panel-collapse collapse">
-            <div class="panel-body">
-                <table class="table">
-                    <tr>
-                        <td>
-                            <span class="glyphicon glyphicon-pencil text-primary"></span><a href="<%= request.getContextPath()%>/vista/ventas/documentoventas.jsp"> Ventas</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="glyphicon glyphicon-pencil text-primary"></span><a href="region.jsp"> Resumenes/Comunicaciones</a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse"  href="#collapseReportes">
-                    Reportes</a>
-            </h4>
-        </div>
-        <div id="collapseReportes" class="panel-collapse collapse">
-            <div class="panel-body">
-                <table class="table">
-                    <tr>
-                        <td>
-                            <span class="glyphicon glyphicon-pencil text-primary"></span><a href="docente.jsp"> Ventas</a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+        <ul id="menu-content" class="menu-content collapse out">
+            <li class="active">
+                <a href="<%= request.getContextPath()%>/vista/principal.jsp"><i class="fa fa-home fa-lg"></i>Inicio</a>
+            </li>
+            <li  data-toggle="collapse" data-target="#administracion" class="collapsed">
+                <a href="#"><i class="fa fa-edit fa-lg"></i>Administración<span class="arrow"></span></a>
+            </li>
+            <ul class="sub-menu collapse" id="administracion">
+                <li onclick='window.location.href="<%= request.getContextPath()%>/vista/administracion/rol.jsp"'>
+                    <a><i class="fa fa-table fa-lg"></i>Roles</a>
+                </li>
+                <li onclick='window.location.href="<%= request.getContextPath()%>/vista/administracion/usuario.jsp"'>
+                    <a><i class="fa fa-table fa-lg"></i>Usuarios</a>
+                </li>
+            </ul>
+            <li data-toggle="collapse" data-target="#mantenimientos" class="collapsed">
+                <a href="#"><i class="fa fa-edit fa-lg"></i> Mantenimientos <span class="arrow"></span></a>
+            </li>  
+            <ul class="sub-menu collapse" id="mantenimientos">
+                <li onclick='window.location.href="<%= request.getContextPath()%>/vista/almacen/producto.jsp"'>
+                    <a><i class="fa fa-table fa-lg"></i>Productos</a>
+                </li>
+                <li onclick='window.location.href="<%= request.getContextPath()%>/vista/ventas/cliente.jsp"'>
+                    <a><i class="fa fa-table fa-lg"></i>Clientes</a>
+                </li>
+            </ul>
+            <li data-toggle="collapse" data-target="#facturacion" class="collapsed">
+                <a><i class="fa fa-edit fa-lg"></i> Facturación <span class="arrow"></span></a>
+            </li>  
+            <ul class="sub-menu collapse" id="facturacion">
+                <li onclick='window.location.href="<%= request.getContextPath()%>/vista/ventas/documentoventas.jsp"'>
+                    <a><i class="fa fa-table fa-lg"></i>Ventas</a>
+                </li>
+                <li onclick='window.location.href="<%= request.getContextPath()%>/vista/ventas/resumenventa.jsp"'>
+                    <a><i class="fa fa-table fa-lg"></i>Resumenes/Comunicaciones</a>
+                </li>
+            </ul>
+            <li data-toggle="collapse" data-target="#reportes" class="collapsed">
+                <a><i class="fa fa-edit fa-lg"></i> Reportes <span class="arrow"></span></a>
+            </li>  
+            <ul class="sub-menu collapse" id="reportes">
+                <li>
+                    <a><i class="fa fa-table fa-lg"></i>Ventas</a>
+                </li>
+            </ul>
+        </ul>
     </div>
 </div>

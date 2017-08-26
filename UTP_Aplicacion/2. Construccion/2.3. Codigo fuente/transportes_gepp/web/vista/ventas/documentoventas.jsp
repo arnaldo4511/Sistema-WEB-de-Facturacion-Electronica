@@ -26,7 +26,7 @@
                 </aside>
             </div>
             <div class='row clearfix'>
-                <div class="col-sm-3">
+                    <div class="col-sm-3">
                     <aside>
                         <ng-include src="'<%= request.getContextPath()%>/vista/menu.jsp'"></ng-include>
                     </aside>

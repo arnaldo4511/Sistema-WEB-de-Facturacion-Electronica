@@ -86,7 +86,7 @@ DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$f
             documentoVenta.tipoTargeta = $scope.tipoTargeta.codigo;
             documentoVenta.banco = $scope.banco.codigo;
             //documentoVenta.numero = '00000000';
-            //console.log(documentoVenta);
+            console.log(documentoVenta);
             //return;
             //return;
             //usuario.usuarioByIdDocumentoVentaCreacion = $scope.sesion.usuario;

@@ -27,7 +27,7 @@ public class ProductoDao implements IProductoDao {
     @Override
     public void crear(Producto producto) {
         try {
-            producto.setFechaCreacion(new Date());
+            System.out.println("ProductoCrear " + producto);
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
             sesion.save(producto);
@@ -41,10 +41,17 @@ public class ProductoDao implements IProductoDao {
     @Override
     public void editar(Producto producto) {
         try {
-            producto.setFechaModificacion(new Date());
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            sesion.update(producto);
+            String hqlUpdate = "update Producto set nombre = :nombre,descripcion = :descripcion,unidad = :unidad,precioCompra = :precioCompra,precioVenta = :precioVenta where id = :id";
+            sesion.createQuery(hqlUpdate)
+                    .setString("nombre", producto.getNombre())
+                    .setString("descripcion", producto.getDescripcion())
+                    .setString("unidad", producto.getUnidad().getCodigo())
+                    .setDouble("precioCompra", producto.getPrecioCompra())
+                    .setDouble("precioVenta", producto.getPrecioVenta())
+                    .setLong("id", producto.getId())
+                    .executeUpdate();
             sesion.getTransaction().commit();
             sesion.close();
         } catch (Exception e) {
@@ -88,10 +95,12 @@ public class ProductoDao implements IProductoDao {
         try {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            Criteria criteria = sesion.createCriteria(Producto.class);
-            lista = criteria.list();
+            Query query = sesion.createQuery("from Producto order by id");
+            lista = query.list();
             sesion.getTransaction().commit();
             sesion.close();
+            System.out.println("query " + query);
+            System.out.println("listar " + lista);
         } catch (Exception e) {
             e.printStackTrace();
         }

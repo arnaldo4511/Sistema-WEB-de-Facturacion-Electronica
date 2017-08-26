@@ -2,12 +2,15 @@ package pe.modelo.pojo;
 // Generated 17-ago-2017 14:14:43 by Hibernate Tools 4.3.1
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,8 +25,8 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "entidad",
-         schema = "public",
-         uniqueConstraints = @UniqueConstraint(columnNames = "documento")
+        schema = "public",
+        uniqueConstraints = @UniqueConstraint(columnNames = "documento")
 )
 public class Entidad implements java.io.Serializable {
 
@@ -42,9 +45,9 @@ public class Entidad implements java.io.Serializable {
     private String correoElectronico1;
     private String correoElectronico2;
     private String correoElectronico3;
-    @JsonIgnore
+    //@JsonIgnore
     private Date fechaCreacion;
-    @JsonIgnore
+    //@JsonIgnore
     private Date fechaModificacion;
     @JsonIgnore
     private Set<Cliente> clientes = new HashSet<Cliente>(0);
@@ -65,28 +68,29 @@ public class Entidad implements java.io.Serializable {
         this.fechaCreacion = fechaCreacion;
     }
 
-        public Entidad(long id, Usuario usuarioByIdUsuarioModificacion, Usuario usuarioByIdUsuarioCreacion, TipoDocumentoEntidad tipoDocumentoEntidad, Ubigeo ubigeo, String documento, String nombre, String codigoPais, String zona, String direccion, String correoElectronico1, String correoElectronico2, String correoElectronico3, Date fechaCreacion, Date fechaModificacion, Set<Cliente> clientes, Set<Usuario> usuarios, Set<Empresa> empresas) {
-       this.id = id;
-       this.usuarioByIdUsuarioModificacion = usuarioByIdUsuarioModificacion;
-       this.usuarioByIdUsuarioCreacion = usuarioByIdUsuarioCreacion;
-       this.tipoDocumentoEntidad = tipoDocumentoEntidad;
-       this.ubigeo = ubigeo;
-       this.documento = documento;
-       this.nombre = nombre;
-       this.codigoPais = codigoPais;
-       this.zona = zona;
-       this.direccion = direccion;
-       this.correoElectronico1 = correoElectronico1;
-       this.correoElectronico2 = correoElectronico2;
-       this.correoElectronico3 = correoElectronico3;
-       this.fechaCreacion = fechaCreacion;
-       this.fechaModificacion = fechaModificacion;
-       this.clientes = clientes;
-       this.usuarios = usuarios;
-       this.empresas = empresas;
+    public Entidad(long id, Usuario usuarioByIdUsuarioModificacion, Usuario usuarioByIdUsuarioCreacion, TipoDocumentoEntidad tipoDocumentoEntidad, Ubigeo ubigeo, String documento, String nombre, String codigoPais, String zona, String direccion, String correoElectronico1, String correoElectronico2, String correoElectronico3, Date fechaCreacion, Date fechaModificacion, Set<Cliente> clientes, Set<Usuario> usuarios, Set<Empresa> empresas) {
+        this.id = id;
+        this.usuarioByIdUsuarioModificacion = usuarioByIdUsuarioModificacion;
+        this.usuarioByIdUsuarioCreacion = usuarioByIdUsuarioCreacion;
+        this.tipoDocumentoEntidad = tipoDocumentoEntidad;
+        this.ubigeo = ubigeo;
+        this.documento = documento;
+        this.nombre = nombre;
+        this.codigoPais = codigoPais;
+        this.zona = zona;
+        this.direccion = direccion;
+        this.correoElectronico1 = correoElectronico1;
+        this.correoElectronico2 = correoElectronico2;
+        this.correoElectronico3 = correoElectronico3;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaModificacion = fechaModificacion;
+        this.clientes = clientes;
+        this.usuarios = usuarios;
+        this.empresas = empresas;
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "id", unique = true, nullable = false)
     public long getId() {
@@ -97,22 +101,26 @@ public class Entidad implements java.io.Serializable {
         this.id = id;
     }
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario_modificacion")
     public Usuario getUsuarioByIdUsuarioModificacion() {
         return this.usuarioByIdUsuarioModificacion;
     }
 
+    @JsonProperty
     public void setUsuarioByIdUsuarioModificacion(Usuario usuarioByIdUsuarioModificacion) {
         this.usuarioByIdUsuarioModificacion = usuarioByIdUsuarioModificacion;
     }
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario_creacion", nullable = false)
     public Usuario getUsuarioByIdUsuarioCreacion() {
         return this.usuarioByIdUsuarioCreacion;
     }
 
+    @JsonProperty
     public void setUsuarioByIdUsuarioCreacion(Usuario usuarioByIdUsuarioCreacion) {
         this.usuarioByIdUsuarioCreacion = usuarioByIdUsuarioCreacion;
     }

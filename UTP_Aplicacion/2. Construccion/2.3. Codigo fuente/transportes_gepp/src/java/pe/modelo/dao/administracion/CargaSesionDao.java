@@ -30,11 +30,17 @@ public class CargaSesionDao implements ICargaSesionDao {
             List<Rol> roles = query.list();
             Query query2 = sesion.createQuery("from PuntoVenta order by id");
             List<PuntoVenta> puntoVentas = query2.list();
+            Query query3 = sesion.createQuery("from Unidad");
+            List<Unidad> unidades = query3.list();
+            Query query4 = sesion.createQuery("from TipoDocumentoEntidad");
+            List<TipoDocumentoEntidad> tiposDocumentosEntidades = query4.list();
             sesion.getTransaction().commit();
             sesion.close();
             cargaSesion.setUsuario(usuario);
             cargaSesion.setRoles(roles);
             cargaSesion.setPuntoVentas(puntoVentas);
+            cargaSesion.setUnidades(unidades);
+            cargaSesion.setTiposDocumentosEntidades(tiposDocumentosEntidades);
         } catch (Exception e) {
             e.printStackTrace();
         }

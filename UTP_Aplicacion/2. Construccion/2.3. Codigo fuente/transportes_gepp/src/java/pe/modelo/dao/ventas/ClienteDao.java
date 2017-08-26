@@ -19,12 +19,13 @@ import pe.modelo.pojo.Cliente;
  * @author octavio
  */
 public class ClienteDao implements IClienteDao {
-
+    
     @Override
     public void crear(Cliente cliente) {
         try {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
+            sesion.save(cliente.getEntidad());
             sesion.save(cliente);
             sesion.getTransaction().commit();
             sesion.close();
@@ -32,21 +33,26 @@ public class ClienteDao implements IClienteDao {
             e.printStackTrace();
         }
     }
-
+    
     @Override
     public void editar(Cliente cliente) {
         try {
             cliente.setFechaModificacion(new Date());
+            cliente.getEntidad().setFechaModificacion(new Date());
+            cliente.getEntidad().setUsuarioByIdUsuarioModificacion(cliente.getUsuarioByIdUsuarioModificacion());
+            cliente.getEntidad().setFechaModificacion(new Date());
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
+            System.out.println("numero:" + cliente.getEntidad().getDocumento());
             sesion.update(cliente);
+            sesion.update(cliente.getEntidad());
             sesion.getTransaction().commit();
             sesion.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
+    
     @Override
     public Cliente buscar(long id) {
         Cliente cliente = null;
@@ -62,7 +68,7 @@ public class ClienteDao implements IClienteDao {
         }
         return cliente;
     }
-
+    
     @Override
     public void eliminar(long id) {
         try {
@@ -76,7 +82,7 @@ public class ClienteDao implements IClienteDao {
             e.printStackTrace();
         }
     }
-
+    
     @Override
     public List<Cliente> listar() {
         List<Cliente> lista = null;
@@ -92,7 +98,7 @@ public class ClienteDao implements IClienteDao {
         }
         return lista;
     }
-
+    
     public List<Cliente> autocompletar(String criterio) {
         List<Cliente> lista = null;
         try {

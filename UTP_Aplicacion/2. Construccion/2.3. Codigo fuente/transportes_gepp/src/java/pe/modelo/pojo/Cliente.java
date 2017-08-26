@@ -2,12 +2,15 @@ package pe.modelo.pojo;
 // Generated 22-ago-2017 9:06:53 by Hibernate Tools 4.3.1
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,12 +24,12 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "cliente",
-         schema = "ventas"
+        schema = "ventas"
 )
 public class Cliente implements java.io.Serializable {
 
     private long id;
-    @JsonIgnore
+    //@JsonIgnore
     private Usuario usuarioByIdUsuarioCreacion;
     @JsonIgnore
     private Usuario usuarioByIdUsuarioModificacion;
@@ -57,6 +60,7 @@ public class Cliente implements java.io.Serializable {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "id", unique = true, nullable = false)
     public long getId() {
@@ -77,12 +81,14 @@ public class Cliente implements java.io.Serializable {
         this.usuarioByIdUsuarioCreacion = usuarioByIdUsuarioCreacion;
     }
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario_modificacion")
     public Usuario getUsuarioByIdUsuarioModificacion() {
         return this.usuarioByIdUsuarioModificacion;
     }
 
+    @JsonProperty
     public void setUsuarioByIdUsuarioModificacion(Usuario usuarioByIdUsuarioModificacion) {
         this.usuarioByIdUsuarioModificacion = usuarioByIdUsuarioModificacion;
     }

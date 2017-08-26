@@ -49,6 +49,9 @@ Contributor(s):
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
         <property name="hibernate.enable_lazy_load_no_trans" >true</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hbm2ddl.auto">update</property>
         <mapping class="pe.modelo.pojo.Cliente"/>
         <mapping class="pe.modelo.pojo.DocumentoVentaDetalle"/>
         <mapping class="pe.modelo.pojo.PuntoVentaSerie"/>

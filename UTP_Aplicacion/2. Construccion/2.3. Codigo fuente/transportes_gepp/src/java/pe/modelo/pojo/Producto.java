@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -32,7 +34,7 @@ public class Producto  implements java.io.Serializable {
      private long id;
      @JsonIgnore
      private Usuario usuarioByIdUsuarioModificacion;
-     @JsonIgnore
+     //@JsonIgnore
      private Usuario usuarioByIdUsuarioCreacion;
      private Unidad unidad;
      private Empresa empresa;
@@ -74,7 +76,7 @@ public class Producto  implements java.io.Serializable {
        this.documentoVentaDetalles = documentoVentaDetalles;
     }
    
-     @Id 
+     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     
     @Column(name="id", unique=true, nullable=false)

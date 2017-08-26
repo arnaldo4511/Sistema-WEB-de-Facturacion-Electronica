@@ -14,19 +14,31 @@
         <title>Transportes :: Inicio</title>
     </head>
     <body ng-app='PrincipalApp' ng-controller='PrincipalController'>
-        <div class="container">
-            <div class='row bg-success'>
-                <ng-include src="'<%= request.getContextPath()%>/vista/cabecera.jsp'"></ng-include>
+        <div class="container-fluid">
+            <div class="row clearfix">
+                <header>
+                    <aside>
+                        <ng-include src="'<%= request.getContextPath()%>/vista/cabecera.jsp'"></ng-include>
+                    </aside>
+                </header>
             </div>
-            <div class='row'>
-                <div class="col-sm-3 bg-success">
-                    <ng-include src="'<%= request.getContextPath()%>/vista/menu.jsp'"></ng-include>
+            <div class='row clearfix'>
+                <div class="col-sm-2">
+                    <aside>
+                        <ng-include src="'<%= request.getContextPath()%>/vista/menu.jsp'"></ng-include>
+                    </aside>
                 </div>
-                <div class="col-sm-9">
+                <div class="col-sm-10">
+                    <section>
+                    </section>
                 </div>
             </div>
-            <div class='row bg-success'>
-                <ng-include src="'<%= request.getContextPath()%>/vista/pie.jsp'"></ng-include>
+            <div class='row clearfix'>
+                <footer>
+                    <aside>
+                        <ng-include src="'<%= request.getContextPath()%>/vista/pie.jsp'"></ng-include>
+                    </aside>
+                </footer>
             </div>
         </div>
     </body>

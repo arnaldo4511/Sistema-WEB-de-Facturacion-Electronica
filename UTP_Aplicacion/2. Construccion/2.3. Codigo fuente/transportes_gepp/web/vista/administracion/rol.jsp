@@ -16,9 +16,11 @@
     <body ng-app='RolApp' ng-controller='RolController'>
         <div class="container-fluid">
             <div class="row clearfix">
-                <aside>
+                <header>
+                    <aside>
                     <ng-include src="'<%= request.getContextPath()%>/vista/cabecera.jsp'"></ng-include>
-                </aside>
+                    </aside>
+                </header>
             </div>
             <div class="row clearfix">
                 <div class="col-md-3">

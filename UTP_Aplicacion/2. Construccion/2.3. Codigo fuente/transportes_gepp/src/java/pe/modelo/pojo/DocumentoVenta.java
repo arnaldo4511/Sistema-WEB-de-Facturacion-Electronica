@@ -30,17 +30,17 @@ import javax.persistence.TemporalType;
 public class DocumentoVenta implements java.io.Serializable {
 
     private long id;
-    @JsonIgnore
+    //@JsonIgnore
     private Usuario usuarioByIdUsuarioModificacion;
-    @JsonIgnore
+    //@JsonIgnore
     private Usuario usuarioByIdUsuarioCreacion;
-    @JsonIgnore
+    //@JsonIgnore
     private Empresa empresa;
-    @JsonIgnore
+    //@JsonIgnore
     private Moneda moneda;
     private Cliente cliente;
     private EstadoDocumentoVenta estadoDocumentoVenta;
-    @JsonIgnore
+    //@JsonIgnore
     private PuntoVenta puntoVenta;
     private PuntoVentaSerie puntoVentaSerie;
     private TipoDocumentoVenta tipoDocumentoVenta;
@@ -57,9 +57,9 @@ public class DocumentoVenta implements java.io.Serializable {
     private double totalGrabado;
     private double totalIgv;
     private double total;
-    @JsonIgnore
+    //@JsonIgnore
     private Date fechaCreacion;
-    @JsonIgnore
+    //@JsonIgnore
     private Date fechaModificacion;
     @JsonIgnore
     private Set<ResumenVentasGrupoVenta> resumenVentasGrupoVentas = new HashSet<ResumenVentasGrupoVenta>(0);
