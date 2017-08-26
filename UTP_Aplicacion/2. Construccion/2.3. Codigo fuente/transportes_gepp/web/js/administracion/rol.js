@@ -19,7 +19,7 @@ RolApp.controller("RolController", ['$scope', '$http', function ($scope, $http) 
         $scope.rolTmp = {};
         $scope.roles = [];
         $http({method: 'GET', url: '/transportes_gepp/controlador/usuario/buscarsesion'}).then(function success(response) {
-            console.log("response.data "+response.data);
+            console.log(response.data);
             $scope.sesion = response.data;
         }, function myError(response) {
         });
@@ -90,7 +90,6 @@ RolApp.controller("RolController", ['$scope', '$http', function ($scope, $http) 
             $scope.mensajeTitutloRol = "Crear Rol";
             $scope.rolTmp = {};
             $scope.rolTmp.id = 0;
-            console.log("$scope.rolTmp.id "+$scope.rolTmp.id);
         };
         $scope.seleccionarRol = function (rol) {
             $scope.mensajeTitutloRol = "Editar Rol";

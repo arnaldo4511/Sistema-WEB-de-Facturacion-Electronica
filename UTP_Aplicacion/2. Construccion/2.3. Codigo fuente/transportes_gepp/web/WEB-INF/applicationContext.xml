@@ -11,7 +11,6 @@
     <bean class="pe.modelo.dao.administracion.UsuarioDao" />
     <bean class="pe.modelo.dao.administracion.RolDao" />
     <bean class="pe.modelo.dao.publico.EmpresaDao" />
-<<<<<<< HEAD
     <bean class="pe.modelo.dao.publico.EntidadDao" />
     <bean class="pe.modelo.dao.administracion.CargaSesionDao" />
     <bean class="pe.modelo.dao.ventas.PuntoVentaDao" />
@@ -20,13 +19,6 @@
     <bean class="pe.modelo.dao.ventas.ClienteDao" />
     <bean class="pe.modelo.dto.ventas.Parametro" />
     <bean class="pe.modelo.dao.ventas.ResumenVentaDao" />
-=======
-    <bean class="pe.modelo.dao.administracion.CargaSesionDao" /> 
-    <bean class="pe.modelo.dao.mantenimiento.ProductoDao" />
-    <bean class="pe.modelo.dao.mantenimiento.ClienteDao" />
-    <bean class="pe.modelo.dao.ventas.PuntoVentaDao" />
-    <bean class="pe.modelo.dao.facturacion.ResumenVentaDao" />
->>>>>>> master
 
     <!--bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"

@@ -36,17 +36,13 @@ public class Producto  implements java.io.Serializable {
      private Usuario usuarioByIdUsuarioModificacion;
      //@JsonIgnore
      private Usuario usuarioByIdUsuarioCreacion;
-     //@JsonIgnore
      private Unidad unidad;
-     //@JsonIgnore
      private Empresa empresa;
      private String nombre;
      private String descripcion;
      private double precioVenta;
      private double precioCompra;
-     @JsonIgnore
      private Date fechaCreacion;
-     @JsonIgnore
      private Date fechaModificacion;
      @JsonIgnore
      private Set<DocumentoVentaDetalle> documentoVentaDetalles = new HashSet<DocumentoVentaDetalle>(0);
@@ -79,8 +75,6 @@ public class Producto  implements java.io.Serializable {
        this.fechaModificacion = fechaModificacion;
        this.documentoVentaDetalles = documentoVentaDetalles;
     }
-    
-    
    
      @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 

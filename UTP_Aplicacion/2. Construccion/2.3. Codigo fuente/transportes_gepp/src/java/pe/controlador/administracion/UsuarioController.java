@@ -64,7 +64,6 @@ public class UsuarioController {
     @RequestMapping(value = "/usuario/buscarsesion", method = RequestMethod.GET, produces = "application/json")
     public void buscarsesion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
         HttpSession session = httpServletRequest.getSession();
-<<<<<<< HEAD
         if (session.getAttribute("idUsuario") == null) {
             session.invalidate();
             httpServletResponse.sendRedirect(httpServletRequest.getContextPath());
@@ -75,14 +74,6 @@ public class UsuarioController {
             httpServletResponse.setContentType("application/json; charset=UTF-8");
             httpServletResponse.getWriter().println(jsonTransformer.toJson(cargaSesion));
         }
-=======
-        System.out.println("session.getAttribute(\"idUsuario\").toString() "+session.getAttribute("idUsuario").toString());
-        Long id = Long.parseLong(session.getAttribute("idUsuario").toString());
-        CargaSesion cargaSesion = cargaSesionDao.crear(id);
-        httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-        httpServletResponse.setContentType("application/json; charset=UTF-8");
-        httpServletResponse.getWriter().println(jsonTransformer.toJson(cargaSesion));
->>>>>>> master
     }
 
     @RequestMapping(value = "/usuario/listar", method = RequestMethod.GET, produces = "application/json")
@@ -105,10 +96,7 @@ public class UsuarioController {
     @RequestMapping(value = "/usuario/crear", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void crear(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) {
         try {
-            System.out.println("jsonEntrada "+jsonEntrada);
             Usuario usuario = (Usuario) jsonTransformer.fromJson(jsonEntrada, Usuario.class);
-            usuario.setFechaCreacion(new Date());
-            System.out.println("usuarioTransform "+usuario);
             usuarioDao.crear(usuario);
             if (usuario.getId() > 0) {
                 String jsonSalida = jsonTransformer.toJson(usuario);

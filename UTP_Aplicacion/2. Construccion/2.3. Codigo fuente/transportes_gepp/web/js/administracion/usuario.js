@@ -23,7 +23,6 @@ UsuarioApp.controller("UsuarioController", ['$scope', '$http', function ($scope,
             $scope.sesion = response.data;
             $scope.roles = $scope.sesion.roles;
             $scope.puntoVentas = $scope.sesion.puntoVentas;
-            
         }, function myError(response) {
         });
         $scope.setPage = function (pageNo) {
@@ -58,7 +57,6 @@ UsuarioApp.controller("UsuarioController", ['$scope', '$http', function ($scope,
         $scope.crear = function (usuario) {
             usuario.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
             usuario.empresa = $scope.sesion.usuario.empresa;
-            console.log(usuario);
             $http({
                 method: 'POST',
                 url: '/transportes_gepp/controlador/usuario/crear',
@@ -106,11 +104,7 @@ UsuarioApp.controller("UsuarioController", ['$scope', '$http', function ($scope,
             $scope.usuario = item;
         };
         $scope.guardar = function (usuario) {
-<<<<<<< HEAD
             $scope.usuario = {};
-=======
-            console.log("usuario.id"+ usuario.id);
->>>>>>> master
             if (usuario.id === 0) {
                 $scope.crear(usuario);
             } else {

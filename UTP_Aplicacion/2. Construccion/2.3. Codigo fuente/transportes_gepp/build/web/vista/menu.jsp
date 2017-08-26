@@ -1,13 +1,6 @@
-<<<<<<< HEAD
 <div class="nav-side-menu">
     <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
 
-=======
-
-<div class="nav-side-menu">
-    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
-
->>>>>>> master
     <div class="menu-list">
 
         <ul id="menu-content" class="menu-content collapse out">
@@ -29,17 +22,10 @@
                 <a href="#"><i class="fa fa-edit fa-lg"></i> Mantenimientos <span class="arrow"></span></a>
             </li>  
             <ul class="sub-menu collapse" id="mantenimientos">
-<<<<<<< HEAD
                 <li onclick='window.location.href="<%= request.getContextPath()%>/vista/almacen/producto.jsp"'>
                     <a><i class="fa fa-table fa-lg"></i>Productos</a>
                 </li>
                 <li onclick='window.location.href="<%= request.getContextPath()%>/vista/ventas/cliente.jsp"'>
-=======
-                <li onclick='window.location.href="<%= request.getContextPath()%>/vista/mantenimiento/producto.jsp"'>
-                    <a><i class="fa fa-table fa-lg"></i>Productos</a>
-                </li>
-                <li onclick='window.location.href="<%= request.getContextPath()%>/vista/mantenimiento/cliente.jsp"'>
->>>>>>> master
                     <a><i class="fa fa-table fa-lg"></i>Clientes</a>
                 </li>
             </ul>
@@ -47,17 +33,10 @@
                 <a><i class="fa fa-edit fa-lg"></i> Facturación <span class="arrow"></span></a>
             </li>  
             <ul class="sub-menu collapse" id="facturacion">
-<<<<<<< HEAD
                 <li onclick='window.location.href="<%= request.getContextPath()%>/vista/ventas/documentoventas.jsp"'>
                     <a><i class="fa fa-table fa-lg"></i>Ventas</a>
                 </li>
                 <li onclick='window.location.href="<%= request.getContextPath()%>/vista/ventas/resumenventa.jsp"'>
-=======
-                <li>
-                    <a><i class="fa fa-table fa-lg"></i>Ventas</a>
-                </li>
-                <li onclick='window.location.href="<%= request.getContextPath()%>/vista/facturacion/resumenventa.jsp"'>
->>>>>>> master
                     <a><i class="fa fa-table fa-lg"></i>Resumenes/Comunicaciones</a>
                 </li>
             </ul>
@@ -72,6 +51,3 @@
         </ul>
     </div>
 </div>
-
-
-

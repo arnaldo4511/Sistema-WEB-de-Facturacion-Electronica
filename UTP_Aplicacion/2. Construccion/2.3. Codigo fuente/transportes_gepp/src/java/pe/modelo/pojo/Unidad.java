@@ -29,11 +29,7 @@ import javax.persistence.UniqueConstraint;
 public class Unidad  implements java.io.Serializable {
 
 
-<<<<<<< HEAD
      private String codigo; 
-=======
-     private String codigo;
->>>>>>> master
      @JsonIgnore
      private Usuario usuarioByIdUsuarioCreacion;
      @JsonIgnore

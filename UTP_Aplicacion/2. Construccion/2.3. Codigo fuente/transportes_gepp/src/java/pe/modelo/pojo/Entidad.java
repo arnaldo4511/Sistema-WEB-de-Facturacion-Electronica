@@ -113,7 +113,7 @@ public class Entidad implements java.io.Serializable {
         this.usuarioByIdUsuarioModificacion = usuarioByIdUsuarioModificacion;
     }
 
-    @JsonProperty
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario_creacion", nullable = false)
     public Usuario getUsuarioByIdUsuarioCreacion() {
