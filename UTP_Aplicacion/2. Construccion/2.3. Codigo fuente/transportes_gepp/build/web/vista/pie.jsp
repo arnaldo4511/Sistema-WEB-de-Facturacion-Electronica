@@ -1,7 +1,5 @@
 <div class="text-center">
-    © 2017 Copyright, 
     <a href="http://gepp.pe/"  target="_blank" >
-        GEPP
+    © 2017 Copyright, GEPP(Grupo Empresarial Poma Pacheco)
     </a>
-    (Grupo Empresarial Poma Pacheco)
 </div>
