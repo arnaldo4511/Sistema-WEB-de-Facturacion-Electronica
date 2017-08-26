@@ -7,17 +7,7 @@ package pe.modelo.dao.ventas;
 
 import pe.modelo.dao.publico.*;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import net.sf.jasperreports.engine.JRParameter;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.query.JRHibernateQueryExecuterFactory;
-import net.sf.jasperreports.engine.util.JRLoader;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -83,45 +73,6 @@ public class DocumentoVentaDao implements IDocumentoVentaDao {
             e.printStackTrace();
         }
         return documentoVenta;
-    }
-
-    @Override
-    public JasperPrint generarReporte(long id) {
-        DocumentoVenta documentoVenta = null;
-        JasperPrint rptDocumentoVenta = null;
-        try {
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
-            sesion.beginTransaction();
-            documentoVenta = (DocumentoVenta) sesion.load(DocumentoVenta.class, id);
-            //Hibernate.initialize(documentoVenta);
-            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("../../dto/ventas/rptDocumentoVenta.jasper"));
-            Map parameters = new HashMap();
-            //parameters.put("id", 1);
-            Locale locale = new Locale("es", "PE");
-            parameters.put(JRParameter.REPORT_LOCALE, locale);
-            //parameters.put(JRHibernateQueryExecuterFactory.PARAMETER_HIBERNATE_SESSION, sesion);
-
-            //parameters.put(JRHibernateQueryExecuterFactory.PARAMETER_HIBERNATE_SESSION, session);
-            //parameters.put("id", id);
-            JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(documentoVenta.getDocumentoVentaDetalles());
-            rptDocumentoVenta = JasperFillManager.fillReport(report, parameters, ds);
-            //List usuarios = session.createQuery("from UsuarioBean").list();
-//fileName = reporte.Path(REPORTE_IMPORTE);
-
-//cargamos el archivo
-//disenioReporte = JRXmlLoader.load(fileName); 
-//lo compilamos
-//JasperReport report = JasperCompileManager.compileReport(disenioReporte) ;
-//obtenmos de forma adecuada los valores de las select para incorporalos.
-//HibernateQueryResultDataSource ds = new HibernateQueryResultDataSource(usuarios,campos);
-//obtenemos lo que vamos a sacar
-//bytes = JasperRunManager.runReportToPdf(report, parameters, ds);
-            sesion.getTransaction().commit();
-            sesion.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return rptDocumentoVenta;
     }
 
     @Override

@@ -1,21 +1,16 @@
 package pe.controlador.ventas;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import java.io.ByteArrayOutputStream;
 import pe.controlador.administracion.*;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperPrint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,46 +51,6 @@ public class DocumentoVentaController {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
             out.println("{\"RSP\":\"ERROR\",\"MSG\":\"" + ex.getMessage() + "\"}");
-        }
-    }
-
-    @RequestMapping(value = "/documentoventa/descargar/{id}", method = RequestMethod.GET, produces = "application/pdf")
-    public void descargar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") long id) throws IOException {
-        //PrintWriter out = httpServletResponse.getWriter();
-        try {
-            JasperPrint print = documentoVentaDao.generarReporte(id);
-            //byte[] bytes = new byte[1];
-            //bytes = JasperExportManager.exportReportToPdf(print);
-            /*httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/pdf; charset=UTF-8");
-            httpServletResponse.setContentLength(bytes.length);
-            ServletOutputStream ouputStream = httpServletResponse.getOutputStream();
-            ouputStream.write(bytes);
-            ouputStream.flush();
-            ouputStream.close();*/
- /*httpServletResponse.setContentType("application/x-pdf");
-            httpServletResponse.setHeader("Content-disposition", "inline; filename=helloWorldReport.pdf");
-
-            final OutputStream outStream = httpServletResponse.getOutputStream();
-            JasperExportManager.exportReportToPdfStream(print, outStream);*/
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-            JasperExportManager.exportReportToPdfStream(print, out);
-
-            byte[] data = out.toByteArray();
-
-            httpServletResponse.setContentType("application/pdf");
-            //To make it a download change "inline" to "attachment"
-            httpServletResponse.setHeader("Content-disposition", "inline; filename=prueba.pdf");
-            httpServletResponse.setContentLength(data.length);
-
-            httpServletResponse.getOutputStream().write(data);
-            //httpServletResponse.getOutputStream().flush();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            httpServletResponse.setContentType("application/json; charset=UTF-8");
-            httpServletResponse.getWriter().println("{\"RSP\":\"ERROR\",\"MSG\":\"" + ex.getMessage() + "\"}");
         }
     }
 

@@ -7,7 +7,6 @@ package pe.modelo.dao.ventas;
 
 import pe.modelo.dao.publico.*;
 import java.util.List;
-import net.sf.jasperreports.engine.JasperPrint;
 import pe.modelo.dto.ventas.Parametro;
 import pe.modelo.pojo.DocumentoVenta;
 import pe.modelo.pojo.TipoDocumentoVenta;
@@ -23,8 +22,6 @@ public interface IDocumentoVentaDao {
     public void editar(DocumentoVenta documentoVenta);
 
     public DocumentoVenta buscar(long id);
-
-    public JasperPrint generarReporte(long id);
 
     public void eliminar(long id);
 

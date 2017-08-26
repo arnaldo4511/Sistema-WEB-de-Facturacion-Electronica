@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%@include file="/WEB-INF/imports.jspf" %>
         <script src="<%= request.getContextPath()%>/js/ventas/documentoventas.js" type="text/javascript"></script>
-        <title>Transportes :: Ventas</title>
+        <title>Transportes :: Rol</title>
         <style>
             .selected {
                 background-color: #4cae4c;
@@ -76,7 +76,7 @@
                         <div class="row clearfix">
                             <div class="col-sm-12">
                                 <div class="pull-right">
-                                    <button class="btn btn-default btn-lg" ng-click="descargarDocumentoVenta()"><span class="glyphicon glyphicon-save-file"></span></button>
+                                    <button class="btn btn-default btn-lg"><span class="glyphicon glyphicon-save-file"></span></button>
                                     <button class="btn btn-default btn-lg"><span class="glyphicon glyphicon-scissors"> Anular</span></button>
                                     <button class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"> Notificar</span></button>
                                     <button class="btn btn-default btn-lg"><span class="glyphicon glyphicon-duplicate"> Hacer Nota de Crédito</span></button>

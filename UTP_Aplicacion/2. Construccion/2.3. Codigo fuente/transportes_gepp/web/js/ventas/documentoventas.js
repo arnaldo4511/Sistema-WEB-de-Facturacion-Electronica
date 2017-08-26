@@ -5,14 +5,15 @@
  */
 
 var DocumentoVentasApp = angular.module("DocumentoVentasApp", ['ngAnimate', 'ngSanitize', 'ui.bootstrap']);
-angular.module('DocumentoVentasApp').directive("formatDate", function () {
+angular.module('DocumentoVentasApp').directive("formatDate", function() {
     return {
         require: 'ngModel',
-        link: function (scope, elem, attr, modelCtrl) {
-            modelCtrl.$formatters.push(function (modelValue) {
-                if (modelValue) {
+        link: function(scope, elem, attr, modelCtrl) {
+            modelCtrl.$formatters.push(function(modelValue) {
+                if (modelValue){
                     return new Date(modelValue);
-                } else {
+                }
+                else {
                     return null;
                 }
             });
@@ -83,7 +84,7 @@ DocumentoVentasApp.controller("DocumentoVentasController", ['$scope', '$http', '
         $scope.fechaDesde = new Date();
         //$scope.fechaDesde =Date.now();//$filter('date')('2017-01-01','yyyy-MM-dd');
         //$scope.fechaDesde = $filter('date')(Date.now(), 'yyyy-MM-dd');
-
+        
         $scope.tipoDocumentoVenta = {'codigo': '', 'nombre': ''};
         $scope.condicion = {'codigo': 'CON', 'nombre': 'CONTADO'};
         $scope.formaPago = {'codigo': 'EFE', 'nombre': 'EFECTIVO'};
@@ -104,21 +105,12 @@ DocumentoVentasApp.controller("DocumentoVentasController", ['$scope', '$http', '
         $scope.itemsPerPage = $scope.pagina.value;
         $scope.maxSize = 5;
         $scope.numero = "";
-        $scope.documentoVentaSeleccionado = {};
-        $scope.descargarDocumentoVenta = function () {
-            if ($scope.documentoVentaSeleccionado !== {})
-            {
-                $window.open('/transportes_gepp/controlador/documentoventa/descargar/' + $scope.documentoVentaSeleccionado.id), '_blank';
-            }
-        };
         $scope.setSelected = function (item) {
             //alert(item.id);
             if (this.selected === "") {
                 this.selected = "selected";
-                $scope.documentoVentaSeleccionado = item;
             } else {
                 this.selected = "";
-                $scope.documentoVentaSeleccionado = {};
             }
         }
         $scope.listar = function () {
