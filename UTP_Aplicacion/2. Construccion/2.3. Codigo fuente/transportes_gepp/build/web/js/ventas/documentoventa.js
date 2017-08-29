@@ -86,7 +86,7 @@ DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$f
             documentoVenta.tipoTargeta = $scope.tipoTargeta.codigo;
             documentoVenta.banco = $scope.banco.codigo;
             //documentoVenta.numero = '00000000';
-            console.log(documentoVenta);
+            //console.log(documentoVenta);
             //return;
             //return;
             //usuario.usuarioByIdDocumentoVentaCreacion = $scope.sesion.usuario;
@@ -96,8 +96,8 @@ DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$f
                 url: '/transportes_gepp/controlador/documentoventa/crear',
                 data: documentoVenta
             }).then(function success(response) {
-                console.log(response.data);
-                //$scope.listar();
+                if(response.data.id>0){
+                $scope.cancelar();}
             }, function error(response) {
                 //console.log(response.data);
             });

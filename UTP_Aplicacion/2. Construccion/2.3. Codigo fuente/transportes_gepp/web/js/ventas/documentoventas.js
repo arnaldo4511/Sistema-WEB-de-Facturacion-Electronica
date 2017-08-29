@@ -5,15 +5,14 @@
  */
 
 var DocumentoVentasApp = angular.module("DocumentoVentasApp", ['ngAnimate', 'ngSanitize', 'ui.bootstrap']);
-angular.module('DocumentoVentasApp').directive("formatDate", function() {
+angular.module('DocumentoVentasApp').directive("formatDate", function () {
     return {
         require: 'ngModel',
-        link: function(scope, elem, attr, modelCtrl) {
-            modelCtrl.$formatters.push(function(modelValue) {
-                if (modelValue){
+        link: function (scope, elem, attr, modelCtrl) {
+            modelCtrl.$formatters.push(function (modelValue) {
+                if (modelValue) {
                     return new Date(modelValue);
-                }
-                else {
+                } else {
                     return null;
                 }
             });
@@ -84,10 +83,12 @@ DocumentoVentasApp.controller("DocumentoVentasController", ['$scope', '$http', '
         $scope.fechaDesde = new Date();
         //$scope.fechaDesde =Date.now();//$filter('date')('2017-01-01','yyyy-MM-dd');
         //$scope.fechaDesde = $filter('date')(Date.now(), 'yyyy-MM-dd');
-        
+
         $scope.tipoDocumentoVenta = {'codigo': '', 'nombre': ''};
         $scope.condicion = {'codigo': 'CON', 'nombre': 'CONTADO'};
         $scope.formaPago = {'codigo': 'EFE', 'nombre': 'EFECTIVO'};
+        $scope.tipoNotificacions = [{'codigo': 'CLI', 'nombre': 'CLIENTE'}, {'codigo': 'PER', 'nombre': 'PERSONALIZADO'}];
+        $scope.tipoNotificacion = {'codigo': 'CLI', 'nombre': 'CLIENTE'};
         //alert($filter('date')(Date.now(), 'dd-MM-yyyy'));
         //$scope.documentoVenta.fechaEmision = $filter('date')(Date.now(), 'dd-MM-yyyy');//'yyyy-MM-dd'
         $scope.clientes = [];
@@ -105,13 +106,26 @@ DocumentoVentasApp.controller("DocumentoVentasController", ['$scope', '$http', '
         $scope.itemsPerPage = $scope.pagina.value;
         $scope.maxSize = 5;
         $scope.numero = "";
-        $scope.setSelected = function (item) {
-            //alert(item.id);
-            if (this.selected === "") {
-                this.selected = "selected";
-            } else {
-                this.selected = "";
+        $scope.documentoVentaSeleccionado = {};
+        $scope.descargarDocumentoVenta = function () {
+            if ($scope.documentoVentaSeleccionado !== {})
+            {
+                $window.open('/transportes_gepp/controlador/documentoventa/descargar/' + $scope.documentoVentaSeleccionado.id), '_blank';
             }
+        };
+        $scope.setSelected = function (row, item) {
+            //alert(item.id)
+            //console.log(row);
+            //console.log(item);
+            $scope.selectedRow = row;
+            $scope.documentoVentaSeleccionado = item;
+            /*if (this.selected === "") {
+             this.selected = "selected";
+             $scope.documentoVentaSeleccionado = item;
+             } else {
+             this.selected = "";
+             $scope.documentoVentaSeleccionado = {};
+             }*/
         }
         $scope.listar = function () {
             $scope.documentoVentas = [];
@@ -205,6 +219,26 @@ DocumentoVentasApp.controller("DocumentoVentasController", ['$scope', '$http', '
                 //console.log(response.data);
             });
         };
+        $scope.nuevaNotificacion = function () {
+            $scope.notificacion = {};
+            $scope.notificacion.idDocumentoVenta = $scope.documentoVentaSeleccionado.id;
+        };
+        $scope.notificacion = {};
+        $scope.notificar = function () {
+            $scope.notificacion.tipo = $scope.tipoNotificacion.codigo;
+            console.log($scope.notificacion);
+            $http({
+                method: 'POST',
+                url: '/transportes_gepp/controlador/documentoventa/enviarcliente',
+                data: $scope.notificacion
+            }).then(function success(response) {
+                console.log(response.data);
+                //$scope.listar();
+            }, function error(response) {
+                //console.log(response.data);
+            });
+        };
+
         $scope.completarCliente = function (criterio) {
             if (criterio === undefined || criterio.trim() === "")
             {

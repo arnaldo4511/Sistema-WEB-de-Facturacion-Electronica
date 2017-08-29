@@ -66,11 +66,12 @@ public class DocumentoVenta implements java.io.Serializable {
     @JsonIgnore
     private Set<DocumentoVentaDetalle> documentoVentaDetalles = new HashSet<DocumentoVentaDetalle>(0);
     private String tipoTargeta;
+    private String totalLetras;
 
     public DocumentoVenta() {
     }
 
-    public DocumentoVenta(long id, Usuario usuarioByIdUsuarioCreacion, Empresa empresa, Moneda moneda, EstadoDocumentoVenta estadoDocumentoVenta, PuntoVenta puntoVenta, PuntoVentaSerie puntoVentaSerie, TipoDocumentoVenta tipoDocumentoVenta, String condicion, String formaPago, Date fechaEmision, String numero, double totalGratuito, double totalDescuento, double totalGrabado, double totalIgv, double total, Date fechaCreacion, String tipoTargeta) {
+    public DocumentoVenta(long id, Usuario usuarioByIdUsuarioCreacion, Empresa empresa, Moneda moneda, EstadoDocumentoVenta estadoDocumentoVenta, PuntoVenta puntoVenta, PuntoVentaSerie puntoVentaSerie, TipoDocumentoVenta tipoDocumentoVenta, String condicion, String formaPago, Date fechaEmision, String numero, double totalGratuito, double totalDescuento, double totalGrabado, double totalIgv, double total, Date fechaCreacion, String tipoTargeta, String totalLetras) {
         this.id = id;
         this.usuarioByIdUsuarioCreacion = usuarioByIdUsuarioCreacion;
         this.empresa = empresa;
@@ -90,6 +91,7 @@ public class DocumentoVenta implements java.io.Serializable {
         this.total = total;
         this.fechaCreacion = fechaCreacion;
         this.tipoTargeta = tipoTargeta;
+        this.totalLetras = totalLetras;
     }
 
     public DocumentoVenta(long id, Usuario usuarioByIdUsuarioModificacion, Usuario usuarioByIdUsuarioCreacion, Empresa empresa, Moneda moneda, Cliente cliente, EstadoDocumentoVenta estadoDocumentoVenta, PuntoVenta puntoVenta, PuntoVentaSerie puntoVentaSerie, TipoDocumentoVenta tipoDocumentoVenta, String condicion, String formaPago, String banco, String numeroPago, Date fechaEmision, Date fechaVencimiento, String guiaRemision, String numero, double totalGratuito, double totalDescuento, double totalGrabado, double totalIgv, double total, Date fechaCreacion, Date fechaModificacion, Set<ResumenVentasGrupoVenta> resumenVentasGrupoVentas, Set<DocumentoVentaDetalle> documentoVentaDetalles, String tipoTargeta) {
@@ -121,6 +123,7 @@ public class DocumentoVenta implements java.io.Serializable {
         this.resumenVentasGrupoVentas = resumenVentasGrupoVentas;
         this.documentoVentaDetalles = documentoVentaDetalles;
         this.tipoTargeta = tipoTargeta;
+        this.totalLetras = totalLetras;
     }
 
     @Id
@@ -396,4 +399,14 @@ public class DocumentoVenta implements java.io.Serializable {
     public void setTipoTargeta(String tipoTargeta) {
         this.tipoTargeta = tipoTargeta;
     }
+
+    @Column(name = "total_letras")
+    public String getTotalLetras() {
+        return this.tipoTargeta;
+    }
+
+    public void setTotalLetras(String totalLetras) {
+        this.totalLetras = totalLetras;
+    }
+
 }

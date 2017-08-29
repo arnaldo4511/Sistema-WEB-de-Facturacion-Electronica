@@ -11,10 +11,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%@include file="/WEB-INF/imports.jspf" %>
         <script src="<%= request.getContextPath()%>/js/ventas/documentoventas.js" type="text/javascript"></script>
-        <title>Transportes :: Rol</title>
+        <title>Transportes :: Ventas</title>
         <style>
-            .selected {
-                background-color: #4cae4c;
+            .active{
+                border:2px solid;
             }
         </style>
     </head>
@@ -26,7 +26,7 @@
                 </aside>
             </div>
             <div class='row clearfix'>
-                    <div class="col-sm-3">
+                <div class="col-sm-3">
                     <aside>
                         <ng-include src="'<%= request.getContextPath()%>/vista/menu.jsp'"></ng-include>
                     </aside>
@@ -76,9 +76,9 @@
                         <div class="row clearfix">
                             <div class="col-sm-12">
                                 <div class="pull-right">
-                                    <button class="btn btn-default btn-lg"><span class="glyphicon glyphicon-save-file"></span></button>
+                                    <button class="btn btn-default btn-lg" ng-click="descargarDocumentoVenta()"><span class="glyphicon glyphicon-save-file"></span></button>
                                     <button class="btn btn-default btn-lg"><span class="glyphicon glyphicon-scissors"> Anular</span></button>
-                                    <button class="btn btn-default btn-lg"><span class="glyphicon glyphicon-envelope"> Notificar</span></button>
+                                    <button class="btn btn-default btn-lg" ng-click="nuevaNotificacion()" ng-disabled="documentoVentaSeleccionado==={}"><span class="glyphicon glyphicon-envelope" data-toggle="modal" data-target="#modalNotificacion"> Notificar</span></button>
                                     <button class="btn btn-default btn-lg"><span class="glyphicon glyphicon-duplicate"> Hacer Nota de Crédito</span></button>
                                     <button class="btn btn-default btn-lg"><span class="glyphicon glyphicon-duplicate"> Hacer Nota de Débito</span></button>
                                     <button class="btn btn-default btn-lg" ng-click="crear()"><span class="glyphicon glyphicon glyphicon-plus"> Crear</span></button>
@@ -111,7 +111,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="item in documentoVentas" ng-click="setSelected(item)" class="{{selected}}">
+                                        <tr ng-repeat="item in documentoVentas" ng-click="setSelected($index, item)" ng-class="{active:$index == selectedRow}">
                                             <td>{{$index + 1}}</td>
                                             <td>{{item.tipoDocumentoVenta.nombre}}</td>
                                             <td>{{item.estadoDocumentoVenta.nombre}}</td>
@@ -136,6 +136,79 @@
                                 <div class="pull-right">
                                     Ver <select style="width: auto;" class="feature-icon form-control"  ng-options="pagina.value for pagina in paginas track by pagina.value"  ng-model="pagina" ng-change="setItemsPerPage(pagina.value)" ng-init="paginas[0].value">
                                     </select> de <b>{{totalItems}}</b> Registro(s)
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modalNotificacion" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Notificación</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="form-horizontal" role="form" name="formNotificacion">
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3" >Tipo:</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control" name="tipoNotificacion"  ng-model="tipoNotificacion" ng-options="tipoNotificacion.nombre for tipoNotificacion in tipoNotificacions track by tipoNotificacion.codigo"  required>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3" >Email:</label>
+                                                <div class="col-sm-9" ng-class="{ 'has-error' : formNotificacion.notificacion.email.$invalid && !formNotificacion.notificacion.email.$pristine }">
+                                                    <input type="email" name="notificacion.email"  ng-model="notificacion.email"  class="form-control" ng-disabled="tipoNotificacion.codigo === 'CLI'" ng-required="tipoNotificacion.codigo === 'PER'"/>
+                                                    <p ng-show="formNotificacion.notificacion.email.$invalid && !formNotificacion.notificacion.email.$pristine" class="help-block">Introduzca un correo electrónico válido.</p>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="notificar(documentoVenta)" <!--ng-disabled="formNotificacion.$invalid"-->>Notificar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modalAnulacion" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Anulación</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="form-horizontal" role="form" name="formNotificacion">
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3" >Tipo:</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control" name="tipoNotificacion"  ng-model="tipoNotificacion" ng-options="tipoNotificacion.nombre for tipoNotificacion in tipoNotificacions track by tipoNotificacion.codigo"  required>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-3" >Motivo:</label>
+                                                <div class="col-sm-9" ng-class="{ 'has-error' : formNotificacion.email.$invalid && !formNotificacion.email.$pristine }">
+                                                    <textarea class="form-control"></textarea>
+                                                    <input type="email" name="email"  ng-model="email"  class="form-control" ng-disabled="tipoNotificacion.codigo === 'CLI'" ng-required="tipoNotificacion.codigo === 'PER'"/>
+                                                    <p ng-show="formNotificacion.email.$invalid && !formNotificacion.email.$pristine" class="help-block">Introduzca un correo electrónico válido.</p>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="notificar(documentoVenta)" ng-disabled="formNotificacion.$invalid">Notificar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

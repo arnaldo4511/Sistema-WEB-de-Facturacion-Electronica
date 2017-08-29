@@ -3,11 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/vista/ingreso.jsp</file>
-            <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/WEB-INF/applicationContext.xml</file>
-            <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/dao/ventas/DocumentoVentaDao.java</file>
             <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/octavio/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/hibernate.cfg.xml</file>
         </group>
     </open-files>
 </project-private>
