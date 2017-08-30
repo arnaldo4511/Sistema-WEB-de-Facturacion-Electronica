@@ -33,17 +33,29 @@
                             <fieldset class="scheduler-border">
                                 <legend class="scheduler-border">VENTA</legend>
                                 <div class="row clearfix">
-                                    <div class="form-group col-sm-2">
+                                    <div class="form-group col-sm-4">
                                         <label >Tipo:</label>
                                         <select class="form-control" ng-init="tipoDocumentoVentas[0].value" ng-model="documentoVenta.tipoDocumentoVenta" ng-options="tipoDocumentoVenta.nombre for tipoDocumentoVenta in tipoDocumentoVentas track by tipoDocumentoVenta.codigo" required="true" ></select>
                                     </div>
                                     <div class="form-group col-sm-3">
                                         <label >Fec. de Emisión</label>
-                                        <input type="date" class="form-control" ng-model="documentoVenta.fechaEmision" required="true"   min="2017-01-01" max="2017-12-31" >
+                                        <input type="date" class="form-control" ng-model="documentoVenta.fechaEmision" required="true"    >
                                     </div>
                                     <div class="form-group col-sm-2">
                                         <label >Condición</label>
                                         <select ng-change="cambiarCondicionVenta()"  class="form-control" ng-init="condiciones[0].value" ng-model="condicion" ng-options="condicion.nombre for condicion in condiciones track by condicion.codigo"></select>
+                                    </div>
+                                    <div class="form-group col-sm-2">
+                                        <label >Factura / Boleta</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <label >Tipo Nota Crédito</label>
+                                        <select class="form-control" ng-model="documentoVenta.tipoNotaCredito" ng-options="tipoNotaCredito.nombre for tipoNotaCredito in tipoNotaCreditos track by tipoNotaCredito.codigo"></select>
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <label >Tipo Nota Débito</label>
+                                        <select class="form-control" ng-model="documentoVenta.tipoNotaDebito" ng-options="tipoNotaDebito.nombre for tipoNotaDebito in tipoNotaDebitos track by tipoNotaDebito.codigo"></select>
                                     </div>
                                     <div class="form-group col-sm-3">
                                         <label >Fec. de Vencto.</label>

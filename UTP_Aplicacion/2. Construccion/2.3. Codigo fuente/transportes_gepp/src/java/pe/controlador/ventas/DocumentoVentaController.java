@@ -23,10 +23,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import pe.controlador.JsonTransformer;
-import pe.modelo.dto.ventas.Parametro;
+import pe.modelo.dto.ParametroDto;
 import pe.modelo.dao.ventas.IDocumentoVentaDao;
 import pe.modelo.dto.ventas.NotificacionDto;
-import pe.modelo.pojo.CargaSesion;
 import pe.modelo.pojo.DocumentoVenta;
 import pe.modelo.pojo.TipoDocumentoVenta;
 
@@ -43,8 +42,8 @@ public class DocumentoVentaController {
     public void listar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) throws IOException {
         PrintWriter out = httpServletResponse.getWriter();
         try {
-            //List<Parametro> parametros = (List<Parametro>) jsonTransformer.fromJson(jsonEntrada,Parametro[].class);
-            Parametro[] parametros = (Parametro[]) jsonTransformer.fromJson(jsonEntrada, Parametro[].class);
+            //List<Parametro> parametros = (List<Parametro>) jsonTransformer.fromJson(jsonEntrada,ParametroDto[].class);
+            ParametroDto[] parametros = (ParametroDto[]) jsonTransformer.fromJson(jsonEntrada, ParametroDto[].class);
             List<DocumentoVenta> lista = documentoVentaDao.listar(parametros);
             long total = documentoVentaDao.totalDocumentoVentas(parametros);
             String jsonSalida = "{\"lista\":" + jsonTransformer.toJson(lista) + ",\"total\":" + total + "}";

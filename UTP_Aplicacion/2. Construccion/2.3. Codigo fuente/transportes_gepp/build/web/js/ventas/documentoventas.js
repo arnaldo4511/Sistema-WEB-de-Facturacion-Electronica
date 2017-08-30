@@ -98,6 +98,7 @@ DocumentoVentasApp.controller("DocumentoVentasController", ['$scope', '$http', '
             $scope.sesion = response.data;
             $scope.roles = $scope.sesion.roles;
             $scope.puntoVentas = $scope.sesion.puntoVentas;
+            console.log($scope.sesion.vwSelDocumentoVentas);
         }, function myError(response) {
         });
         $scope.pagina.value = 5;
@@ -110,7 +111,7 @@ DocumentoVentasApp.controller("DocumentoVentasController", ['$scope', '$http', '
         $scope.descargarDocumentoVenta = function () {
             if ($scope.documentoVentaSeleccionado !== {})
             {
-                $window.open('/transportes_gepp/controlador/documentoventa/descargar/' + $scope.documentoVentaSeleccionado.id), '_blank';
+                $window.open('/transportes_gepp/controlador/documentoventa/descargar/' + $scope.documentoVentaSeleccionado.id, '_blank');
             }
         };
         $scope.setSelected = function (row, item) {
@@ -177,7 +178,9 @@ DocumentoVentasApp.controller("DocumentoVentasController", ['$scope', '$http', '
             $scope.listar();
         }
         $scope.crear = function () {
-            $window.location.href = 'documentoventa.jsp';
+            $window.open('documentoventa.jsp',"_self");
+            
+            //$window.location.href = 'documentoventa.jsp';
         }
 
         $scope.validar = function () {

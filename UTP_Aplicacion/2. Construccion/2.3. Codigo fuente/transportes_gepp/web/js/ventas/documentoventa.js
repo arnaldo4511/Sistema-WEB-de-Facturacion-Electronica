@@ -5,7 +5,12 @@
  */
 
 var DocumentoVentaApp = angular.module("DocumentoVentaApp", ['ngAnimate', 'ngSanitize', 'ui.bootstrap']);
-DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$filter', '$window', function ($scope, $http, $filter, $window) {
+DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$filter', '$window', '$location', function ($scope, $http, $filter, $window, $location) {
+        //console.log("s:"+$location.search());
+        $scope.parametros = {};
+        $window.location.search.replace(/\?/, '').split('&').map(function (o) {
+            $scope.parametros[o.split('=')[0]] = o.split('=')[1]
+        });
         $scope.sesion = {};
         $scope.documentoVenta = {};
         $scope.producto = {};
@@ -25,9 +30,9 @@ DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$f
         $scope.tipoDocumentoEntidades = [
             {'codigo': '1', 'nombre': 'DNI'},
             {'codigo': '9', 'nombre': 'RUC'}];
-        $scope.tipoDocumentoVentas = [
+        /*$scope.tipoDocumentoVentas = [
             {'codigo': '01', 'nombre': 'FACTURA'},
-            {'codigo': '03', 'nombre': 'BOLETA DE VENTA'}];
+            {'codigo': '03', 'nombre': 'BOLETA DE VENTA'}];*/
         $scope.condiciones = [
             {'codigo': 'CON', 'nombre': 'CONTADO'},
             {'codigo': 'CRE', 'nombre': 'CRÉDITO'}];
@@ -49,6 +54,8 @@ DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$f
         $scope.documentoVenta.tipoDocumentoVenta = {'codigo': '01', 'nombre': 'FACTURA'};
         $scope.condicion = {'codigo': 'CON', 'nombre': 'CONTADO'};
         $scope.formaPago = {'codigo': 'EFE', 'nombre': 'EFECTIVO'};
+        
+        $scope.documentoVenta.fechaEmision = new Date();
         //alert($filter('date')(Date.now(), 'dd-MM-yyyy'));
         //$scope.documentoVenta.fechaEmision = $filter('date')(Date.now(), 'dd-MM-yyyy');//'yyyy-MM-dd'
         $scope.clientes = [];
@@ -58,6 +65,10 @@ DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$f
             $scope.sesion = response.data;
             $scope.roles = $scope.sesion.roles;
             $scope.puntoVentas = $scope.sesion.puntoVentas;
+            $scope.tipoDocumentoVentas = $scope.sesion.tipoDocumentoVentas;
+            $scope.tipoNotaCreditos = $scope.sesion.tipoNotaCreditos;
+            $scope.tipoNotaDebitos = $scope.sesion.tipoNotaDebitos;
+            
         }, function myError(response) {
         });
         $scope.cancelar = function () {
@@ -96,8 +107,9 @@ DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$f
                 url: '/transportes_gepp/controlador/documentoventa/crear',
                 data: documentoVenta
             }).then(function success(response) {
-                if(response.data.id>0){
-                $scope.cancelar();}
+                if (response.data.id > 0) {
+                    $scope.cancelar();
+                }
             }, function error(response) {
                 //console.log(response.data);
             });

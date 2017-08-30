@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pe.modelo.dto.ventas;
+package pe.modelo.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,17 +11,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @author octavio
  */
-public class Parametro {
+public class ParametroDto {
 
     @JsonProperty("nombre")
     private String nombre;
     @JsonProperty("valor")
     private String valor;
 
-    public Parametro() {
+    public ParametroDto() {
     }
 
-    public Parametro(String nombre, String valor) {
+    public ParametroDto(String nombre, String valor) {
         this.nombre = nombre;
         this.valor = valor;
     }

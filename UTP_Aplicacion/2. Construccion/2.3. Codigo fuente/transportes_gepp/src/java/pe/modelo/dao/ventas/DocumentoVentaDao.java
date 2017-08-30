@@ -41,7 +41,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
-import pe.modelo.dto.ventas.Parametro;
+import pe.modelo.dto.ParametroDto;
 import pe.modelo.dao.HibernateUtil;
 import pe.modelo.pojo.DocumentoVenta;
 import pe.modelo.pojo.DocumentoVentaDetalle;
@@ -107,7 +107,7 @@ public class DocumentoVentaDao implements IDocumentoVentaDao {
     public JasperPrint generarReporte(DocumentoVenta documentoVenta) {
         JasperPrint rptDocumentoVenta = null;
         try {
-            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("../../dto/ventas/rptDocumentoVenta.jasper"));
+            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("../../reportes/ventas/rptDocumentoVenta.jasper"));
             Map parameters = new HashMap();
             Locale locale = new Locale("es", "PE");
             parameters.put(JRParameter.REPORT_LOCALE, locale);
@@ -134,7 +134,7 @@ public class DocumentoVentaDao implements IDocumentoVentaDao {
     }
 
     @Override
-    public List<DocumentoVenta> listar(Parametro[] parametros) {
+    public List<DocumentoVenta> listar(ParametroDto[] parametros) {
         List<DocumentoVenta> lista = null;
         try {
             DetachedCriteria detachedCriteria = DetachedCriteria.forClass(DocumentoVenta.class);
@@ -157,7 +157,7 @@ public class DocumentoVentaDao implements IDocumentoVentaDao {
     }
 
     @Override
-    public long totalDocumentoVentas(Parametro[] parametros) {
+    public long totalDocumentoVentas(ParametroDto[] parametros) {
         long total = 0;
         try {
             DetachedCriteria detachedCriteria = DetachedCriteria.forClass(DocumentoVenta.class);

@@ -17,7 +17,7 @@
     <bean class="pe.modelo.dao.ventas.DocumentoVentaDao" />
     <bean class="pe.modelo.dao.almacen.ProductoDao" />
     <bean class="pe.modelo.dao.ventas.ClienteDao" />
-    <bean class="pe.modelo.dto.ventas.Parametro" />
+    <bean class="pe.modelo.dto.ParametroDto" />
     <bean class="pe.modelo.dao.ventas.ResumenVentaDao" />
 
     <!--bean id="propertyConfigurer"

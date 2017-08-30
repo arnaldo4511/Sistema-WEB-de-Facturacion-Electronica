@@ -9,7 +9,7 @@ import pe.modelo.dao.publico.*;
 import java.util.List;
 import net.sf.jasperreports.engine.JasperPrint;
 import pe.modelo.dto.ventas.NotificacionDto;
-import pe.modelo.dto.ventas.Parametro;
+import pe.modelo.dto.ParametroDto;
 import pe.modelo.pojo.DocumentoVenta;
 import pe.modelo.pojo.TipoDocumentoVenta;
 
@@ -31,9 +31,9 @@ public interface IDocumentoVentaDao {
 
     public void eliminar(long id);
 
-    public List<DocumentoVenta> listar(Parametro[] parametros);
+    public List<DocumentoVenta> listar(ParametroDto[] parametros);
 
-    public long totalDocumentoVentas(Parametro[] parametros);
+    public long totalDocumentoVentas(ParametroDto[] parametros);
 
     public List<DocumentoVenta> autocompletar(String criterio);
 
