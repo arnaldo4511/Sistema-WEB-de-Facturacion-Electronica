@@ -15,6 +15,14 @@ ResumenVentaApp.filter('startFrom', function () {
     }
 });
 ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$window', function ($scope, $http, $window) {
+        $scope.puntoVentaSeries = [
+            {'codigo': ''},
+            {'codigo': 'B001'},
+            {'codigo': 'B002'},
+            {'codigo': 'F001'},
+            {'codigo': 'F007'},
+            {'codigo': 'F008'}];
+        $scope.puntoVentaSerie = {'codigo': ''};
         $scope.sesion = {};
         $scope.productoTmp = {};
         $scope.resumenVentas = [];
@@ -52,12 +60,12 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
             }, function myError(response) {
             });
         };
-        $scope.listarDocumentoVenta = function (tipoDocumento) {
+        $scope.listarDocumentoVenta = function () {
             $scope.documentoVentas = [];
             $scope.parametros = [];
             $scope.parametro = {};
             $scope.parametro.nombre = "tipoDocumentoVenta.codigo";
-            $scope.parametro.valor = tipoDocumento;
+            $scope.parametro.valor = "03";
             $scope.parametros.push($scope.parametro);
             $scope.parametro = {};
             $scope.parametro.nombre = "currentPage";
@@ -70,6 +78,10 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
             $scope.parametro = {};
             $scope.parametro.nombre = "numero";
             $scope.parametro.valor = "";
+            $scope.parametros.push($scope.parametro);
+            $scope.parametro = {};
+            $scope.parametro.nombre = "puntoVentaSerie.codigo";
+            $scope.parametro.valor = $scope.puntoVentaSerie.codigo;
             $scope.parametros.push($scope.parametro);
             console.log($scope.parametros);
             //$scope.parametros.push($scope.parametro);
@@ -193,7 +205,7 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
             //$scope.personalDetails = newDataList;
         };
         
-        $scope.selectDocumentoVentas = function () {
+        $scope.selectDocumentoVentasBaja = function () {
             //$scope.resumenVentasGrupos = [];
             $scope.comunicacionBajaGrupos = [];
             $scope.comunicacionBajaGrupo = {};

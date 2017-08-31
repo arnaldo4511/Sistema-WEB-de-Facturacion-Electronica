@@ -137,14 +137,22 @@ public class DocumentoVentaDao implements IDocumentoVentaDao {
     public List<DocumentoVenta> listar(ParametroDto[] parametros) {
         List<DocumentoVenta> lista = null;
         try {
+            System.out.println("parametros[0] "+parametros[0].getValor());
+            System.out.println("parametros[1] "+parametros[1].getValor());
+            System.out.println("parametros[2] "+parametros[2].getValor());
+            System.out.println("parametros[3] "+parametros[3].getValor());
+            System.out.println("parametros[4] "+parametros[4].getValor());
             DetachedCriteria detachedCriteria = DetachedCriteria.forClass(DocumentoVenta.class);
             if (!parametros[0].getValor().equals("")) {
                 detachedCriteria.add(Property.forName("tipoDocumentoVenta.codigo").eq(parametros[0].getValor()));
             }
+            if (!parametros[4].getValor().equals("")) {
+                detachedCriteria.add(Property.forName("puntoVentaSerie.codigo").eq(parametros[4].getValor()));
+            }
             detachedCriteria.add(Property.forName("numero").like("%" + parametros[3].getValor() + "%"));
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            lista = detachedCriteria.getExecutableCriteria(sesion).setFirstResult(Integer.parseInt(parametros[1].getValor())).setMaxResults(Integer.parseInt(parametros[2].getValor())).list();
+            lista = detachedCriteria.getExecutableCriteria(sesion).setFirstResult(Integer.parseInt(parametros[1].getValor())).setMaxResults(Integer.parseInt(parametros[2].getValor())).addOrder(Property.forName("tipoDocumentoVenta.codigo").desc())/*.addOrder(Property.forName("numero").asc())*/.list();
             //List<DocumentoVenta> lista2 = sesion.createCriteria(DocumentoVenta.class).list();
             //Query query = sesion.createQuery("FROM DocumentoVenta order by id");
             //lista = query.list();

@@ -147,6 +147,10 @@ DocumentoVentasApp.controller("DocumentoVentasController", ['$scope', '$http', '
             $scope.parametro.nombre = "numero";
             $scope.parametro.valor = $scope.numero;
             $scope.parametros.push($scope.parametro);
+            $scope.parametro = {};
+            $scope.parametro.nombre = "puntoVentaSerie.codigo";
+            $scope.parametro.valor = "";
+            $scope.parametros.push($scope.parametro);
             console.log($scope.parametros);
             //$scope.parametros.push($scope.parametro);
             $http({

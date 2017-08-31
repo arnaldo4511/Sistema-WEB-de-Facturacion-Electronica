@@ -264,7 +264,13 @@
                                                     <tr>
                                                         <th></th>
                                                         <th>#</th>
-                                                        <th>Serie</th>
+                                                        <th>
+                                                            Serie<br>
+                                                            <select class="form-control"
+                                                                    ng-init="puntoVentaSeries[0].value" ng-model="puntoVentaSerie" ng-options="puntoVentaSerie.codigo for puntoVentaSerie in puntoVentaSeries track by puntoVentaSerie.codigo"
+                                                                    ng-change="listarDocumentoVenta()">
+                                                            </select>
+                                                        </th>
                                                         <th>Número</th>
                                                         <th>Total</th>
                                                     </tr>
