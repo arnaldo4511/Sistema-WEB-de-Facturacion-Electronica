@@ -28,3 +28,10 @@ legend.scheduler-border {
 .footer {
     background-color: #ededed;
 }
+
+.elementRight{
+    float: right;
+}
+.modalMedium{
+    width: 61em;
+}
