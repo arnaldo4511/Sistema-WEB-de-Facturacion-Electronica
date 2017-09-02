@@ -56,16 +56,16 @@ public class ResumenVentaController {
         
     }
     
-    /*@RequestMapping(value = "/producto/crear", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    @RequestMapping(value = "/resumenventa/crear", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void crear(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) {
-        try {
-            System.out.println("insertttttttttttttttttttt");
+        //try {
+            System.out.println("crearrrrrrrrrrrrrrrrrrrrrrr");
             System.out.println("jsonEntrada "+jsonEntrada);
-            Producto producto = (Producto) jsonTransformer.fromJson(jsonEntrada, Producto.class);
+            /*Producto producto = (Producto) jsonTransformer.fromJson(jsonEntrada, Producto.class);
             System.out.println("Producto "+producto);
             producto.setFechaCreacion(new Date());
             System.out.println("Productooooooo "+producto);
-            productoDao.crear(producto);
+            resumenVentaDao.crear(producto);
             if (producto.getId() > 0) {
                 String jsonSalida = jsonTransformer.toJson(producto);
                 httpServletResponse.setStatus(HttpServletResponse.SC_OK);
@@ -86,11 +86,11 @@ public class ResumenVentaController {
                 ex.printStackTrace(httpServletResponse.getWriter());
             } catch (IOException ex1) {
                 Logger.getLogger(ResumenVentaController.class.getName()).log(Level.SEVERE, null, ex1);
-            }
-        }
+            }*/
+        //}
     }
     
-    @RequestMapping(value = "/producto/editar", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    /*@RequestMapping(value = "/producto/editar", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void editar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) throws IOException {
         PrintWriter out = httpServletResponse.getWriter();
         try {

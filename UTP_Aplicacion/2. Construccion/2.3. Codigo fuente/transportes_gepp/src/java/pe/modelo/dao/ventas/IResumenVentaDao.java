@@ -15,9 +15,9 @@ import pe.modelo.pojo.ResumenVentas;
  */
 public interface IResumenVentaDao {
 
-    /*public void crear(Producto producto);
+    public void crear(ResumenVentas resumenVentas);
     
-    public void editar(Producto producto);
+    /*public void editar(Producto producto);
 
     public Producto buscar(long id);
 

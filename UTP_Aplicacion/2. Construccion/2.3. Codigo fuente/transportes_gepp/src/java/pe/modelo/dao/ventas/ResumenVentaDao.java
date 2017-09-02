@@ -20,13 +20,13 @@ import pe.modelo.pojo.ResumenVentas;
  */
 public class ResumenVentaDao implements IResumenVentaDao {
 
-    /*@Override
-    public void crear(Producto producto) {
+    @Override
+    public void crear(ResumenVentas resumenVentas) {
         try {
-            System.out.println("ProductoCrear " + producto);
+            System.out.println("resumenVentas " + resumenVentas);
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            sesion.save(producto);
+            sesion.save(resumenVentas);
             sesion.getTransaction().commit();
             sesion.close();
         } catch (Exception e) {
@@ -34,7 +34,7 @@ public class ResumenVentaDao implements IResumenVentaDao {
         }
     }
     
-    @Override
+    /*@Override
     public void editar(Producto producto) {
         try {
             Session sesion = HibernateUtil.getSessionFactory().openSession();

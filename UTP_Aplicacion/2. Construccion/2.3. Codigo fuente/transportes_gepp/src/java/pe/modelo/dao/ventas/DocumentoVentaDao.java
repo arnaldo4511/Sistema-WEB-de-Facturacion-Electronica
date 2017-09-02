@@ -5,6 +5,7 @@
  */
 package pe.modelo.dao.ventas;
 
+import java.text.SimpleDateFormat;
 import pe.modelo.dao.publico.*;
 import java.util.Date;
 import java.util.HashMap;
@@ -41,6 +42,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
+import org.hibernate.criterion.Restrictions;
 import pe.modelo.dto.ParametroDto;
 import pe.modelo.dao.HibernateUtil;
 import pe.modelo.pojo.DocumentoVenta;
@@ -142,6 +144,7 @@ public class DocumentoVentaDao implements IDocumentoVentaDao {
             System.out.println("parametros[2] "+parametros[2].getValor());
             System.out.println("parametros[3] "+parametros[3].getValor());
             System.out.println("parametros[4] "+parametros[4].getValor());
+            System.out.println("parametros[5] "+parametros[5].getValor());
             DetachedCriteria detachedCriteria = DetachedCriteria.forClass(DocumentoVenta.class);
             if (!parametros[0].getValor().equals("")) {
                 detachedCriteria.add(Property.forName("tipoDocumentoVenta.codigo").eq(parametros[0].getValor()));
@@ -149,10 +152,21 @@ public class DocumentoVentaDao implements IDocumentoVentaDao {
             if (!parametros[4].getValor().equals("")) {
                 detachedCriteria.add(Property.forName("puntoVentaSerie.codigo").eq(parametros[4].getValor()));
             }
+            if (!parametros[5].getValor().equals("")) {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = formatter.parse(parametros[5].getValor());
+                System.out.println("date "+date);
+                
+                /*Date d =  new SimpleDateFormat("yyyy-MM-dd").parse("2017-08-29");
+                System.out.println("d "+d);
+                detachedCriteria.add(Restrictions.sqlRestriction("trunc(fechaEmision)=?", d, org.hibernate.type.StandardBasicTypes.DATE));*/
+                
+                detachedCriteria.add(Property.forName("fechaEmision").eq(date));
+            }
             detachedCriteria.add(Property.forName("numero").like("%" + parametros[3].getValor() + "%"));
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            lista = detachedCriteria.getExecutableCriteria(sesion).setFirstResult(Integer.parseInt(parametros[1].getValor())).setMaxResults(Integer.parseInt(parametros[2].getValor())).addOrder(Property.forName("tipoDocumentoVenta.codigo").desc())/*.addOrder(Property.forName("numero").asc())*/.list();
+            lista = detachedCriteria.getExecutableCriteria(sesion).setFirstResult(Integer.parseInt(parametros[1].getValor())).setMaxResults(Integer.parseInt(parametros[2].getValor())).addOrder(Property.forName("puntoVentaSerie.codigo").asc()).addOrder(Property.forName("numero").asc()).list();
             //List<DocumentoVenta> lista2 = sesion.createCriteria(DocumentoVenta.class).list();
             //Query query = sesion.createQuery("FROM DocumentoVenta order by id");
             //lista = query.list();

@@ -90,7 +90,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-sm-2" >Fecha</label>
                                             <div class="col-sm-3">
-                                                <input type="date" class="form-control"  required>
+                                                <input type="date" class="form-control" ng-model="fechaEmision"  required/>
                                             </div>
                                             <button type="button" class="btn btn-default elementRight" data-toggle="modal" data-target="#modalDocumentoVenta" ng-click="listarDocumentoVenta('03')"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Grupo</button>
                                         </div>
@@ -156,7 +156,7 @@
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formProducto.$invalid" ng-click="guardarProducto(productoTmp)">Guardar</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formProducto.$invalid" ng-click="crearResumenVentasGrupos(resumenVentasGrupos)">Guardar</button>
                                 </div>
                             </div>
                         </div>
@@ -242,7 +242,7 @@
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formProducto.$invalid" ng-click="guardarProducto(productoTmp)">Guardar</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formProducto.$invalid" ng-click="guardarProducto(comunicacionBajaGrupos)">Guardar</button>
                                 </div>
                             </div>
                         </div>
