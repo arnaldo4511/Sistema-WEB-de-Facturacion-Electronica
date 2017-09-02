@@ -27,6 +27,11 @@ public class ResumenVentaDao implements IResumenVentaDao {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
             sesion.save(resumenVentas);
+            /*for (DocumentoVentaDetalle documentoVentaDetalle : documentoVenta.getDocumentoVentaDetalles()) {
+                documentoVentaDetalle.setDocumentoVenta(documentoVenta);
+                documentoVentaDetalle.setFechaCreacion(new Date());
+                sesion.save(documentoVentaDetalle);
+            }*/
             sesion.getTransaction().commit();
             sesion.close();
         } catch (Exception e) {

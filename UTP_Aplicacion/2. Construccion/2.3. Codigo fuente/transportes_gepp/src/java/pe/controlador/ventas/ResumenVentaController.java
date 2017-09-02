@@ -20,7 +20,7 @@ import pe.controlador.BussinessException;
 import pe.controlador.BussinessMessage;
 import pe.controlador.JsonTransformer;
 import pe.modelo.dao.ventas.IResumenVentaDao;
-import pe.modelo.pojo.Producto;
+//import pe.modelo.pojo.Producto;
 import pe.modelo.pojo.ResumenVentas;
 import pe.modelo.pojo.Usuario;
 
@@ -58,21 +58,21 @@ public class ResumenVentaController {
     
     @RequestMapping(value = "/resumenventa/crear", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void crear(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) {
-        //try {
+        try {
             System.out.println("crearrrrrrrrrrrrrrrrrrrrrrr");
             System.out.println("jsonEntrada "+jsonEntrada);
-            /*Producto producto = (Producto) jsonTransformer.fromJson(jsonEntrada, Producto.class);
-            System.out.println("Producto "+producto);
-            producto.setFechaCreacion(new Date());
-            System.out.println("Productooooooo "+producto);
-            resumenVentaDao.crear(producto);
-            if (producto.getId() > 0) {
-                String jsonSalida = jsonTransformer.toJson(producto);
+            ResumenVentas resumenVentas = (ResumenVentas) jsonTransformer.fromJson(jsonEntrada, ResumenVentas.class);
+            System.out.println("ResumenVentas "+resumenVentas);
+            resumenVentas.setFechaCreacion(new Date());
+            System.out.println("ResumenVentasss "+resumenVentas);
+            resumenVentaDao.crear(resumenVentas);
+            if (resumenVentas.getId() > 0) {
+                String jsonSalida = jsonTransformer.toJson(resumenVentas);
                 httpServletResponse.setStatus(HttpServletResponse.SC_OK);
                 httpServletResponse.setContentType("application/json; charset=UTF-8");
                 httpServletResponse.getWriter().println(jsonSalida);
             } else {
-                String jsonSalida = jsonTransformer.toJson(producto);
+                String jsonSalida = jsonTransformer.toJson(resumenVentas);
                 httpServletResponse.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
                 httpServletResponse.setContentType("application/json; charset=UTF-8");
                 httpServletResponse.getWriter().println(jsonSalida);
@@ -86,8 +86,8 @@ public class ResumenVentaController {
                 ex.printStackTrace(httpServletResponse.getWriter());
             } catch (IOException ex1) {
                 Logger.getLogger(ResumenVentaController.class.getName()).log(Level.SEVERE, null, ex1);
-            }*/
-        //}
+            }
+        }
     }
     
     /*@RequestMapping(value = "/producto/editar", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
