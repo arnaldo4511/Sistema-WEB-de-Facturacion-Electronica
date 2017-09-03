@@ -13,6 +13,8 @@ import org.hibernate.criterion.Restrictions;
 import pe.modelo.dao.HibernateUtil;
 import pe.modelo.pojo.Producto;
 import pe.modelo.pojo.ResumenVentas;
+import pe.modelo.pojo.ResumenVentasGrupo;
+import pe.modelo.pojo.ResumenVentasGrupoVenta;
 
 /**
  *
@@ -23,15 +25,15 @@ public class ResumenVentaDao implements IResumenVentaDao {
     @Override
     public void crear(ResumenVentas resumenVentas) {
         try {
-            System.out.println("resumenVentas " + resumenVentas);
+            System.out.println("resumenVentasGrupoVenta " + resumenVentas);
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
             sesion.save(resumenVentas);
-            /*for (DocumentoVentaDetalle documentoVentaDetalle : documentoVenta.getDocumentoVentaDetalles()) {
-                documentoVentaDetalle.setDocumentoVenta(documentoVenta);
-                documentoVentaDetalle.setFechaCreacion(new Date());
-                sesion.save(documentoVentaDetalle);
-            }*/
+            for (ResumenVentasGrupo resumenVentasGrupo : resumenVentas.getResumenVentasGrupos()) {
+                resumenVentasGrupo.setResumenVentas(resumenVentas);
+                //resumenVentasGrupo.setFechaCreacion(new Date());
+                sesion.save(resumenVentasGrupo);
+            }
             sesion.getTransaction().commit();
             sesion.close();
         } catch (Exception e) {

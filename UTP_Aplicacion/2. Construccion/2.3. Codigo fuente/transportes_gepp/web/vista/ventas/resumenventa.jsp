@@ -29,6 +29,7 @@
                             <li class="list-group-item" ng-repeat="countrydata in filterCountry" ng-click="fillTextbox(countrydata)">{{countrydata}}</li>  
                         </ul--> 
                         <fieldset>
+                            
                             <legend>Resumenes / Comunicaciones</legend>
                             <div class="row">
                                 <button type="button" class="btn btn-default"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>
@@ -74,6 +75,8 @@
                                 <ul  uib-pagination boundary-links="true" total-items="totalItemsResumenVentas" ng-model="currentPageResumenVentas" ng-change="pageChanged()" class="pagination-sm " items-per-page="itemsPerPageResumenVentas" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
                                 </ul>
                             </div>
+                            resumenVentas{{resumenVentas}}
+                            resumenVenta {{resumenVenta}}
                         </fieldset>
                     </form>
                     <!-- Modal -->
@@ -94,8 +97,10 @@
                                             </div>
                                             <button type="button" class="btn btn-default elementRight" data-toggle="modal" data-target="#modalDocumentoVenta" ng-click="listarDocumentoVenta('03')"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Grupo</button>
                                         </div>
-                                        resumenVentasGrupos {{resumenVentasGrupos}}
-                                        resumenVentasGrupo {{resumenVentasGrupo}}
+                                        resumenVentas {{resumenVentas}}
+                                        resumenVenta {{resumenVenta}}
+                                        resumenVenta.resumenVentasGrupos {{resumenVenta.resumenVentasGrupos}}
+                                        resumenVenta.resumenVentasGrupo {{resumenVenta.resumenVentasGrupo}}
                                         <div class="row">
                                             <table class="table table-bordered">
                                                 <thead>
@@ -111,14 +116,14 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr ng-repeat="resumenVentasGrupo in resumenVentasGrupos">
+                                                    <tr ng-repeat="resumenVenta.resumenVentasGrupo in resumenVenta.resumenVentasGrupos">
                                                         <td>{{$index + 1}}</td>
-                                                        <td>{{resumenVentasGrupo.serie}}</td>
-                                                        <td>{{resumenVentasGrupo.desde}}</td>
-                                                        <td>{{resumenVentasGrupo.hasta}}</td>
-                                                        <td>{{resumenVentasGrupo.grabada}}</td>
-                                                        <td>{{resumenVentasGrupo.igv}}</td>
-                                                        <td>{{resumenVentasGrupo.total}}</td>
+                                                        <td>{{resumenVenta.resumenVentasGrupo.serie}}</td>
+                                                        <td>{{resumenVenta.resumenVentasGrupo.desde}}</td>
+                                                        <td>{{resumenVenta.resumenVentasGrupo.hasta}}</td>
+                                                        <td>{{resumenVenta.resumenVentasGrupo.grabada}}</td>
+                                                        <td>{{resumenVenta.resumenVentasGrupo.igv}}</td>
+                                                        <td>{{resumenVenta.resumenVentasGrupo.total}}</td>
                                                         <td></td>
                                                         <!--td class="text-center">
                                                             <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalProducto" ng-click="seleccionarProducto(producto)">
@@ -149,14 +154,15 @@
                                                        ">Importe Total S/. {{resumenVentasGrupo||"0.00"}}</label>
                                             </div>
                                         </div>
-                                        resumenVentasGrupos {{resumenVentasGrupos}}
-                                        resumenVentasGrupo {{resumenVentasGrupo}}
+                                        resumenVenta.resumenVentasGrupos {{resumenVenta.resumenVentasGrupos}}
+                                        resumenVenta.resumenVentasGrupo {{resumenVenta.resumenVentasGrupo}}
                                     </form>
                                 </div>
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formProducto.$invalid" ng-click="crearResumenVentasGrupos(resumenVentasGrupos)">Guardar</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formProducto.$invalid" ng-click="crearResumenVentasGrupos(resumenVenta)">Guardar</button>
+                                    
                                 </div>
                             </div>
                         </div>

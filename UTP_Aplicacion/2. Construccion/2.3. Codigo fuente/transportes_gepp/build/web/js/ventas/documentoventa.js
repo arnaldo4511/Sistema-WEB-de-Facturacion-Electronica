@@ -182,8 +182,10 @@ DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$f
             }
             $http({method: 'GET', url: '/transportes_gepp/controlador/producto/autocompletar/' + criterio
             }).then(function mySucces(response) {
-                //console.log(response.data);
+                console.log("productoooooooo  "+response.data);
+                console.log("productoooooooo  "+response);
                 $scope.productos = response.data;
+                console.log("$scope.productos  "+$scope.productos);
                 $scope.ocultarProductosAuto = false;
             }, function myError(response) {
 

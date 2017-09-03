@@ -8,6 +8,7 @@ package pe.modelo.dao.ventas;
 import java.util.List;
 import pe.modelo.pojo.Producto;
 import pe.modelo.pojo.ResumenVentas;
+import pe.modelo.pojo.ResumenVentasGrupoVenta;
 
 /**
  *

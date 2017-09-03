@@ -127,6 +127,7 @@ public class ProductoController {
         try {
             List<Producto> lista = productoDao.autocompletar(criterio);
             String jsonSalida = jsonTransformer.toJson(lista);
+            System.out.println("autocompletar "+jsonSalida);
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
             out.println(jsonSalida);

@@ -15,6 +15,17 @@ ResumenVentaApp.filter('startFrom', function () {
     }
 });
 ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$window', function ($scope, $http, $window) {
+        $scope.resumenVentasGruposVentas = [];
+        
+        $scope.resumenVentas = [];
+        $scope.documentoVentas = [];
+        console.log("{}");
+        $scope.resumenVentasGruposVenta = {};
+        $scope.resumenVentasGrupo = {};
+        $scope.resumenVenta = {};
+        $scope.documentoVenta = {};
+        $scope.resumenVentasGrupos = {};
+        $scope.resumenVenta.resumenVentasGrupos = [];
         $scope.puntoVentaSeries = [
             {'codigo': 'B001'},
             {'codigo': 'B002'},
@@ -25,7 +36,7 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
         $scope.fechaEmision = "";
         $scope.sesion = {};
         $scope.productoTmp = {};
-        $scope.resumenVentas = [];
+        $scope.resumenVentasLista = [];
         $scope.unidades = [];
         $http({method: 'GET', url: '/transportes_gepp/controlador/usuario/buscarsesion'}).then(function success(response) {
             console.log("response.data " + response.data);
@@ -51,9 +62,9 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
             }).then(function success(response) {
                 console.log(response);
                 console.log("response.data " + response.data);
-                $scope.resumenVentas = response.data;
+                $scope.resumenVentasLista = response.data;
                 $scope.viewby = 5;
-                $scope.totalItemsResumenVentas = $scope.resumenVentas.length;
+                $scope.totalItemsResumenVentas = $scope.resumenVentasLista.length;
                 $scope.currentPageResumenVentas = 1;
                 $scope.itemsPerPage = $scope.viewby;
                 $scope.maxSize = 5; //Number of pager buttons to show
@@ -115,10 +126,7 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
             });
         };
         $scope.selectDocumentoVentas = function () {
-            //$scope.resumenVentasGrupos = [];
-            $scope.resumenVentasGrupos = [];
-            console.log("{}");
-            $scope.resumenVentasGrupo = {};
+
             //$scope.resumenVentasGrupo.serie = 
             var c1 = 0;
             var c2 = 0;
@@ -130,6 +138,7 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
             var numero2 = 0;
             angular.forEach($scope.documentoVentas, function (selected) {
                 if (selected.selected) {
+                    $scope.resumenVentasGrupos.documentoVenta = selected.id;
                     console.log("selected.numero " + selected.puntoVentaSerie.codigo);
                     console.log("selected.numero " + selected.numero);
                     console.log("selected.numero " + selected.totalGrabado);
@@ -140,8 +149,8 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
                     //if ($scope.resumenVentasGrupo.serie === selected.puntoVentaSerie.codigo || $scope.resumenVentasGrupo.serie === undefined) {
                     console.log("140 ==================================================================");
 
-                    $scope.resumenVentasGrupo.serie = selected.puntoVentaSerie.codigo;
-                    console.log("   $scope.resumenVentasGrupo.serie " + $scope.resumenVentasGrupo.serie);
+                    $scope.resumenVentasGrupos.serie = selected.puntoVentaSerie.codigo;
+                    console.log("   $scope.resumenVentasGrupo.serie " + $scope.resumenVentasGrupos.serie);
                     if (numero === 0)
                     {
                         grabada = 0;
@@ -150,7 +159,9 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
                         numero = parseInt(selected.numero);
                         //$scope.resumenVentasGrupo = {};
                         console.log("PUSH");
-                        $scope.resumenVentasGrupos.push($scope.resumenVentasGrupo);
+                        $scope.resumenVenta.resumenVentasGrupos.push($scope.resumenVentasGrupos);
+                        $scope.resumenVentas.push($scope.resumenVentasGrupos);
+                        
                     }
                     //numero2 = numero-1;
                     console.log("   numero " + numero);
@@ -158,25 +169,25 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
                     if (numero === parseInt(selected.numero) /*|| numero2 === parseInt(selected.numero)*/) {
                         console.log("c1 " + c1 + "------------------------------------------------------------------");
                         if (c1 === 0) {
-                            $scope.resumenVentasGrupo.desde = selected.numero;
-                            console.log("   $scope.resumenVentasGrupo.desde " + $scope.resumenVentasGrupo.desde);
+                            $scope.resumenVentasGrupos.desde = selected.numero;
+                            console.log("   $scope.resumenVentasGrupo.desde " + $scope.resumenVentasGrupos.desde);
                         }
                         c1++;
 
-                        $scope.resumenVentasGrupo.hasta = selected.numero;
-                        console.log("   $scope.resumenVentasGrupo.hasta " + $scope.resumenVentasGrupo.hasta);
+                        $scope.resumenVentasGrupos.hasta = selected.numero;
+                        console.log("   $scope.resumenVentasGrupo.hasta " + $scope.resumenVentasGrupos.hasta);
 
                         grabada = grabada + selected.totalGrabado;
                         igv = igv + selected.totalIgv;
                         total = total + selected.total;
 
 
-                        $scope.resumenVentasGrupo.grabada = grabada.toFixed(2);
-                        console.log("   $scope.resumenVentasGrupo.grabada " + $scope.resumenVentasGrupo.grabada);
-                        $scope.resumenVentasGrupo.igv = igv.toFixed(2);
-                        console.log("   $scope.resumenVentasGrupo.igv " + $scope.resumenVentasGrupo.igv);
-                        $scope.resumenVentasGrupo.total = total.toFixed(2);
-                        console.log("   $scope.resumenVentasGrupo.total " + $scope.resumenVentasGrupo.total);
+                        $scope.resumenVentasGrupos.grabada = grabada.toFixed(2);
+                        console.log("   $scope.resumenVentasGrupo.grabada " + $scope.resumenVentasGrupos.grabada);
+                        $scope.resumenVentasGrupos.igv = igv.toFixed(2);
+                        console.log("   $scope.resumenVentasGrupo.igv " + $scope.resumenVentasGrupos.igv);
+                        $scope.resumenVentasGrupos.total = total.toFixed(2);
+                        console.log("   $scope.resumenVentasGrupo.total " + $scope.resumenVentasGrupos.total);
 
 
                         console.log("c1 " + c1 + "------------------------------------------------------------------");
@@ -196,33 +207,33 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
 
                             if (c2 === 0) {
                                 console.log("{}");
-                                $scope.resumenVentasGrupo = {};
-                                $scope.resumenVentasGrupo.serie = selected.puntoVentaSerie.codigo;
-                                console.log("   $scope.resumenVentasGrupo.serie " + $scope.resumenVentasGrupo.serie);
+                                $scope.resumenVentasGrupos = {};
+                                $scope.resumenVentasGrupos.serie = selected.puntoVentaSerie.codigo;
+                                console.log("   $scope.resumenVentasGrupo.serie " + $scope.resumenVentasGrupos.serie);
                                 grabada = 0;
                                 igv = 0;
                                 total = 0;
-                                $scope.resumenVentasGrupo.desde = selected.numero;
-                                console.log("   $scope.resumenVentasGrupo.desde " + $scope.resumenVentasGrupo.desde);
+                                $scope.resumenVentasGrupos.desde = selected.numero;
+                                console.log("   $scope.resumenVentasGrupo.desde " + $scope.resumenVentasGrupos.desde);
                                 console.log("PUSH");
-                                $scope.resumenVentasGrupos.push($scope.resumenVentasGrupo);
+                                $scope.resumenVentas.push($scope.resumenVentasGrupos);
                             }
                             c2++;
 
-                            $scope.resumenVentasGrupo.hasta = selected.numero;
-                            console.log("   $scope.resumenVentasGrupo.hasta " + $scope.resumenVentasGrupo.hasta);
+                            $scope.resumenVentasGrupos.hasta = selected.numero;
+                            console.log("   $scope.resumenVentasGrupo.hasta " + $scope.resumenVentasGrupos.hasta);
 
                             grabada = grabada + selected.totalGrabado;
                             igv = igv + selected.totalIgv;
                             total = total + selected.total;
 
                             console.log("108");
-                            $scope.resumenVentasGrupo.grabada = grabada.toFixed(2);
-                            console.log("   $scope.resumenVentasGrupo.grabada " + $scope.resumenVentasGrupo.grabada);
-                            $scope.resumenVentasGrupo.igv = igv.toFixed(2);
-                            console.log("   $scope.resumenVentasGrupo.igv " + $scope.resumenVentasGrupo.igv);
-                            $scope.resumenVentasGrupo.total = total.toFixed(2);
-                            console.log("   $scope.resumenVentasGrupo.total " + $scope.resumenVentasGrupo.total);
+                            $scope.resumenVentasGrupos.grabada = grabada.toFixed(2);
+                            console.log("   $scope.resumenVentasGrupo.grabada " + $scope.resumenVentasGrupos.grabada);
+                            $scope.resumenVentasGrupos.igv = igv.toFixed(2);
+                            console.log("   $scope.resumenVentasGrupo.igv " + $scope.resumenVentasGrupos.igv);
+                            $scope.resumenVentasGrupos.total = total.toFixed(2);
+                            console.log("   $scope.resumenVentasGrupo.total " + $scope.resumenVentasGrupos.total);
 
                             console.log("c2 " + c2 + "------------------------------------------------------------------");
                         }
@@ -235,33 +246,33 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
 
                             if (c3 === 0) {
                                 console.log("{}");
-                                $scope.resumenVentasGrupo = {};
-                                $scope.resumenVentasGrupo.serie = selected.puntoVentaSerie.codigo;
-                                console.log("   $scope.resumenVentasGrupo.serie " + $scope.resumenVentasGrupo.serie);
+                                $scope.resumenVentasGrupos = {};
+                                $scope.resumenVentasGrupos.serie = selected.puntoVentaSerie.codigo;
+                                console.log("   $scope.resumenVentasGrupo.serie " + $scope.resumenVentasGrupos.serie);
                                 grabada = 0;
                                 igv = 0;
                                 total = 0;
-                                $scope.resumenVentasGrupo.desde = selected.numero;
-                                console.log("   $scope.resumenVentasGrupo.desde " + $scope.resumenVentasGrupo.desde);
+                                $scope.resumenVentasGrupos.desde = selected.numero;
+                                console.log("   $scope.resumenVentasGrupo.desde " + $scope.resumenVentasGrupos.desde);
                                 console.log("PUSH");
-                                $scope.resumenVentasGrupos.push($scope.resumenVentasGrupo);
+                                $scope.resumenVentas.push($scope.resumenVentasGrupos);
                             }
                             c3++;
 
-                            $scope.resumenVentasGrupo.hasta = selected.numero;
-                            console.log("   $scope.resumenVentasGrupo.hasta " + $scope.resumenVentasGrupo.hasta);
+                            $scope.resumenVentasGrupos.hasta = selected.numero;
+                            console.log("   $scope.resumenVentasGrupo.hasta " + $scope.resumenVentasGrupos.hasta);
 
                             grabada = grabada + selected.totalGrabado;
                             igv = igv + selected.totalIgv;
                             total = total + selected.total;
 
                             console.log("108");
-                            $scope.resumenVentasGrupo.grabada = grabada.toFixed(2);
-                            console.log("   $scope.resumenVentasGrupo.grabada " + $scope.resumenVentasGrupo.grabada);
-                            $scope.resumenVentasGrupo.igv = igv.toFixed(2);
-                            console.log("   $scope.resumenVentasGrupo.igv " + $scope.resumenVentasGrupo.igv);
-                            $scope.resumenVentasGrupo.total = total.toFixed(2);
-                            console.log("   $scope.resumenVentasGrupo.total " + $scope.resumenVentasGrupo.total);
+                            $scope.resumenVentasGrupos.grabada = grabada.toFixed(2);
+                            console.log("   $scope.resumenVentasGrupo.grabada " + $scope.resumenVentasGrupos.grabada);
+                            $scope.resumenVentasGrupos.igv = igv.toFixed(2);
+                            console.log("   $scope.resumenVentasGrupo.igv " + $scope.resumenVentasGrupos.igv);
+                            $scope.resumenVentasGrupos.total = total.toFixed(2);
+                            console.log("   $scope.resumenVentasGrupo.total " + $scope.resumenVentasGrupos.total);
 
                             console.log("c3 " + c3 + "------------------------------------------------------------------");
                         }
@@ -276,8 +287,9 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
                     console.log("222 ==================================================================");
                 }
             });
-            console.log("$scope.resumenVentasGrupo.serie " + $scope.resumenVentasGrupo.serie);
-            console.log("$scope.resumenVentasGrupos " + $scope.resumenVentasGrupos);
+            console.log("$scope.resumenVentasGrupo.serie " + $scope.resumenVentasGrupos.serie);
+            console.log("$scope.resumenVentasGrupos " + $scope.resumenVentas);
+            
             //$scope.personalDetails = newDataList;
         };
 
@@ -377,16 +389,20 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
 
             //$scope.personalDetails = newDataList;
         };
-
-        $scope.crearResumenVentasGrupos = function (resumenVentasGrupos) {
-            /*producto.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
-            producto.empresa = $scope.sesion.usuario.empresa;
-            producto.unidad = {'codigo': 'NIU'}*/
-            console.log("crearResumenVentasGrupos " + resumenVentasGrupos);
+        $scope.crearResumenVentasGrupos = function (resumenVenta) {
+            
+            resumenVenta.tipo = "RSB";
+            resumenVenta.estadoDocumentoVenta = {'codigo': 'CRE'};
+            resumenVenta.numero = 1;
+            resumenVenta.empresa = {'id': '1'};
+            resumenVenta.usuarioByIdUsuarioCreacion = {'id': '3'};
+            //resumenVentas.resumenVentasGrupo = {'id': '1'};
+            //producto.unidad = {'codigo': 'NIU'};
+            console.log("resumenVentasGruposVenta " + $scope.resumenVenta);
             $http({
                 method: 'POST',
                 url: '/transportes_gepp/controlador/resumenventa/crear',
-                data: resumenVentasGrupos
+                data: resumenVenta
             }).then(function success(response) {
                 console.log(response.data);
                 $scope.listar();

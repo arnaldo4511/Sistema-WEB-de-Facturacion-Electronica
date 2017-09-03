@@ -22,6 +22,7 @@ import pe.controlador.JsonTransformer;
 import pe.modelo.dao.ventas.IResumenVentaDao;
 //import pe.modelo.pojo.Producto;
 import pe.modelo.pojo.ResumenVentas;
+import pe.modelo.pojo.ResumenVentasGrupoVenta;
 import pe.modelo.pojo.Usuario;
 
 @Controller
@@ -59,12 +60,13 @@ public class ResumenVentaController {
     @RequestMapping(value = "/resumenventa/crear", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void crear(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) {
         try {
-            System.out.println("crearrrrrrrrrrrrrrrrrrrrrrr");
+            System.out.println("crearrrrrrrrrrrrrrrrrrrrrrr resumenVentas");
             System.out.println("jsonEntrada "+jsonEntrada);
             ResumenVentas resumenVentas = (ResumenVentas) jsonTransformer.fromJson(jsonEntrada, ResumenVentas.class);
-            System.out.println("ResumenVentas "+resumenVentas);
+            System.out.println("resumenVentas "+resumenVentas);
+            resumenVentas.setFechaEmision(new Date());
             resumenVentas.setFechaCreacion(new Date());
-            System.out.println("ResumenVentasss "+resumenVentas);
+            System.out.println("resumenVentas "+resumenVentas);
             resumenVentaDao.crear(resumenVentas);
             if (resumenVentas.getId() > 0) {
                 String jsonSalida = jsonTransformer.toJson(resumenVentas);

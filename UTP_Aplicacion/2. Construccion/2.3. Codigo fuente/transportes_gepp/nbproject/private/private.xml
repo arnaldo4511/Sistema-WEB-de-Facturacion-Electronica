@@ -3,16 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/controlador/ventas/ResumenVentaController.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/js/ventas/resumenventa.js</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/pojo/Producto.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/dao/ventas/DocumentoVentaDao.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/js/almacen/producto.js</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/controlador/ventas/DocumentoVentaController.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/dao/ventas/ResumenVentaDao.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/controlador/almacen/ProductoController.java</file>
             <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/vista/ventas/resumenventa.jsp</file>
             <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/pojo/DocumentoVenta.java</file>
-            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/vista/ventas/documentoventas.jsp</file>
-            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/js/ventas/resumenventa.js</file>
-            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/pojo/PuntoVentaSerie.java</file>
-            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/dao/ventas/DocumentoVentaDao.java</file>
-            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/dto/ParametroDto.java</file>
-            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/controlador/ventas/DocumentoVentaController.java</file>
-            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/js/ventas/documentoventas.js</file>
-            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/pojo/TipoDocumentoVenta.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/pojo/ResumenVentas.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/vista/ventas/documentoventa.jsp</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/pojo/EstadoDocumentoVenta.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/src/java/pe/modelo/dao/ventas/IResumenVentaDao.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Sistema-WEB-de-Facturacion-Electronica/UTP_Aplicacion/2.%20Construccion/2.3.%20Codigo%20fuente/transportes_gepp/web/js/ventas/documentoventa.js</file>
         </group>
     </open-files>
 </project-private>
