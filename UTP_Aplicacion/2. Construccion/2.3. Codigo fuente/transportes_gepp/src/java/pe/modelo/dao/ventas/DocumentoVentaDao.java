@@ -5,6 +5,7 @@
  */
 package pe.modelo.dao.ventas;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import pe.modelo.dao.publico.*;
 import java.util.Date;
@@ -40,15 +41,20 @@ import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import pe.modelo.dto.ParametroDto;
 import pe.modelo.dao.HibernateUtil;
+import pe.modelo.dto.ventas.ListaDocumentoVentaDto;
 import pe.modelo.pojo.DocumentoVenta;
 import pe.modelo.pojo.DocumentoVentaDetalle;
 import pe.modelo.pojo.TipoDocumentoVenta;
 import pe.modelo.dto.ventas.NotificacionDto;
+import pe.modelo.dto.ventas.AnulacionDto;
+import pe.modelo.pojo.VwSelDocumentoVenta;
 
 /**
  *
@@ -109,7 +115,7 @@ public class DocumentoVentaDao implements IDocumentoVentaDao {
     public JasperPrint generarReporte(DocumentoVenta documentoVenta) {
         JasperPrint rptDocumentoVenta = null;
         try {
-            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("../../reportes/ventas/rptDocumentoVenta.jasper"));
+            JasperReport report = (JasperReport) JRLoader.loadObject(getClass().getResource("../../reporte/ventas/rptDocumentoVenta.jasper"));
             Map parameters = new HashMap();
             Locale locale = new Locale("es", "PE");
             parameters.put(JRParameter.REPORT_LOCALE, locale);
@@ -136,67 +142,111 @@ public class DocumentoVentaDao implements IDocumentoVentaDao {
     }
 
     @Override
-    public List<DocumentoVenta> listar(ParametroDto[] parametros) {
-        List<DocumentoVenta> lista = null;
+    public ListaDocumentoVentaDto listar(ParametroDto[] parametros) {
+        ListaDocumentoVentaDto listaDocumentoVentaDto = new ListaDocumentoVentaDto();
+        List<VwSelDocumentoVenta> lista = null;
+        long nroDocumentoVentas = 0;
+        double totalFacturas = 0;
+        double totalBoletas = 0;
+        double totalNotaCreditos = 0;
+        double totalNotaDebitos = 0;
+        Integer currentPage = 0;
+        Integer itemsPerPage = 0;
+        Date fechaDesde = null;
+        Date fechaHasta = null;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
         try {
-            System.out.println("parametros[0] "+parametros[0].getValor());
-            System.out.println("parametros[1] "+parametros[1].getValor());
-            System.out.println("parametros[2] "+parametros[2].getValor());
-            System.out.println("parametros[3] "+parametros[3].getValor());
-            System.out.println("parametros[4] "+parametros[4].getValor());
-            System.out.println("parametros[5] "+parametros[5].getValor());
-            DetachedCriteria detachedCriteria = DetachedCriteria.forClass(DocumentoVenta.class);
-            if (!parametros[0].getValor().equals("")) {
-                detachedCriteria.add(Property.forName("tipoDocumentoVenta.codigo").eq(parametros[0].getValor()));
+            DetachedCriteria detachedCriteria = DetachedCriteria.forClass(VwSelDocumentoVenta.class);
+            DetachedCriteria detachedCriteria1 = DetachedCriteria.forClass(VwSelDocumentoVenta.class);
+            DetachedCriteria detachedCriteria2 = DetachedCriteria.forClass(VwSelDocumentoVenta.class);
+            DetachedCriteria detachedCriteria3 = DetachedCriteria.forClass(VwSelDocumentoVenta.class);
+            DetachedCriteria detachedCriteria4 = DetachedCriteria.forClass(VwSelDocumentoVenta.class);
+            DetachedCriteria detachedCriteria5 = DetachedCriteria.forClass(VwSelDocumentoVenta.class);
+            for (ParametroDto parametro : parametros) {
+                if (parametro.getNombre().equals("currentPage") && parametro.getValor() != null) {
+                    currentPage = Integer.parseInt(parametro.getValor());
+                } else if (parametro.getNombre().equals("itemsPerPage") && parametro.getValor() != null) {
+                    itemsPerPage = Integer.parseInt(parametro.getValor());
+                } else if (parametro.getNombre().equals("codigoTipo") && parametro.getValor() != null) {
+                    detachedCriteria.add(Property.forName(parametro.getNombre()).eq(parametro.getValor()));
+                    detachedCriteria1.add(Property.forName(parametro.getNombre()).eq(parametro.getValor()));
+                    detachedCriteria2.add(Property.forName(parametro.getNombre()).eq(parametro.getValor()));
+                    detachedCriteria3.add(Property.forName(parametro.getNombre()).eq(parametro.getValor()));
+                    detachedCriteria4.add(Property.forName(parametro.getNombre()).eq(parametro.getValor()));
+                    detachedCriteria5.add(Property.forName(parametro.getNombre()).eq(parametro.getValor()));
+                } else if (parametro.getNombre().equals("codigoEstado") && parametro.getValor() != null) {
+                    detachedCriteria.add(Property.forName(parametro.getNombre()).eq(parametro.getValor()));
+                    detachedCriteria1.add(Property.forName(parametro.getNombre()).eq(parametro.getValor()));
+                    detachedCriteria2.add(Property.forName(parametro.getNombre()).eq(parametro.getValor()));
+                    detachedCriteria3.add(Property.forName(parametro.getNombre()).eq(parametro.getValor()));
+                    detachedCriteria4.add(Property.forName(parametro.getNombre()).eq(parametro.getValor()));
+                    detachedCriteria5.add(Property.forName(parametro.getNombre()).eq(parametro.getValor()));
+                } else if (parametro.getNombre().equals("numero") && parametro.getValor() != null) {
+                    detachedCriteria.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%"));
+                    detachedCriteria1.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%"));
+                    detachedCriteria2.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%"));
+                    detachedCriteria3.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%"));
+                    detachedCriteria4.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%"));
+                    detachedCriteria5.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%"));
+                } else if (parametro.getNombre().equals("fechaEmision") && parametro.getValor() != null) {
+                    detachedCriteria.add(Property.forName(parametro.getNombre()).eq(dateFormat.parse((parametro.getValor()))));
+                    detachedCriteria1.add(Property.forName(parametro.getNombre()).eq(dateFormat.parse((parametro.getValor()))));
+                    detachedCriteria2.add(Property.forName(parametro.getNombre()).eq(dateFormat.parse((parametro.getValor()))));
+                    detachedCriteria3.add(Property.forName(parametro.getNombre()).eq(dateFormat.parse((parametro.getValor()))));
+                    detachedCriteria4.add(Property.forName(parametro.getNombre()).eq(dateFormat.parse((parametro.getValor()))));
+                    detachedCriteria5.add(Property.forName(parametro.getNombre()).eq(dateFormat.parse((parametro.getValor()))));
+                } else if (parametro.getNombre().equals("documentoCliente") && parametro.getValor() != null) {
+                    detachedCriteria.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%"));
+                    detachedCriteria1.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%"));
+                    detachedCriteria2.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%"));
+                    detachedCriteria3.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%"));
+                    detachedCriteria4.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%"));
+                    detachedCriteria5.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%"));
+                } else if (parametro.getNombre().equals("nombreCliente") && parametro.getValor() != null) {
+                    detachedCriteria.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%").ignoreCase());
+                    detachedCriteria1.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%").ignoreCase());
+                    detachedCriteria2.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%").ignoreCase());
+                    detachedCriteria3.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%").ignoreCase());
+                    detachedCriteria4.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%").ignoreCase());
+                    detachedCriteria5.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%").ignoreCase());
+                } else if (parametro.getNombre().equals("fechaDesde") && parametro.getValor() != null) {
+                    fechaDesde = dateFormat.parse(parametro.getValor());
+                } else if (parametro.getNombre().equals("fechaHasta") && parametro.getValor() != null) {
+                    fechaHasta = dateFormat.parse(parametro.getValor());
+                }
             }
-            if (!parametros[4].getValor().equals("")) {
-                detachedCriteria.add(Property.forName("puntoVentaSerie.codigo").eq(parametros[4].getValor()));
+            if (fechaDesde != null && fechaHasta != null) {
+                detachedCriteria.add(Restrictions.between("fechaEmision", fechaDesde, fechaHasta));
+                detachedCriteria1.add(Restrictions.between("fechaEmision", fechaDesde, fechaHasta));
+                detachedCriteria2.add(Restrictions.between("fechaEmision", fechaDesde, fechaHasta));
+                detachedCriteria3.add(Restrictions.between("fechaEmision", fechaDesde, fechaHasta));
+                detachedCriteria4.add(Restrictions.between("fechaEmision", fechaDesde, fechaHasta));
+                detachedCriteria5.add(Restrictions.between("fechaEmision", fechaDesde, fechaHasta));
             }
-            if (!parametros[5].getValor().equals("")) {
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                Date date = formatter.parse(parametros[5].getValor());
-                System.out.println("date "+date);
-                
-                /*Date d =  new SimpleDateFormat("yyyy-MM-dd").parse("2017-08-29");
-                System.out.println("d "+d);
-                detachedCriteria.add(Restrictions.sqlRestriction("trunc(fechaEmision)=?", d, org.hibernate.type.StandardBasicTypes.DATE));*/
-                
-                detachedCriteria.add(Property.forName("fechaEmision").eq(date));
-            }
-            detachedCriteria.add(Property.forName("numero").like("%" + parametros[3].getValor() + "%"));
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            lista = detachedCriteria.getExecutableCriteria(sesion).setFirstResult(Integer.parseInt(parametros[1].getValor())).setMaxResults(Integer.parseInt(parametros[2].getValor())).addOrder(Property.forName("puntoVentaSerie.codigo").asc()).addOrder(Property.forName("numero").asc()).list();
-            //List<DocumentoVenta> lista2 = sesion.createCriteria(DocumentoVenta.class).list();
-            //Query query = sesion.createQuery("FROM DocumentoVenta order by id");
-            //lista = query.list();
+            lista = detachedCriteria.getExecutableCriteria(sesion).setFirstResult(currentPage).setMaxResults(itemsPerPage).addOrder(Order.asc("id")).list();
+            nroDocumentoVentas = (long) detachedCriteria1.getExecutableCriteria(sesion).setProjection(Projections.rowCount()).uniqueResult();
+            Object objectTotalFacturas = detachedCriteria2.getExecutableCriteria(sesion).add(Property.forName("codigoTipo").eq("01")).setProjection(Projections.sum("total")).uniqueResult();
+            totalFacturas = (objectTotalFacturas == null ? (double) 0 : (double) objectTotalFacturas);
+            Object objectTotalBoletas = detachedCriteria3.getExecutableCriteria(sesion).add(Property.forName("codigoTipo").eq("03")).setProjection(Projections.sum("total")).uniqueResult();
+            totalBoletas = (objectTotalBoletas == null ? (double) 0 : (double) objectTotalBoletas);
+            Object objectNotaCreditos = detachedCriteria4.getExecutableCriteria(sesion).add(Property.forName("codigoTipo").eq("07")).setProjection(Projections.sum("total")).uniqueResult();
+            totalNotaCreditos = (objectNotaCreditos == null ? (double) 0 : (double) objectNotaCreditos);
+            Object objectNotaDebitos = detachedCriteria5.getExecutableCriteria(sesion).add(Property.forName("codigoTipo").eq("08")).setProjection(Projections.sum("total")).uniqueResult();
+            totalNotaDebitos = (objectNotaDebitos == null ? (double) 0 : (double) objectNotaDebitos);
             sesion.getTransaction().commit();
             sesion.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return lista;
-    }
-
-    @Override
-    public long totalDocumentoVentas(ParametroDto[] parametros) {
-        long total = 0;
-        try {
-            DetachedCriteria detachedCriteria = DetachedCriteria.forClass(DocumentoVenta.class);
-            if (!parametros[0].getValor().equals("")) {
-                detachedCriteria.add(Property.forName("tipoDocumentoVenta.codigo").eq(parametros[0].getValor()));
-            }
-            detachedCriteria.add(Property.forName("numero").like("%" + parametros[3].getValor() + "%"));
-
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
-            sesion.beginTransaction();
-            total = (long) detachedCriteria.getExecutableCriteria(sesion).setProjection(Projections.rowCount()).uniqueResult();
-            sesion.getTransaction().commit();
-            sesion.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return total;
+        listaDocumentoVentaDto.setDocumentoVentas(lista);
+        listaDocumentoVentaDto.setNroDocumentoVentas(nroDocumentoVentas);
+        listaDocumentoVentaDto.setTotalFacturas(totalFacturas);
+        listaDocumentoVentaDto.setTotalBoletas(totalBoletas);
+        listaDocumentoVentaDto.setTotalNotaCreditos(totalNotaCreditos);
+        listaDocumentoVentaDto.setTotalNotaDebitos(totalNotaDebitos);
+        return listaDocumentoVentaDto;
     }
 
     public List<DocumentoVenta> autocompletar(String criterio) {
@@ -257,7 +307,7 @@ public class DocumentoVentaDao implements IDocumentoVentaDao {
             BodyPart messageBodyPart = new MimeBodyPart();
             String mensaje = saludo + "<br><br>\n"
                     + "<div style='width: 600px;background:#3F51B5;color: #ffffff;margin: 0 auto;text-align: center;padding: 5px;border-radius: 15px;'>\n"
-                    + "            <img style='width: 160px;height: 204px;' src='http://www.gepp.pe/LOGOS/" + documentoVenta.getEmpresa().getLogo() + "'><h1>" + nombreDocumento + "</h1>\n"
+                    + "            <img style='width: 160px;height: 204px;' src='http://gepp.pe/assets/images/gepp_transmap.png'><h1>" + nombreDocumento + "</h1>\n"
                     + "            <h1>No. " + documentoVenta.getPuntoVentaSerie().getCodigo() + "-" + documentoVenta.getNumero() + "</h1>\n"
                     + "            <div>Fecha de emisión: " + documentoVenta.getFechaEmision() + "</div>\n"
                     + "            <div>Fecha de vencimiento: " + documentoVenta.getFechaVencimiento() + "</div>\n"
@@ -306,4 +356,20 @@ public class DocumentoVentaDao implements IDocumentoVentaDao {
         }
     }
 
+    @Override
+    public void anular(AnulacionDto anulacionDto) {
+        try {
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            String hqlUpdate = "update DocumentoVenta set codigo_estado_documento_venta = :codigo_estado where id = :id";
+            sesion.createQuery(hqlUpdate)
+                    .setString("codigo_estado", "ANU")
+                    .setLong("id", anulacionDto.getIdDocumentoVenta())
+                    .executeUpdate();
+            sesion.getTransaction().commit();
+            sesion.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 }

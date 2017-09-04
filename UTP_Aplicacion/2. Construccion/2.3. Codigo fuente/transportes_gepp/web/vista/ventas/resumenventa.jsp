@@ -15,13 +15,10 @@
     </head>
     <script src="<%= request.getContextPath()%>/js/ventas/resumenventa.js" type="text/javascript"></script>
     <body ng-app='ResumenVentaApp' ng-controller='ResumenVentaController'>
-        <div class="container">
+        <div class="container-fluid">
             <ng-include src="'<%= request.getContextPath()%>/vista/cabecera.jsp'"></ng-include>
-            <div id="rowMenu" class='row'>
-                <div id="colMenu" class="col-sm-3">
-                    <ng-include src="'<%= request.getContextPath()%>/vista/menu.jsp'"></ng-include>
-                </div>
-                <div id="divForm" class="col-sm-9">
+            <div id="rowMenu" class='row clearfix'>
+                <div id="divForm" class="col-sm-12">
                     <form>
                         <!--label>Nombre</label>  
                         <input type="text" name="country" id="country" ng-model="country" ng-keyup="complete(country)" class="form-control" />  
@@ -29,7 +26,7 @@
                             <li class="list-group-item" ng-repeat="countrydata in filterCountry" ng-click="fillTextbox(countrydata)">{{countrydata}}</li>  
                         </ul--> 
                         <fieldset>
-                            
+
                             <legend>Resumenes / Comunicaciones</legend>
                             <div class="row">
                                 <button type="button" class="btn btn-default"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>
@@ -55,7 +52,7 @@
                                         <tr ng-repeat="listaResumenVenta in listaResumenVentas.slice(((currentPageListaResumenVentas - 1) * itemsPerPageListarResumenVentas), ((currentPageListaResumenVentas) * itemsPerPageListarResumenVentas))| filter:search ">
                                             <td>{{$index + 1}}</td>
                                             <td>{{listaResumenVenta.tipo}}</td>
-                                            <td>{{listaResumenVenta.estadoDocumentoVenta.codigo}}</td>
+                                            <td>{{listaResumenVenta.estadoDocumentoVenta.nombre}}</td>
                                             <td></td>
                                             <td>{{listaResumenVenta.numero}}</td>
                                             <td>{{listaResumenVenta.fechaEmision}}</td>
@@ -101,7 +98,7 @@
                                         resumenVentas {{resumenVentas}}
                                         resumenVenta {{resumenVenta}}
                                         resumenVenta.resumenVentasGrupos {{resumenVenta.resumenVentasGrupos}}
-                                        
+
                                         <div class="row">
                                             <table class="table table-bordered">
                                                 <thead>
@@ -164,14 +161,14 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formProducto.$invalid" ng-click="crearResumenVentasGrupos(resumenVenta)">Guardar</button>
-                                    
+
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- Modal -->
                     <!-- Modal -->
-                    
+
                     <!-- Modal -->
                     <div class="modal fade" id="modalDocumentoVenta" role="dialog">
                         <div class="modal-dialog modalMedium">

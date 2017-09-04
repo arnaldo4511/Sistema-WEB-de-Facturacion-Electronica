@@ -9,7 +9,9 @@ DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$f
         //console.log("s:"+$location.search());
         $scope.parametros = {};
         $window.location.search.replace(/\?/, '').split('&').map(function (o) {
-            $scope.parametros[o.split('=')[0]] = o.split('=')[1]
+            if (o !== "") {
+                $scope.parametros[o.split('=')[0]] = o.split('=')[1]
+            }
         });
         $scope.sesion = {};
         $scope.documentoVenta = {};
@@ -27,12 +29,9 @@ DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$f
         $scope.puntoVentas = [];
         $scope.documentoVentaDetalles = [];
 
-        $scope.tipoDocumentoEntidades = [
-            {'codigo': '1', 'nombre': 'DNI'},
-            {'codigo': '9', 'nombre': 'RUC'}];
-        /*$scope.tipoDocumentoVentas = [
-            {'codigo': '01', 'nombre': 'FACTURA'},
-            {'codigo': '03', 'nombre': 'BOLETA DE VENTA'}];*/
+        /*$scope.tipoDocumentoEntidades = [
+         {'codigo': '1', 'nombre': 'DNI'},
+         {'codigo': '9', 'nombre': 'RUC'}];*/
         $scope.condiciones = [
             {'codigo': 'CON', 'nombre': 'CONTADO'},
             {'codigo': 'CRE', 'nombre': 'CRÉDITO'}];
@@ -54,23 +53,100 @@ DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$f
         $scope.documentoVenta.tipoDocumentoVenta = {'codigo': '01', 'nombre': 'FACTURA'};
         $scope.condicion = {'codigo': 'CON', 'nombre': 'CONTADO'};
         $scope.formaPago = {'codigo': 'EFE', 'nombre': 'EFECTIVO'};
-        
+
         $scope.documentoVenta.fechaEmision = new Date();
         //alert($filter('date')(Date.now(), 'dd-MM-yyyy'));
         //$scope.documentoVenta.fechaEmision = $filter('date')(Date.now(), 'dd-MM-yyyy');//'yyyy-MM-dd'
         $scope.clientes = [];
 
         $http({method: 'GET', url: '/transportes_gepp/controlador/usuario/buscarsesion'}).then(function success(response) {
-            //console.log(response.data);
             $scope.sesion = response.data;
             $scope.roles = $scope.sesion.roles;
             $scope.puntoVentas = $scope.sesion.puntoVentas;
             $scope.tipoDocumentoVentas = $scope.sesion.tipoDocumentoVentas;
             $scope.tipoNotaCreditos = $scope.sesion.tipoNotaCreditos;
             $scope.tipoNotaDebitos = $scope.sesion.tipoNotaDebitos;
-            
+            $scope.tipoDocumentoEntidads = $scope.sesion.tipoDocumentoEntidads;
+            if ($scope.parametros.id !== undefined) {
+                $scope.tipoDocumentoVentaSelected = $filter('filter')($scope.tipoDocumentoVentas, {codigo: $scope.parametros.codigoTipo}, true)[0];
+                $scope.documentoVenta.tipoDocumentoVenta = $scope.tipoDocumentoVentaSelected;
+                $scope.documentoVenta.documentoVenta = {};
+                $scope.cambioTipoDocumentoVenta();
+                $http({method: 'POST', url: '/transportes_gepp/controlador/documentoventa/buscar/' + $scope.parametros.id
+                }).then(function success(response) {
+                    $scope.documentoVentaRef = response.data;
+                    $scope.documentoVenta.cliente = $scope.documentoVentaRef.cliente;
+                    $scope.item = {};
+                    $scope.item.producto = {};
+                    $scope.documentoVenta.documentoVenta = $scope.documentoVentaRef;
+                    console.log($scope.documentoVenta.documentoVenta);
+                    if ($scope.documentoVenta.tipoDocumentoVenta.codigo === "07") {
+                        $scope.documentoVenta.tipoNotaCredito = $scope.tipoNotaCreditos[0];
+                        //$scope.documentoVenta.tipoNotaDebito = {};
+                        $scope.item.producto.nombre = $scope.documentoVenta.tipoNotaCredito.nombre;
+                    } else if ($scope.documentoVenta.tipoDocumentoVenta.codigo === "08") {
+                        $scope.documentoVenta.tipoNotaDebito = $scope.tipoNotaDebitos[0];
+                        //$scope.documentoVenta.tipoNotaCredito = {};
+                        $scope.item.producto.nombre = $scope.documentoVenta.tipoNotaDebito.nombre;
+                    }
+                    $scope.item.cantidad = 1;
+                    $scope.item.descuentoUnitario = 0;
+                    $scope.item.precioToten = $scope.documentoVenta.documentoVenta.total;
+                    $scope.item.producto.id = null;
+                    $scope.item.unidad = {'codigo': 'NIU'};
+                    $scope.item.fleteUnitario = 0;
+                    $scope.item.bonificacionUnitario = 0;
+                    $scope.item.precioUnitario = ($scope.item.precioToten + $scope.item.fleteUnitario + $scope.item.bonificacionUnitario)
+                    $scope.item.valorUnitario = $scope.item.precioUnitario / 1.18;
+                    $scope.item.costoUnitario = ($scope.item.fleteUnitario + $scope.item.bonificacionUnitario) - $scope.item.descuentoUnitario;
+                    $scope.item.precioFinal = $scope.item.precioToten + $scope.item.costoUnitario;
+                    $scope.item.codigoPrecio = '01';
+                    $scope.item.codigoIgv = '10';
+                    $scope.item.totalGratuito = 0;
+                    $scope.item.ventaBruta = $scope.item.valorUnitario * $scope.item.cantidad;
+                    $scope.item.totalDescuento = $scope.item.descuentoUnitario * $scope.item.cantidad;
+                    $scope.item.descuento = $scope.item.totalDescuento > 0 ? true : false;
+                    $scope.item.total = $scope.item.precioFinal * $scope.item.cantidad;
+                    $scope.item.totalIgv = $scope.item.total * 0.18;
+                    $scope.item.totalGrabado = $scope.item.total - $scope.item.totalIgv;
+                    $scope.item.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
+                    $scope.documentoVenta.documentoVentaDetalles.push($scope.item);
+                    console.log($scope.item);
+                    $scope.calcularMontos();
+                    $scope.nuevoDocumentoVentaDetalle();
+                }, function error(response) {
+                });
+            }
         }, function myError(response) {
         });
+
+        $scope.cambioTipoDocumentoVenta = function () {
+            if ($scope.documentoVenta.tipoDocumentoVenta.codigo === "01") {
+                $scope.habilitarEdicionPrecioToten = true;
+                $scope.ocultarVenta = false;
+                $scope.ocultarNotaCredito = true;
+                $scope.ocultarNotaDebito = true;
+                $scope.ocultarNota = true;
+            } else if ($scope.documentoVenta.tipoDocumentoVenta.codigo === "03") {
+                $scope.habilitarEdicionPrecioToten = true;
+                $scope.ocultarVenta = false;
+                $scope.ocultarNotaCredito = true;
+                $scope.ocultarNotaDebito = true;
+                $scope.ocultarNota = true;
+            } else if ($scope.documentoVenta.tipoDocumentoVenta.codigo === "07") {
+                $scope.ocultarVenta = true;
+                $scope.ocultarNotaCredito = false;
+                $scope.ocultarNotaDebito = true;
+                $scope.ocultarNota = false;
+                $scope.habilitarEdicionPrecioToten = false;
+            } else if ($scope.documentoVenta.tipoDocumentoVenta.codigo === "08") {
+                $scope.ocultarVenta = true;
+                $scope.ocultarNotaCredito = true;
+                $scope.ocultarNotaDebito = false;
+                $scope.ocultarNota = false;
+                $scope.habilitarEdicionPrecioToten = false;
+            }
+        };
         $scope.cancelar = function () {
             $window.location.href = 'documentoventas.jsp';
         }
@@ -93,11 +169,13 @@ DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$f
             documentoVenta.moneda = {'codigo': 'PEN', 'nombre': 'Soles'};
             documentoVenta.estadoDocumentoVenta = {'codigo': 'CRE', 'nombre': 'CREADO'};
             documentoVenta.puntoVenta = $scope.sesion.usuario.puntoVenta;
-            documentoVenta.puntoVentaSerie = {'codigo': 'F001'};
+            //documentoVenta.puntoVentaSerie = {'codigo': 'F001'};
             documentoVenta.tipoTargeta = $scope.tipoTargeta.codigo;
             documentoVenta.banco = $scope.banco.codigo;
+            //$scope.documentoVenta.documentoVenta=undefined;
+            //documentoVenta.documentoVentaDetalles[0].producto = {};
             //documentoVenta.numero = '00000000';
-            //console.log(documentoVenta);
+            console.log(documentoVenta);
             //return;
             //return;
             //usuario.usuarioByIdDocumentoVentaCreacion = $scope.sesion.usuario;
@@ -107,7 +185,9 @@ DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$f
                 url: '/transportes_gepp/controlador/documentoventa/crear',
                 data: documentoVenta
             }).then(function success(response) {
+                console.log(response.data.id);
                 if (response.data.id > 0) {
+                $window.open('/transportes_gepp/controlador/documentoventa/descargar/' + response.data.id, '_blank');
                     $scope.cancelar();
                 }
             }, function error(response) {
@@ -182,10 +262,8 @@ DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$f
             }
             $http({method: 'GET', url: '/transportes_gepp/controlador/producto/autocompletar/' + criterio
             }).then(function mySucces(response) {
-                console.log("productoooooooo  "+response.data);
-                console.log("productoooooooo  "+response);
+                //console.log(response.data);
                 $scope.productos = response.data;
-                console.log("$scope.productos  "+$scope.productos);
                 $scope.ocultarProductosAuto = false;
             }, function myError(response) {
 
@@ -261,7 +339,69 @@ DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$f
             $scope.documentoVenta.documentoVentaDetalles.splice(item, 1);
             $scope.calcularMontos();
         };
-
+        $scope.setSelected = function (row, item) {
+            $scope.selectedRow = row;
+        };
+        $scope.calcularDetalle = function (item) {
+            item.precioUnitario = (item.precioToten + item.fleteUnitario + item.bonificacionUnitario)
+            item.valorUnitario = item.precioUnitario / 1.18;
+            item.costoUnitario = (item.fleteUnitario + item.bonificacionUnitario) - item.descuentoUnitario;
+            item.precioFinal = item.precioToten + item.costoUnitario;
+            item.ventaBruta = item.valorUnitario * item.cantidad;
+            item.totalDescuento = item.descuentoUnitario * item.cantidad;
+            item.descuento = item.totalDescuento > 0 ? true : false;
+            item.total = item.precioFinal * item.cantidad;
+            item.totalIgv = item.total * 0.18;
+            item.totalGrabado = item.total - item.totalIgv;
+            $scope.calcularMontos();
+        };
+        $scope.clienteTmp = {};
+        $scope.nuevoCliente = function () {
+            $scope.mensajeTituloCliente = "Crear Cliente";
+            $scope.clienteTmp = {};
+            $scope.clienteTmp.id = 0;
+            //$scope.clienteTmp.entidad.tipoDocumentoEntidad = $scope.tipoDocumentoEntidads[0];
+            //console.log("$scope.entidadTmp.id " + $scope.entidadTmp.id);
+        };
+        $scope.guardarCliente = function (cliente) {
+            if (cliente.id === 0) {
+                $scope.crearCliente(cliente);
+            } else {
+                //$scope.editarCliente(cliente);
+            }
+        };
+        $scope.crearCliente = function (cliente) {
+            cliente.entidad.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
+            cliente.entidad.ubigeo = {'codigo': '030101'};
+            cliente.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
+            console.log(cliente);
+            $http({
+                method: 'POST',
+                url: '/transportes_gepp/controlador/cliente/crear',
+                data: cliente
+            }).then(function success(response) {
+                $scope.documentoVenta.cliente=response.data;
+                $scope.criterioCliente="";
+                //console.log(response.data);
+                //$scope.listar();
+            }, function error(response) {
+                //console.log(response.data);
+            });
+        };
         $scope.nuevoDocumentoVentaDetalle();
         $scope.calcularMontos();
+        $scope.cambioTipoDocumentoVenta();
+    }]);
+DocumentoVentaApp.directive('selectOnClick', ['$window', function ($window) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                element.on('click', function () {
+                    if (!$window.getSelection().toString()) {
+                        // Required for mobile Safari
+                        this.setSelectionRange(0, this.value.length)
+                    }
+                });
+            }
+        };
     }]);
