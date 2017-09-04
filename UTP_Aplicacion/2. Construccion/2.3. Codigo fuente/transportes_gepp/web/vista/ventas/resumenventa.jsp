@@ -264,10 +264,10 @@
                                                 <tbody>
                                                     <tr ng-repeat="comunicacionBajaGrupo in comunicacionBajaGrupos">
                                                         <td>{{$index + 1}}</td>
-                                                        <td>{{comunicacionBajaGrupo.serie}}</td>
-                                                        <td>{{resumenVentasGrupo.desde}}</td>
-                                                        <td>{{resumenVentasGrupo.hasta}}</td>
-                                                        <td>{{resumenVentasGrupo.grabada}}</td>
+                                                        <td>{{comunicacionBajaGrupo.tipoDocumentoVenta}}</td>
+                                                        <td>{{comunicacionBajaGrupo.puntoVentaSerie}}</td>
+                                                        <td>{{comunicacionBajaGrupo.inicioDocumentoVenta}}</td>
+                                                        <td></td>
                                                         <td></td>
                                                         <!--td class="text-center">
                                                             <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalProducto" ng-click="seleccionarProducto(producto)">
@@ -305,7 +305,7 @@
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formProducto.$invalid" ng-click="guardarProducto(comunicacionBajaGrupos)">Guardar</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formProducto.$invalid" ng-click="crearResumenVentasGrupos(comunicacionBajaGrupos)">Guardar</button>
                                 </div>
                             </div>
                         </div>
@@ -370,7 +370,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formProducto.$invalid" ng-click="selectDocumentoVentas()">Guardar</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formProducto.$invalid" ng-click="selectDocumentoVentasBaja()">Guardar</button>
                                 </div>
                             </div>
                         </div>

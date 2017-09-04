@@ -365,7 +365,7 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
         $scope.selectDocumentoVentasBaja = function () {
             //$scope.resumenVentasGrupos = [];
             $scope.comunicacionBajaGrupos = [];
-            $scope.comunicacionBajaGrupo = {};
+            
             //$scope.resumenVentasGrupo.serie = 
             var c1 = 0;
             var c2 = 0;
@@ -383,75 +383,16 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
                     console.log("selected.numero " + selected.total);
 
                     console.log("selected.puntoVentaSerie.codigo " + selected.puntoVentaSerie.codigo);
-                    console.log("$scope.resumenVentasGrupo.serie " + $scope.comunicacionBajaGrupo.serie);
                     /*if ($scope.comunicacionBajaGrupo.serie === selected.puntoVentaSerie.codigo || $scope.comunicacionBajaGrupo.serie === undefined) {
                      console.log("104 ");
                      $scope.comunicacionBajaGrupo.serie = selected.puntoVentaSerie.codigo;*/
-
-                    if (numero === 0)
-                    {
-                        grabada = 0;
-                        igv = 0;
-                        total = 0;
-                        numero = parseInt(selected.numero);
-                        //$scope.resumenVentasGrupo = {};
-                        $scope.comunicacionBajaGrupos.push($scope.resumenVentasGrupo);
-                    }
-
-                    if (numero === parseInt(selected.numero)) {
-                        if (c1 === 0) {
-                            $scope.comunicacionBajaGrupo.desde = selected.numero;
-                        }
-                        c1++;
-
-                        $scope.comunicacionBajaGrupo.hasta = selected.numero;
-
-                        grabada = grabada + selected.totalGrabado;
-                        igv = igv + selected.totalIgv;
-                        total = total + selected.total;
-
-                        console.log("numero " + numero);
-                        console.log("108");
-                        $scope.comunicacionBajaGrupo.grabada = grabada;
-                        $scope.comunicacionBajaGrupo.igv = igv;
-                        $scope.comunicacionBajaGrupo.total = total;
-
-
-
-
-                    } else {
-
-                        $scope.resumenVentasGrupo.serie = selected.puntoVentaSerie.codigo;
-                        if (c2 === 0) {
-                            $scope.comunicacionBajaGrupo = {};
-                            $scope.comunicacionBajaGrupos.push($scope.resumenVentasGrupo);
-                            grabada = 0;
-                            igv = 0;
-                            total = 0;
-                            $scope.comunicacionBajaGrupo.desde = selected.numero;
-                        }
-                        c2++;
-
-                        $scope.comunicacionBajaGrupo.hasta = selected.numero;
-
-                        grabada = grabada + selected.totalGrabado;
-                        igv = igv + selected.totalIgv;
-                        total = total + selected.total;
-
-                        console.log("numero " + numero);
-                        console.log("108");
-                        $scope.comunicacionBajaGrupo.grabada = grabada;
-                        $scope.comunicacionBajaGrupo.igv = igv;
-                        $scope.comunicacionBajaGrupo.total = total;
-
-                    }
-                    numero++;
-                    /*} else {
-                     alert("diferente");
-                     $scope.resumenVentasGrupos = [];
-                     throw("exit");
-                     }*/
-
+                    $scope.comunicacionBajaGrupo = {};
+                    //$scope.comunicacionBajaGrupo.resumenVentasGrupo.documentoVenta = selected.id;
+                    $scope.comunicacionBajaGrupo.tipoDocumentoVenta = selected.tipoDocumentoVenta.nombre;
+                    $scope.comunicacionBajaGrupo.puntoVentaSerie = selected.puntoVentaSerie.codigo;
+                    $scope.comunicacionBajaGrupo.inicioDocumentoVenta = selected.numero;
+                    $scope.comunicacionBajaGrupo.finDocumentoVenta = selected.numero;
+                    $scope.comunicacionBajaGrupos.push($scope.comunicacionBajaGrupo);
 
                 }
             });
