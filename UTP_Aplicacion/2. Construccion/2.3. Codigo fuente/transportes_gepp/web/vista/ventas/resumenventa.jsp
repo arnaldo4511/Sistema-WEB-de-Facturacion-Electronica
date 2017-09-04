@@ -52,13 +52,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="resumenVenta in resumenVentas.slice(((currentPage - 1) * itemsPerPage), ((currentPage) * itemsPerPage))| filter:search ">
+                                        <tr ng-repeat="listaResumenVenta in listaResumenVentas.slice(((currentPageListaResumenVentas - 1) * itemsPerPageListarResumenVentas), ((currentPageListaResumenVentas) * itemsPerPageListarResumenVentas))| filter:search ">
                                             <td>{{$index + 1}}</td>
-                                            <td>{{resumenVenta.tipo}}</td>
-                                            <td>{{resumenVenta.estadoDocumentoVenta}}</td>
+                                            <td>{{listaResumenVenta.tipo}}</td>
+                                            <td>{{listaResumenVenta.estadoDocumentoVenta.codigo}}</td>
                                             <td></td>
-                                            <td>{{resumenVenta.numero}}</td>
-                                            <td>{{resumenVenta.fechaEmision}}</td>
+                                            <td>{{listaResumenVenta.numero}}</td>
+                                            <td>{{listaResumenVenta.fechaEmision}}</td>
+                                            <td></td>
                                             <td></td>
                                             <!--td class="text-center">
                                                 <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalProducto" ng-click="seleccionarProducto(producto)">
@@ -100,7 +101,7 @@
                                         resumenVentas {{resumenVentas}}
                                         resumenVenta {{resumenVenta}}
                                         resumenVenta.resumenVentasGrupos {{resumenVenta.resumenVentasGrupos}}
-                                        resumenVenta.resumenVentasGrupo {{resumenVenta.resumenVentasGrupo}}
+                                        
                                         <div class="row">
                                             <table class="table table-bordered">
                                                 <thead>
@@ -116,14 +117,14 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr ng-repeat="resumenVenta.resumenVentasGrupo in resumenVenta.resumenVentasGrupos">
+                                                    <tr ng-repeat="listaResumenVentaGrupo in resumenVenta.resumenVentasGrupos">
                                                         <td>{{$index + 1}}</td>
-                                                        <td>{{resumenVenta.resumenVentasGrupo.serie}}</td>
-                                                        <td>{{resumenVenta.resumenVentasGrupo.desde}}</td>
-                                                        <td>{{resumenVenta.resumenVentasGrupo.hasta}}</td>
-                                                        <td>{{resumenVenta.resumenVentasGrupo.grabada}}</td>
-                                                        <td>{{resumenVenta.resumenVentasGrupo.igv}}</td>
-                                                        <td>{{resumenVenta.resumenVentasGrupo.total}}</td>
+                                                        <td>{{listaResumenVentaGrupo.puntoVentaSerie}}</td>
+                                                        <td>{{listaResumenVentaGrupo.inicioDocumentoVenta}}</td>
+                                                        <td>{{listaResumenVentaGrupo.finDocumentoVenta}}</td>
+                                                        <td>{{listaResumenVentaGrupo.totalGrabado}}</td>
+                                                        <td>{{listaResumenVentaGrupo.totalIgv}}</td>
+                                                        <td>{{listaResumenVentaGrupo.total}}</td>
                                                         <td></td>
                                                         <!--td class="text-center">
                                                             <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalProducto" ng-click="seleccionarProducto(producto)">
@@ -154,6 +155,7 @@
                                                        ">Importe Total S/. {{resumenVentasGrupo||"0.00"}}</label>
                                             </div>
                                         </div>
+                                        listaResumenVentaGrupo {{listaResumenVentaGrupo}}
                                         resumenVenta.resumenVentasGrupos {{resumenVenta.resumenVentasGrupos}}
                                         resumenVenta.resumenVentasGrupo {{resumenVenta.resumenVentasGrupo}}
                                     </form>
@@ -169,6 +171,65 @@
                     </div>
                     <!-- Modal -->
                     <!-- Modal -->
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="modalDocumentoVenta" role="dialog">
+                        <div class="modal-dialog modalMedium">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Boletas de Ventas</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal" role="form" name="formProducto">
+                                        <div class="row">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>#</th>
+                                                        <th>
+                                                            Serie<br>
+                                                            <select class="form-control"
+                                                                    ng-init="puntoVentaSeries[0].value" ng-model="puntoVentaSerie" ng-options="puntoVentaSerie.codigo for puntoVentaSerie in puntoVentaSeries track by puntoVentaSerie.codigo"
+                                                                    ng-change="listarDocumentoVenta()">
+                                                            </select>
+                                                        </th>
+                                                        <th>Número</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="documentoVenta in documentoVentas">
+                                                        <td><input type="checkbox" ng-model="documentoVenta.selected"/></td>
+                                                        <td>{{documentoVenta.a.$index + 1}}</td>
+                                                        <td>{{documentoVenta.puntoVentaSerie.codigo}}</td>
+                                                        <td>{{documentoVenta.numero}}</td>
+                                                        <td>{{documentoVenta.total}}</td>
+                                                        <!--td class="text-center">
+                                                            <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalProducto" ng-click="seleccionarProducto(producto)">
+                                                                <span class="glyphicon glyphicon-pencil"></span>
+                                                            </button>
+                                                            <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalEliminarProducto" ng-click="seleccionarProducto(producto)">
+                                                                <span class="glyphicon glyphicon-trash"></span>
+                                                            </button>
+                                                        </td-->
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <ul  uib-pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm " items-per-page="itemsPerPage" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+                                            </ul>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formProducto.$invalid" ng-click="selectDocumentoVentas()">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="modal fade" id="modalComunicacionBaja" role="dialog">
                         <div class="modal-dialog modalMedium">
                             <!-- Modal content-->
@@ -182,9 +243,9 @@
                                         <div class="form-group">
                                             <label class="control-label col-sm-2" >Fecha</label>
                                             <div class="col-sm-3">
-                                                <input type="date" class="form-control"  required>
+                                                <input type="date" class="form-control" ng-model="fechaEmisionBaja"  required/>
                                             </div>
-                                            <button type="button" class="btn btn-default elementRight" data-toggle="modal" data-target="#modalDocumentoVenta" ng-click="listarDocumentoVenta('')"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Grupo</button>
+                                            <button type="button" class="btn btn-default elementRight" data-toggle="modal" data-target="#modalDocumentoVentaBaja" ng-click="listarDocumentoVentaBaja()"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Grupo</button>
                                         </div>
                                         comunicacionBajaGrupos {{comunicacionBajaGrupos}}
                                         comunicacionBajaGrupo {{comunicacionBajaGrupo}}
@@ -193,12 +254,10 @@
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
+                                                        <th>Tipo Venta</th>
                                                         <th>Serie</th>
-                                                        <th>Desde</th>
-                                                        <th>Hasta</th>
-                                                        <th>Grabada</th>
-                                                        <th>IGV</th>
-                                                        <th>Total</th>
+                                                        <th>Numero</th>
+                                                        <th>Descripcion</th>
                                                         <th>Eliminar</th>
                                                     </tr>
                                                 </thead>
@@ -209,8 +268,6 @@
                                                         <td>{{resumenVentasGrupo.desde}}</td>
                                                         <td>{{resumenVentasGrupo.hasta}}</td>
                                                         <td>{{resumenVentasGrupo.grabada}}</td>
-                                                        <td>{{resumenVentasGrupo.igv}}</td>
-                                                        <td>{{resumenVentasGrupo.total}}</td>
                                                         <td></td>
                                                         <!--td class="text-center">
                                                             <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalProducto" ng-click="seleccionarProducto(producto)">
@@ -253,14 +310,13 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Modal -->
-                    <div class="modal fade" id="modalDocumentoVenta" role="dialog">
+                    <div class="modal fade" id="modalDocumentoVentaBaja" role="dialog">
                         <div class="modal-dialog modalMedium">
                             <!-- Modal content-->
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Boletas de Ventas</h4>
+                                    <h4 class="modal-title">Documentos de Ventas</h4>
                                 </div>
                                 <div class="modal-body">
                                     <form class="form-horizontal" role="form" name="formProducto">
@@ -271,10 +327,17 @@
                                                         <th></th>
                                                         <th>#</th>
                                                         <th>
+                                                            Tipo<br>
+                                                            <select class="form-control"
+                                                                    ng-init="tipoDocumentoVentas[0].value" ng-model="tipoDocumentoVenta" ng-options="tipoDocumentoVenta.nombre for tipoDocumentoVenta in tipoDocumentoVentas track by tipoDocumentoVenta.codigo"
+                                                                    ng-change="listarDocumentoVentaBaja()">
+                                                            </select>
+                                                        </th>
+                                                        <th>
                                                             Serie<br>
                                                             <select class="form-control"
                                                                     ng-init="puntoVentaSeries[0].value" ng-model="puntoVentaSerie" ng-options="puntoVentaSerie.codigo for puntoVentaSerie in puntoVentaSeries track by puntoVentaSerie.codigo"
-                                                                    ng-change="listarDocumentoVenta()">
+                                                                    ng-change="listarDocumentoVentaBaja()">
                                                             </select>
                                                         </th>
                                                         <th>Número</th>
@@ -285,6 +348,7 @@
                                                     <tr ng-repeat="documentoVenta in documentoVentas">
                                                         <td><input type="checkbox" ng-model="documentoVenta.selected"/></td>
                                                         <td>{{documentoVenta.a.$index + 1}}</td>
+                                                        <td>{{documentoVenta.tipoDocumentoVenta.nombre}}</td>
                                                         <td>{{documentoVenta.puntoVentaSerie.codigo}}</td>
                                                         <td>{{documentoVenta.numero}}</td>
                                                         <td>{{documentoVenta.total}}</td>
