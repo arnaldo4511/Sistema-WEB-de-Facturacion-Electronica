@@ -33,6 +33,11 @@ public class ResumenVentaDao implements IResumenVentaDao {
                 resumenVentasGrupo.setResumenVentas(resumenVentas);
                 //resumenVentasGrupo.setFechaCreacion(new Date());
                 sesion.save(resumenVentasGrupo);
+                for (ResumenVentasGrupoVenta resumenVentasGrupoVenta : resumenVentasGrupo.getResumenVentasGrupoVentas()) {
+                    resumenVentasGrupoVenta.setResumenVentasGrupo(resumenVentasGrupo);
+                    //resumenVentasGrupo.setFechaCreacion(new Date());
+                    sesion.save(resumenVentasGrupoVenta);
+                }
             }
             sesion.getTransaction().commit();
             sesion.close();
@@ -40,58 +45,57 @@ public class ResumenVentaDao implements IResumenVentaDao {
             e.printStackTrace();
         }
     }
-    
+
     /*@Override
-    public void editar(Producto producto) {
-        try {
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
-            sesion.beginTransaction();
-            String hqlUpdate = "update Producto set nombre = :nombre,descripcion = :descripcion,unidad = :unidad,precioCompra = :precioCompra,precioVenta = :precioVenta where id = :id";
-            sesion.createQuery(hqlUpdate)
-                    .setString("nombre", producto.getNombre())
-                    .setString("descripcion", producto.getDescripcion())
-                    .setString("unidad", producto.getUnidad().getCodigo())
-                    .setDouble("precioCompra", producto.getPrecioCompra())
-                    .setDouble("precioVenta", producto.getPrecioVenta())
-                    .setLong("id", producto.getId())
-                    .executeUpdate();
-            sesion.getTransaction().commit();
-            sesion.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+     public void editar(Producto producto) {
+     try {
+     Session sesion = HibernateUtil.getSessionFactory().openSession();
+     sesion.beginTransaction();
+     String hqlUpdate = "update Producto set nombre = :nombre,descripcion = :descripcion,unidad = :unidad,precioCompra = :precioCompra,precioVenta = :precioVenta where id = :id";
+     sesion.createQuery(hqlUpdate)
+     .setString("nombre", producto.getNombre())
+     .setString("descripcion", producto.getDescripcion())
+     .setString("unidad", producto.getUnidad().getCodigo())
+     .setDouble("precioCompra", producto.getPrecioCompra())
+     .setDouble("precioVenta", producto.getPrecioVenta())
+     .setLong("id", producto.getId())
+     .executeUpdate();
+     sesion.getTransaction().commit();
+     sesion.close();
+     } catch (Exception e) {
+     e.printStackTrace();
+     }
+     }
     
-    @Override
-    public Producto buscar(long id) {
-        Producto producto = null;
-        try {
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
-            sesion.beginTransaction();
-            producto = (Producto) sesion.load(Producto.class, id);
-            Hibernate.initialize(producto);
-            sesion.getTransaction().commit();
-            sesion.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return producto;
-    }
+     @Override
+     public Producto buscar(long id) {
+     Producto producto = null;
+     try {
+     Session sesion = HibernateUtil.getSessionFactory().openSession();
+     sesion.beginTransaction();
+     producto = (Producto) sesion.load(Producto.class, id);
+     Hibernate.initialize(producto);
+     sesion.getTransaction().commit();
+     sesion.close();
+     } catch (Exception e) {
+     e.printStackTrace();
+     }
+     return producto;
+     }
 
-    @Override
-    public void eliminar(long id) {
-        try {
-            Session sesion = HibernateUtil.getSessionFactory().openSession();
-            sesion.beginTransaction();
-            String hql = "delete from Producto where id= :id";
-            sesion.createQuery(hql).setLong("id", id).executeUpdate();
-            sesion.getTransaction().commit();
-            sesion.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
-
+     @Override
+     public void eliminar(long id) {
+     try {
+     Session sesion = HibernateUtil.getSessionFactory().openSession();
+     sesion.beginTransaction();
+     String hql = "delete from Producto where id= :id";
+     sesion.createQuery(hql).setLong("id", id).executeUpdate();
+     sesion.getTransaction().commit();
+     sesion.close();
+     } catch (Exception e) {
+     e.printStackTrace();
+     }
+     }*/
     @Override
     public List<ResumenVentas> listar() {
         List<ResumenVentas> lista = null;
@@ -109,6 +113,5 @@ public class ResumenVentaDao implements IResumenVentaDao {
         }
         return lista;
     }
-
 
 }
