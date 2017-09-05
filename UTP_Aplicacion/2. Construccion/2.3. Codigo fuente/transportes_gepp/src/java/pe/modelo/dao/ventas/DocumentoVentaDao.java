@@ -54,7 +54,7 @@ import pe.modelo.pojo.DocumentoVentaDetalle;
 import pe.modelo.pojo.TipoDocumentoVenta;
 import pe.modelo.dto.ventas.NotificacionDto;
 import pe.modelo.dto.ventas.AnulacionDto;
-import pe.modelo.pojo.vista.VwSelDocumentoVenta;
+import pe.modelo.pojo.VwSelDocumentoVenta;
 
 /**
  *

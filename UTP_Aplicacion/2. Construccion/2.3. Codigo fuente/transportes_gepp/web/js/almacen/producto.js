@@ -95,13 +95,13 @@ ProductoApp.controller("ProductoController", ['$scope', '$http', '$window', func
             });
         };
         $scope.nuevoProducto = function () {
-            $scope.mensajeTituloProducto = "Crear Servicio";
+            $scope.mensajeTituloProducto = "Crear Producto";
             $scope.productoTmp = {};
             $scope.productoTmp.id = 0;
             console.log($scope.productoTmp.id);
         };
         $scope.seleccionarProducto = function (producto) {
-            $scope.mensajeTituloProducto = "Editar Servicio";
+            $scope.mensajeTituloProducto = "Editar Producto";
             $scope.productoTmp = producto;
         };
 

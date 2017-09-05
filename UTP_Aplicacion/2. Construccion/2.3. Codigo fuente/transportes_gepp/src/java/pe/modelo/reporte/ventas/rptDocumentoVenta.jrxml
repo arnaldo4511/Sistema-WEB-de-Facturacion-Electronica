@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="36499892-48dd-410f-a621-adb20b767988">
-	<property name="ireport.zoom" value="1.0000000000000007"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="193"/>
+	<property name="ireport.zoom" value="1.2100000000000009"/>
+	<property name="ireport.x" value="108"/>
+	<property name="ireport.y" value="240"/>
 	<queryString language="hql">
 		<![CDATA[from DocumentoVentaDetalle]]>
 	</queryString>
@@ -88,11 +88,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{documentoVenta}.getEmpresa().getEntidad().getDireccion()+"\n"+
-$F{documentoVenta}.getEmpresa().getEntidad().getZona()+ "\n"+
-$F{documentoVenta}.getEmpresa().getEntidad().getUbigeo().getNombreDepartamento()+" - "+
-$F{documentoVenta}.getEmpresa().getEntidad().getUbigeo().getNombreProvincia()+" - "+
-$F{documentoVenta}.getEmpresa().getEntidad().getUbigeo().getNombre()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getEmpresa().getEntidad().getDireccion()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement mode="Opaque" x="314" y="31" width="241" height="36" backcolor="#CCCCCC" uuid="8c3064d2-a7a2-402a-8da3-f3f13912403b"/>
@@ -121,7 +117,7 @@ $F{documentoVenta}.getEmpresa().getEntidad().getUbigeo().getNombre()]]></textFie
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="153" splitType="Stretch">
+		<band height="123" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="42" width="77" height="15" uuid="58006496-50ba-4dde-bac3-726d8dedd577"/>
 				<box leftPadding="3" rightPadding="3"/>
@@ -139,7 +135,7 @@ $F{documentoVenta}.getEmpresa().getEntidad().getUbigeo().getNombre()]]></textFie
 				<text><![CDATA[FECHA DE EMISION:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="140" y="133" width="145" height="20" backcolor="#CCCCCC" uuid="0bc30d12-5a7a-4203-8b63-04bf1571443f"/>
+				<reportElement mode="Opaque" x="140" y="103" width="145" height="20" backcolor="#CCCCCC" uuid="0bc30d12-5a7a-4203-8b63-04bf1571443f"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -149,10 +145,10 @@ $F{documentoVenta}.getEmpresa().getEntidad().getUbigeo().getNombre()]]></textFie
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Descripción]]></text>
+				<text><![CDATA[Producto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="500" y="133" width="55" height="20" backcolor="#CCCCCC" uuid="4464d92e-da38-499b-bd9a-8d3c7a32ba6b"/>
+				<reportElement mode="Opaque" x="500" y="103" width="55" height="20" backcolor="#CCCCCC" uuid="4464d92e-da38-499b-bd9a-8d3c7a32ba6b"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -165,7 +161,7 @@ $F{documentoVenta}.getEmpresa().getEntidad().getUbigeo().getNombre()]]></textFie
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="77" y="133" width="63" height="20" backcolor="#CCCCCC" uuid="42a641ab-0d0f-49ca-bd17-ee7371a40082"/>
+				<reportElement mode="Opaque" x="77" y="103" width="63" height="20" backcolor="#CCCCCC" uuid="42a641ab-0d0f-49ca-bd17-ee7371a40082"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -178,7 +174,7 @@ $F{documentoVenta}.getEmpresa().getEntidad().getUbigeo().getNombre()]]></textFie
 				<text><![CDATA[Unid.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="450" y="133" width="50" height="20" backcolor="#CCCCCC" uuid="02df4e2f-7cc3-4b93-b44e-665b022411a0"/>
+				<reportElement mode="Opaque" x="450" y="103" width="50" height="20" backcolor="#CCCCCC" uuid="02df4e2f-7cc3-4b93-b44e-665b022411a0"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -191,7 +187,7 @@ $F{documentoVenta}.getEmpresa().getEntidad().getUbigeo().getNombre()]]></textFie
 				<text><![CDATA[IGV]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="27" y="133" width="50" height="20" backcolor="#CCCCCC" uuid="d838c3cb-fd77-4953-abd2-097d7d300a60"/>
+				<reportElement mode="Opaque" x="27" y="103" width="50" height="20" backcolor="#CCCCCC" uuid="d838c3cb-fd77-4953-abd2-097d7d300a60"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -204,7 +200,7 @@ $F{documentoVenta}.getEmpresa().getEntidad().getUbigeo().getNombre()]]></textFie
 				<text><![CDATA[Cant.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="395" y="133" width="55" height="20" backcolor="#CCCCCC" uuid="271593f5-d9d3-409b-a63c-81d59957d88d"/>
+				<reportElement mode="Opaque" x="395" y="103" width="55" height="20" backcolor="#CCCCCC" uuid="271593f5-d9d3-409b-a63c-81d59957d88d"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -217,7 +213,7 @@ $F{documentoVenta}.getEmpresa().getEntidad().getUbigeo().getNombre()]]></textFie
 				<text><![CDATA[Valor ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="133" width="27" height="20" backcolor="#CCCCCC" uuid="443e09ed-e902-4dae-b1ad-310688ec244f"/>
+				<reportElement mode="Opaque" x="0" y="103" width="27" height="20" backcolor="#CCCCCC" uuid="443e09ed-e902-4dae-b1ad-310688ec244f"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -230,10 +226,7 @@ $F{documentoVenta}.getEmpresa().getEntidad().getUbigeo().getNombre()]]></textFie
 				<text><![CDATA[Nro.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="57" width="77" height="15" isRemoveLineWhenBlank="true" uuid="137d57df-cf8b-442b-bfee-963119833170">
-					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("01") ||
-$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWhenExpression>
-				</reportElement>
+				<reportElement x="0" y="57" width="77" height="15" uuid="137d57df-cf8b-442b-bfee-963119833170"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
@@ -241,7 +234,7 @@ $F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWh
 				<text><![CDATA[CONDICION:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="285" y="133" width="65" height="20" backcolor="#CCCCCC" uuid="3b688f05-2917-47a6-9d6b-1f09ba44162d"/>
+				<reportElement mode="Opaque" x="285" y="103" width="65" height="20" backcolor="#CCCCCC" uuid="3b688f05-2917-47a6-9d6b-1f09ba44162d"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -254,7 +247,7 @@ $F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWh
 				<text><![CDATA[Prec. Unit.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="350" y="133" width="45" height="20" backcolor="#CCCCCC" uuid="73eda446-fb82-4878-a95b-c9c6f6811ecf"/>
+				<reportElement mode="Opaque" x="350" y="103" width="45" height="20" backcolor="#CCCCCC" uuid="73eda446-fb82-4878-a95b-c9c6f6811ecf"/>
 				<box leftPadding="3" rightPadding="3">
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -295,10 +288,7 @@ $F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWh
 				<textFieldExpression><![CDATA[$F{documentoVenta}.getFechaEmision()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="346" y="57" width="71" height="15" isRemoveLineWhenBlank="true" uuid="fdd8d489-7716-45b0-bcba-093d34570aaf">
-					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("01") ||
-$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWhenExpression>
-				</reportElement>
+				<reportElement x="346" y="57" width="71" height="15" uuid="fdd8d489-7716-45b0-bcba-093d34570aaf"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
@@ -306,10 +296,7 @@ $F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWh
 				<text><![CDATA[NRO. GUIA:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="165" y="57" width="98" height="15" isRemoveLineWhenBlank="true" uuid="afce2281-957c-4911-9e02-c734cf8258ec">
-					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("01") ||
-$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWhenExpression>
-				</reportElement>
+				<reportElement x="165" y="57" width="98" height="15" uuid="afce2281-957c-4911-9e02-c734cf8258ec"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
@@ -317,34 +304,25 @@ $F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWh
 				<text><![CDATA[FECHA DE VENC.:]]></text>
 			</staticText>
 			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
-				<reportElement x="263" y="57" width="81" height="15" isRemoveLineWhenBlank="true" uuid="6cad4625-af38-42d7-b76c-d42172f64f79">
-					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("01") ||
-$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWhenExpression>
-				</reportElement>
+				<reportElement x="263" y="57" width="81" height="15" uuid="6cad4625-af38-42d7-b76c-d42172f64f79"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{documentoVenta}.getFechaVencimiento()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="77" y="57" width="88" height="15" isRemoveLineWhenBlank="true" uuid="92875c64-71f6-4e75-b974-c4bf348483c9">
-					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("01") ||
-$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWhenExpression>
-				</reportElement>
+				<reportElement x="77" y="57" width="88" height="15" uuid="92875c64-71f6-4e75-b974-c4bf348483c9"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{documentoVenta}.getCondicion().equals("CRE") ? "CREDITO" :"CONTADO"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="418" y="57" width="137" height="15" isRemoveLineWhenBlank="true" uuid="683078e9-8ee7-4e69-8c22-809a8fa632a9">
-					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("01") ||
-$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWhenExpression>
-				</reportElement>
+				<reportElement x="418" y="57" width="137" height="15" uuid="683078e9-8ee7-4e69-8c22-809a8fa632a9"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{documentoVenta}.getGuiaRemision()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="1" y="87" width="98" height="15" uuid="cc6f09a5-5a25-44f2-84da-811cf381263e"/>
+				<reportElement x="1" y="72" width="98" height="15" uuid="cc6f09a5-5a25-44f2-84da-811cf381263e"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
@@ -352,7 +330,7 @@ $F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWh
 				<text><![CDATA[FORMA DE PAGO:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="99" y="87" width="66" height="15" uuid="75cf629e-9d8c-4d40-8032-0f00c76fc646"/>
+				<reportElement x="99" y="72" width="66" height="15" uuid="75cf629e-9d8c-4d40-8032-0f00c76fc646"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{documentoVenta}.getFormaPago().equals("EFE") ?
@@ -379,7 +357,7 @@ $F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWh
 				<text><![CDATA[NOMBRE:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="165" y="87" width="98" height="15" uuid="0272bfbf-d122-45ce-9e90-ac087c6ec054"/>
+				<reportElement x="165" y="72" width="98" height="15" uuid="0272bfbf-d122-45ce-9e90-ac087c6ec054"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
@@ -387,13 +365,13 @@ $F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWh
 				<text><![CDATA[TIPO TARGETA:]]></text>
 			</staticText>
 			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
-				<reportElement x="263" y="87" width="81" height="15" uuid="81022f11-c915-4317-9630-d15335542e1c"/>
+				<reportElement x="263" y="72" width="81" height="15" uuid="81022f11-c915-4317-9630-d15335542e1c"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{documentoVenta}.getTipoTargeta()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="165" y="102" width="98" height="15" uuid="423007dc-480e-4cea-981a-36fb097d0cfe"/>
+				<reportElement x="165" y="87" width="98" height="15" uuid="423007dc-480e-4cea-981a-36fb097d0cfe"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
@@ -401,13 +379,13 @@ $F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWh
 				<text><![CDATA[BANCO:]]></text>
 			</staticText>
 			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
-				<reportElement x="263" y="102" width="81" height="15" uuid="d29df3cd-f3f6-4841-b91d-910d41f6eaaf"/>
+				<reportElement x="263" y="87" width="81" height="15" uuid="d29df3cd-f3f6-4841-b91d-910d41f6eaaf"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{documentoVenta}.getBanco()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="346" y="87" width="209" height="15" uuid="1cc7e4ec-dcb2-4570-9295-81e44ac93369"/>
+				<reportElement x="346" y="72" width="209" height="15" uuid="1cc7e4ec-dcb2-4570-9295-81e44ac93369"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
@@ -415,96 +393,12 @@ $F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWh
 				<text><![CDATA[NRO. TARGETA/ DEPOSITO]]></text>
 			</staticText>
 			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
-				<reportElement x="346" y="102" width="209" height="15" uuid="bdf0c7de-b433-473d-a69e-08c20eec3bb4"/>
+				<reportElement x="346" y="87" width="209" height="15" uuid="bdf0c7de-b433-473d-a69e-08c20eec3bb4"/>
 				<box leftPadding="3" rightPadding="3"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{documentoVenta}.getNumeroPago().equals(null)?
 "":
 "*******"+$F{documentoVenta}.getNumeroPago()]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="1" y="72" width="164" height="15" isRemoveLineWhenBlank="true" uuid="f8a15dc8-cf70-448d-9224-78fa66e2f2f7">
-					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("01") ||
-$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWhenExpression>
-				</reportElement>
-				<box leftPadding="3" rightPadding="3"/>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[NRO. GUIA TRANSPORTISTA:]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="165" y="72" width="179" height="15" isRemoveLineWhenBlank="true" uuid="ee5ba293-580c-4c74-b2f4-c3c1bf4798f7">
-					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("01") ||
-$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWhenExpression>
-				</reportElement>
-				<box leftPadding="3" rightPadding="3"/>
-				<textElement verticalAlignment="Top"/>
-				<textFieldExpression><![CDATA[$F{documentoVenta}.getGuiaRemisionTransportista()]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="418" y="72" width="137" height="15" isRemoveLineWhenBlank="true" uuid="f42b7e44-4e56-40f7-9c1b-77020b8665e8">
-					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("01") ||
-$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWhenExpression>
-				</reportElement>
-				<box leftPadding="3" rightPadding="3"/>
-				<textElement verticalAlignment="Top"/>
-				<textFieldExpression><![CDATA[$F{documentoVenta}.getPlaca()]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="346" y="72" width="71" height="15" isRemoveLineWhenBlank="true" uuid="0caf81e9-41a7-411d-8a5c-6930c4f885bc">
-					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("01") ||
-$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWhenExpression>
-				</reportElement>
-				<box leftPadding="3" rightPadding="3"/>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[PLACA:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="1" y="117" width="76" height="15" isRemoveLineWhenBlank="true" uuid="5d80d95b-4947-49a2-b697-e86742799313">
-					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("07") ||
-$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("08"))]]></printWhenExpression>
-				</reportElement>
-				<box leftPadding="3" rightPadding="3"/>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[DOC. REF. :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="165" y="117" width="98" height="15" isRemoveLineWhenBlank="true" uuid="8fbb40cc-43d3-4ab2-b180-13bdad082daf">
-					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("07") ||
-$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("08"))]]></printWhenExpression>
-				</reportElement>
-				<box leftPadding="3" rightPadding="3"/>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[MOTIVO:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="77" y="117" width="88" height="15" isRemoveLineWhenBlank="true" uuid="12d5c8a6-8a1b-4ba0-80e5-10db1ab6b8fb">
-					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("07") ||
-$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("08"))]]></printWhenExpression>
-				</reportElement>
-				<box leftPadding="3" rightPadding="3"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{documentoVenta}.getDocumentoVenta().getPuntoVentaSerie().getCodigo()+" - "+
-$F{documentoVenta}.getDocumentoVenta().getNumero()]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="263" y="117" width="292" height="15" isRemoveLineWhenBlank="true" uuid="7458f2d9-692e-4039-ae25-a8d65816b296">
-					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("07") ||
-$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("08"))]]></printWhenExpression>
-				</reportElement>
-				<box leftPadding="3" rightPadding="3"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("07")?
-$F{documentoVenta}.getTipoNotaCredito().getNombre():
-($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("08")?
-$F{documentoVenta}.getTipoNotaDebito().getNombre():"")]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
@@ -571,12 +465,9 @@ $F{documentoVenta}.getTipoNotaDebito().getNombre():"")]]></textFieldExpression>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font size="6"/>
+					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("07")?
-$F{documentoVenta}.getTipoNotaCredito().getNombre():
-$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("08")?
-$F{documentoVenta}.getTipoNotaDebito().getNombre():$F{producto}.getDescripcion()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{producto}.getNombre()]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0.00;-###0.00">
 				<reportElement x="350" y="0" width="45" height="20" uuid="806b1e39-a620-465b-ad56-4a644e0f8a6a"/>
@@ -804,16 +695,6 @@ $F{documentoVenta}.getTipoNotaDebito().getNombre():$F{producto}.getDescripcion()
 				</textElement>
 				<textFieldExpression><![CDATA[$F{documentoVenta}.getTotalDescuento()]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="0" y="17" width="395" height="60" isRemoveLineWhenBlank="true" uuid="20d7014b-9955-4e47-9469-91cde91784a8">
-					<printWhenExpression><![CDATA[$F{documentoVenta}.getTotal()>600]]></printWhenExpression>
-				</reportElement>
-				<box leftPadding="3" rightPadding="3"/>
-				<textElement verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[OPERAC. SUJETAS AL SISTEMA DE OPERAC. TRIBUTARIAS DEL GOBIERNO CENTRAL CTA. BCO DE LA NACIÓN  N° 00-615-001554]]></text>
-			</staticText>
 		</band>
 	</summary>
 </jasperReport>

@@ -29,7 +29,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
                         <li onclick='window.location.href = "<%= request.getContextPath()%>/vista/almacen/producto.jsp"'>
-                            <a>Servicios</a>
+                            <a>Productos</a>
                         </li>
                         <li onclick='window.location.href = "<%= request.getContextPath()%>/vista/ventas/cliente.jsp"'>
                             <a>Clientes</a>

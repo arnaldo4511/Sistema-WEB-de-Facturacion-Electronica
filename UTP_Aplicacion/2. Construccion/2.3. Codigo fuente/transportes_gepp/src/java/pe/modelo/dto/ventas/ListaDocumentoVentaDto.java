@@ -6,7 +6,7 @@
 package pe.modelo.dto.ventas;
 
 import java.util.List;
-import pe.modelo.pojo.vista.VwSelDocumentoVenta;
+import pe.modelo.pojo.VwSelDocumentoVenta;
 
 /**
  *

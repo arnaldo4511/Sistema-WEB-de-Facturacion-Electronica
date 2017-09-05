@@ -13,14 +13,13 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import pe.modelo.dao.HibernateUtil;
 import pe.modelo.pojo.Cliente;
-import pe.modelo.pojo.Entidad;
 
 /**
  *
  * @author octavio
  */
 public class ClienteDao implements IClienteDao {
-
+    
     @Override
     public void crear(Cliente cliente) {
         try {
@@ -34,7 +33,7 @@ public class ClienteDao implements IClienteDao {
             e.printStackTrace();
         }
     }
-
+    
     @Override
     public void editar(Cliente cliente) {
         try {
@@ -42,15 +41,9 @@ public class ClienteDao implements IClienteDao {
             cliente.getEntidad().setFechaModificacion(new Date());
             cliente.getEntidad().setUsuarioByIdUsuarioModificacion(cliente.getUsuarioByIdUsuarioModificacion());
             cliente.getEntidad().setFechaModificacion(new Date());
-
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            cliente.getEntidad().setUsuarioByIdUsuarioCreacion((cliente.getUsuarioByIdUsuarioCreacion()));
-            //System.out.println("numero:" + cliente.getEntidad().getDocumento());
-            /*if (cliente.getEntidad().getId() > 0) {
-                Entidad entidad = (Entidad) sesion.load(Entidad.class, cliente.getEntidad().getId());
-                cliente.getEntidad().setUsuarioByIdUsuarioCreacion((entidad.getUsuarioByIdUsuarioCreacion()));
-            }*/
+            System.out.println("numero:" + cliente.getEntidad().getDocumento());
             sesion.update(cliente);
             sesion.update(cliente.getEntidad());
             sesion.getTransaction().commit();
@@ -59,7 +52,7 @@ public class ClienteDao implements IClienteDao {
             e.printStackTrace();
         }
     }
-
+    
     @Override
     public Cliente buscar(long id) {
         Cliente cliente = null;
@@ -75,7 +68,7 @@ public class ClienteDao implements IClienteDao {
         }
         return cliente;
     }
-
+    
     @Override
     public void eliminar(long id) {
         try {
@@ -89,7 +82,7 @@ public class ClienteDao implements IClienteDao {
             e.printStackTrace();
         }
     }
-
+    
     @Override
     public List<Cliente> listar() {
         List<Cliente> lista = null;
@@ -105,7 +98,7 @@ public class ClienteDao implements IClienteDao {
         }
         return lista;
     }
-
+    
     public List<Cliente> autocompletar(String criterio) {
         List<Cliente> lista = null;
         try {

@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%@include file="/WEB-INF/imports.jspf" %>
         <script src="<%= request.getContextPath()%>/js/ventas/documentoventa.js" type="text/javascript"></script>
-        <title>Transportes :: Venta</title>
+        <title>Transportes :: Rol</title>
     </head>
     <body ng-app='DocumentoVentaApp' ng-controller='DocumentoVentaController'>
         <div class="container-fluid">
@@ -60,14 +60,6 @@
                                         <label >Guia de Remisión</label>
                                         <input type="text" class="form-control" ng-model="documentoVenta.guiaRemision" ng-disabled="condicion.codigo === 'CON'">
                                     </div>
-                                    <div class="form-group col-sm-2" ng-hide="ocultarVenta">
-                                        <label >Placa</label>
-                                        <input type="text" class="form-control" ng-model="documentoVenta.placa" >
-                                    </div>
-                                    <div class="form-group col-sm-2" ng-hide="ocultarVenta">
-                                        <label >Guia de Remisión Transportista</label>
-                                        <input type="text" class="form-control" ng-model="documentoVenta.guiaRemisionTransportista" >
-                                    </div>
                                     <div class="col-sm-1">
                                     </div>
                                 </div>
@@ -88,8 +80,8 @@
                                     </div>
                                     <div class="form-group col-sm-2">
                                         <button class="btn btn-default btn-group-lg" ng-click="cancelarCliente()"><span class="glyphicon glyphicon-remove"></span></button>
-                                        <button class="btn btn-default btn-group-lg" ng-click="nuevoCliente()" data-toggle="modal" data-target="#modalCliente"><span class="glyphicon glyphicon-user"></span></button>
-                                        <button class="btn btn-default btn-group-lg" ng-click="verCliente()" data-toggle="modal" data-target="#modalCliente"><span class="glyphicon glyphicon-pencil"></span></button>
+                                        <button class="btn btn-default btn-group-lg" ng-click="nuevoCliente()" data-toggle="modal" data-target="#modalItem"><span class="glyphicon glyphicon-user"></span></button>
+                                        <button class="btn btn-default btn-group-lg" ng-click=""><span class="glyphicon glyphicon-pencil"></span></button>
                                     </div>
                                 </div>
                                 <div class="row clearfix">
@@ -108,7 +100,7 @@
                                 </div>
                             </fieldset>
                             <fieldset class="scheduler-border">
-                                <legend class="scheduler-border">SERVICIOS</legend>
+                                <legend class="scheduler-border">PRODUCTOS</legend>
                                 <div class="row clearfix" ng-hide="ocultarVenta">
                                     <div class="row clearfix">
                                         <div class="form-group col-sm-12">
@@ -125,7 +117,7 @@
                                         </div>  
                                     </div>
                                     <div class="form-group col-sm-3">
-                                        <label >Servicio:</label><br>
+                                        <label >Producto:</label><br>
                                         {{documentoVentaDetalle.producto.nombre}}
                                     </div>
                                     <div class="form-group col-sm-1">
@@ -236,7 +228,7 @@
                     </section>
                     <section>
                         <!-- Modal -->
-                        <div class="modal fade" id="modalCliente" role="dialog">
+                        <div class="modal fade" id="modalItem" role="dialog">
                             <div class="modal-dialog">
                                 <!-- Modal content-->
                                 <div class="modal-content">
@@ -245,7 +237,7 @@
                                         <h4 class="modal-title">{{mensajeTitulo}}</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="form-horizontal" role="form" name="formCliente">
+                                        <form class="form-horizontal" role="form" name="formItem">
                                             <div class="form-group">
                                                 <label class="control-label col-sm-2" >Tipo Documento</label>
                                                 <div class="col-sm-10">
@@ -274,26 +266,26 @@
                                             <div class="form-group">
                                                 <label class="control-label col-sm-2" >E-mail 1</label>
                                                 <div class="col-sm-10">
-                                                    <input type="email" class="form-control" ng-model="clienteTmp.entidad.correoElectronico1" required>
+                                                    <input type="text" class="form-control" ng-model="clienteTmp.entidad.correoElectronico1" required>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-sm-2" >E-mail 2</label>
                                                 <div class="col-sm-10">
-                                                    <input type="email" class="form-control" ng-model="clienteTmp.entidad.correoElectronico2">
+                                                    <input type="text" class="form-control" ng-model="clienteTmp.entidad.correoElectronico2">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-sm-2" >E-mail 3</label>
                                                 <div class="col-sm-10">
-                                                    <input type="email" class="form-control" ng-model="clienteTmp.entidad.correoElectronico3">
+                                                    <input type="text" class="form-control" ng-model="clienteTmp.entidad.correoElectronico3">
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formCliente.$invalid" ng-click="guardarCliente(clienteTmp)">Guardar</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formItem.$invalid" ng-click="guardarCliente(clienteTmp)">Guardar</button>
                                     </div>
                                 </div>
                             </div>

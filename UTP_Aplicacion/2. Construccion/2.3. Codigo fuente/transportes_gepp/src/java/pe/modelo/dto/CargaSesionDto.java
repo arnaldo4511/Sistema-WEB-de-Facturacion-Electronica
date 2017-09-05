@@ -20,7 +20,7 @@ import pe.modelo.pojo.TipoNotaCredito;
 import pe.modelo.pojo.TipoNotaDebito;
 import pe.modelo.pojo.Unidad;
 import pe.modelo.pojo.Usuario;
-import pe.modelo.pojo.vista.VwSelDocumentoVenta;
+import pe.modelo.pojo.VwSelDocumentoVenta;
 
 /**
  *
