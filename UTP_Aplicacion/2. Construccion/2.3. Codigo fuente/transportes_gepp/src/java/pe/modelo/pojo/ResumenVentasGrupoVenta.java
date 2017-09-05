@@ -2,10 +2,13 @@ package pe.modelo.pojo;
 // Generated 17-ago-2017 14:14:43 by Hibernate Tools 4.3.1
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,9 +27,13 @@ public class ResumenVentasGrupoVenta  implements java.io.Serializable {
 
 
      private long id;
+     //@JsonIgnore
      private Usuario usuarioByIdUsuarioCreacion;
+     @JsonIgnore
      private Usuario usuarioByIdUsuarioModificacion;
+     //@JsonIgnore
      private DocumentoVenta documentoVenta;
+     @JsonIgnore
      private ResumenVentasGrupo resumenVentasGrupo;
      private Date fechaCreacion;
      private Date fechaModificacion;
@@ -52,7 +59,7 @@ public class ResumenVentasGrupoVenta  implements java.io.Serializable {
        this.fechaModificacion = fechaModificacion;
     }
    
-     @Id 
+     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     
     @Column(name="id", unique=true, nullable=false)
