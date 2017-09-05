@@ -16,7 +16,7 @@ ResumenVentaApp.filter('startFrom', function () {
 });
 ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$window', function ($scope, $http, $window) {
         $scope.resumenVentasGruposVentas = [];
-        
+
         $scope.resumenVentas = [];
         $scope.documentoVentas = [];
         console.log("{}");
@@ -34,11 +34,11 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
             {'codigo': 'F008'}];
         $scope.puntoVentaSerie = {'codigo': 'B001'};
         $scope.tipoDocumentoVentas = [
-            {'codigo': '01','nombre':'FACTURA ELECTRÓNICA'},
-            {'codigo': '03','nombre':'BOLETA DE VENTA ELECTRÓNICA'},
-            {'codigo': '07','nombre':'NOTA DE CRÉDITO  ELECTRÓNICA'},
-            {'codigo': '08','nombre':'NOTA DE DÉBITO  ELECTRÓNICA'}];
-        $scope.tipoDocumentoVenta = {'codigo': '03','nombre':'BOLETA DE VENTA ELECTRÓNICA'};
+            {'codigo': '01', 'nombre': 'FACTURA ELECTRÓNICA'},
+            {'codigo': '03', 'nombre': 'BOLETA DE VENTA ELECTRÓNICA'},
+            {'codigo': '07', 'nombre': 'NOTA DE CRÉDITO  ELECTRÓNICA'},
+            {'codigo': '08', 'nombre': 'NOTA DE DÉBITO  ELECTRÓNICA'}];
+        $scope.tipoDocumentoVenta = {'codigo': '03', 'nombre': 'BOLETA DE VENTA ELECTRÓNICA'};
         $scope.fechaEmision = "";
         $scope.fechaEmisionBaja = "";
         $scope.sesion = {};
@@ -82,7 +82,7 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
             $scope.documentoVentas = [];
             $scope.parametros = [];
             $scope.parametro = {};
-            $scope.parametro.nombre = "tipoDocumentoVenta.codigo";
+            /*$scope.parametro.nombre = "tipoDocumentoVenta.codigo";
             $scope.parametro.valor = "03";
             $scope.parametros.push($scope.parametro);
             $scope.parametro = {};
@@ -107,8 +107,12 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
             $scope.parametros.push($scope.parametro);
             console.log("$scope.fechaEmision " + $scope.fechaEmision);
             console.log("$scope.fechaEmision " + $scope.fechaEmision);
-            console.log("$scope.parametros " + $scope.parametros);
+            console.log("$scope.parametros " + $scope.parametros);*/
             //$scope.parametros.push($scope.parametro);
+            $scope.parametros.push({'nombre': 'codigoTipo', 'valor': '03'});
+            //$scope.parametros.push({'nombre': 'codigoEstado', 'valor': ($scope.parametro.estadoDocumentoVenta === null ? null : $scope.parametro.estadoDocumentoVenta.codigo)});
+            //$scope.parametros.push({'nombre': 'numero', 'valor': $scope.parametro.numero});
+            $scope.parametros.push({'nombre': 'fechaEmision', 'valor': $scope.fechaEmision});
             $http({
                 method: 'POST',
                 url: '/transportes_gepp/controlador/documentoventa/listar',
@@ -120,12 +124,10 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
                 console.log("response.headers " + response.headers);
                 console.log("response.config " + response.config);
                 console.log("response.config.data " + response.config.data);
-                console.log("response.config.data.numero " + response.config.data.numero);
 
                 console.log("response.records " + response.records);
                 console.log("response.data " + response.data);
-                console.log("response.data.lista.numero " + response.data.lista.numero);
-                $scope.documentoVentas = response.data.lista;
+                $scope.documentoVentas = response.data.documentoVentas;
                 /*$scope.totalItems = response.data.total;//$scope.documentoVentas.length;
                  console.log($scope.totalItems);*/
             }, function myError(response) {
@@ -146,17 +148,16 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
             angular.forEach($scope.documentoVentas, function (selected) {
                 if (selected.selected) {
                     //$scope.resumenVentasGrupos.documentoVenta = selected.id;
-                    console.log("selected.numero " + selected.puntoVentaSerie.codigo);
+                    console.log("selected.numero " + selected.serie);
                     console.log("selected.numero " + selected.numero);
                     console.log("selected.numero " + selected.totalGrabado);
                     console.log("selected.numero " + selected.totalIgv);
                     console.log("selected.numero " + selected.total);
 
-                    console.log("selected.puntoVentaSerie.codigo " + selected.puntoVentaSerie.codigo);
                     //if ($scope.resumenVentasGrupo.serie === selected.puntoVentaSerie.codigo || $scope.resumenVentasGrupo.serie === undefined) {
                     console.log("140 ==================================================================");
 
-                    
+
                     console.log("   $scope.resumenVentasGrupo.serie " + $scope.resumenVentasGrupos.serie);
                     if (numero === 0)
                     {
@@ -168,7 +169,7 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
                         console.log("PUSH");
                         $scope.resumenVenta.resumenVentasGrupos.push($scope.resumenVentasGrupos);
                         //$scope.resumenVentas.push($scope.resumenVentasGrupos);
-                        
+
                     }
                     //numero2 = numero-1;
                     console.log("   numero " + numero);
@@ -176,9 +177,17 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
                     if (numero === parseInt(selected.numero) /*|| numero2 === parseInt(selected.numero)*/) {
                         console.log("c1 " + c1 + "------------------------------------------------------------------");
                         if (c1 === 0) {
-                            $scope.resumenVentasGrupos.puntoVentaSerie = selected.puntoVentaSerie.codigo;
-                            $scope.resumenVentasGrupos.usuarioByIdUsuarioCreacion = {'id': '3'};
-                            $scope.resumenVentasGrupos.tipoDocumentoVenta = {'codigo':'03'};
+                            $scope.resumenVentasGrupos.tipoDocumentoVenta = {'codigo': '03'};
+                            $scope.resumenVentasGrupos.puntoVentaSerie = {'codigo': selected.serie};
+                            $scope.resumenVentasGrupos.fechaCreacion = new Date();
+                            $scope.resumenVentasGrupos.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
+                            $scope.resumenVentasGrupoVentas = [];
+                            $scope.resumenVentasGrupoVenta = {};
+                            $scope.resumenVentasGrupoVenta.documentoVenta = { 'id' : selected.id};
+                            $scope.resumenVentasGrupoVenta.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
+                            $scope.resumenVentasGrupoVenta.fechaCreacion = new Date();
+                            $scope.resumenVentasGrupoVentas.push($scope.resumenVentasGrupoVenta);
+                            $scope.resumenVentasGrupos.resumenVentasGrupoVentas = $scope.resumenVentasGrupoVentas;
                             $scope.resumenVentasGrupos.inicioDocumentoVenta = selected.numero;
                             console.log("   $scope.resumenVentasGrupo.desde " + $scope.resumenVentasGrupos.inicioDocumentoVenta);
                         }
@@ -192,10 +201,10 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
                         total = total + selected.total;
 
 
-                        $scope.resumenVentasGrupos.totalGrabado = grabada.toFixed(2);
+                        /*$scope.resumenVentasGrupos.totalGrabado = grabada.toFixed(2);
                         console.log("   $scope.resumenVentasGrupo.grabada " + $scope.resumenVentasGrupos.totalGrabado);
                         $scope.resumenVentasGrupos.totalIgv = igv.toFixed(2);
-                        console.log("   $scope.resumenVentasGrupo.igv " + $scope.resumenVentasGrupos.totalIgv);
+                        console.log("   $scope.resumenVentasGrupo.igv " + $scope.resumenVentasGrupos.totalIgv);*/
                         $scope.resumenVentasGrupos.total = total.toFixed(2);
                         console.log("   $scope.resumenVentasGrupo.total " + $scope.resumenVentasGrupos.total);
 
@@ -218,8 +227,17 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
                             if (c2 === 0) {
                                 console.log("{}");
                                 $scope.resumenVentasGrupos = {};
-                                $scope.resumenVentasGrupos.puntoVentaSerie = selected.puntoVentaSerie.codigo;
-                                $scope.resumenVentasGrupos.usuarioByIdUsuarioCreacion = {'id': '3'};
+                                $scope.resumenVentasGrupos.tipoDocumentoVenta = {'codigo': '03'};
+                                $scope.resumenVentasGrupos.puntoVentaSerie = {'codigo': selected.serie};
+                                $scope.resumenVentasGrupos.fechaCreacion = new Date();
+                                $scope.resumenVentasGrupos.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
+                                $scope.resumenVentasGrupoVentas = [];
+                                $scope.resumenVentasGrupoVenta = {};
+                                $scope.resumenVentasGrupoVenta.documentoVenta = { 'id' : selected.id};
+                                $scope.resumenVentasGrupoVenta.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
+                                $scope.resumenVentasGrupoVenta.fechaCreacion = new Date();
+                                $scope.resumenVentasGrupoVentas.push($scope.resumenVentasGrupoVenta);
+                                $scope.resumenVentasGrupos.resumenVentasGrupoVentas = $scope.resumenVentasGrupoVentas;
                                 console.log("   $scope.resumenVentasGrupo.serie " + $scope.resumenVentasGrupos.serie);
                                 grabada = 0;
                                 igv = 0;
@@ -240,10 +258,10 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
                             total = total + selected.total;
 
                             console.log("108");
-                            $scope.resumenVentasGrupos.totalGrabado = grabada.toFixed(2);
+                            /*$scope.resumenVentasGrupos.totalGrabado = grabada.toFixed(2);
                             console.log("   $scope.resumenVentasGrupo.grabada " + $scope.resumenVentasGrupos.totalGrabado);
                             $scope.resumenVentasGrupos.totalIgv = igv.toFixed(2);
-                            console.log("   $scope.resumenVentasGrupo.igv " + $scope.resumenVentasGrupos.totalIgv);
+                            console.log("   $scope.resumenVentasGrupo.igv " + $scope.resumenVentasGrupos.totalIgv);*/
                             $scope.resumenVentasGrupos.total = total.toFixed(2);
                             console.log("   $scope.resumenVentasGrupo.total " + $scope.resumenVentasGrupos.total);
 
@@ -259,8 +277,17 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
                             if (c3 === 0) {
                                 console.log("{}");
                                 $scope.resumenVentasGrupos = {};
-                                $scope.resumenVentasGrupos.puntoVentaSerie = selected.puntoVentaSerie.codigo;
-                                $scope.resumenVentasGrupos.usuarioByIdUsuarioCreacion = {'id': '3'};
+                                $scope.resumenVentasGrupos.tipoDocumentoVenta = {'codigo': '03'};
+                                $scope.resumenVentasGrupos.puntoVentaSerie = {'codigo': selected.serie};
+                                $scope.resumenVentasGrupos.fechaCreacion = new Date();
+                                $scope.resumenVentasGrupos.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
+                                $scope.resumenVentasGrupoVentas = [];
+                                $scope.resumenVentasGrupoVenta = {};
+                                $scope.resumenVentasGrupoVenta.documentoVenta = { 'id' : selected.id};
+                                $scope.resumenVentasGrupoVenta.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
+                                $scope.resumenVentasGrupoVenta.fechaCreacion = new Date();
+                                $scope.resumenVentasGrupoVentas.push($scope.resumenVentasGrupoVenta);
+                                $scope.resumenVentasGrupos.resumenVentasGrupoVentas = $scope.resumenVentasGrupoVentas;
                                 console.log("   $scope.resumenVentasGrupo.serie " + $scope.resumenVentasGrupos.serie);
                                 grabada = 0;
                                 igv = 0;
@@ -281,10 +308,10 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
                             total = total + selected.total;
 
                             console.log("108");
-                            $scope.resumenVentasGrupos.totalGrabado = grabada.toFixed(2);
+                            /*$scope.resumenVentasGrupos.totalGrabado = grabada.toFixed(2);
                             console.log("   $scope.resumenVentasGrupo.grabada " + $scope.resumenVentasGrupos.totalGrabado);
                             $scope.resumenVentasGrupos.totalIgv = igv.toFixed(2);
-                            console.log("   $scope.resumenVentasGrupo.igv " + $scope.resumenVentasGrupos.totalIgv);
+                            console.log("   $scope.resumenVentasGrupo.igv " + $scope.resumenVentasGrupos.totalIgv);*/
                             $scope.resumenVentasGrupos.total = total.toFixed(2);
                             console.log("   $scope.resumenVentasGrupo.total " + $scope.resumenVentasGrupos.total);
 
@@ -303,15 +330,15 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
             });
             console.log("$scope.resumenVentasGrupo.serie " + $scope.resumenVentasGrupos.serie);
             console.log("$scope.resumenVentasGrupos " + $scope.resumenVentas);
-            
+
             //$scope.personalDetails = newDataList;
         };
-        
+
         $scope.listarDocumentoVentaBaja = function () {
             $scope.documentoVentas = [];
             $scope.parametros = [];
             $scope.parametro = {};
-            $scope.parametro.nombre = "tipoDocumentoVenta.codigo";
+            /*$scope.parametro.nombre = "codigoTipo";
             $scope.parametro.valor = $scope.tipoDocumentoVenta.codigo;
             $scope.parametros.push($scope.parametro);
             $scope.parametro = {};
@@ -337,7 +364,19 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
             console.log("$scope.fechaEmision " + $scope.fechaEmision);
             console.log("$scope.fechaEmision " + $scope.fechaEmision);
             console.log("$scope.parametros " + $scope.parametros);
-            //$scope.parametros.push($scope.parametro);
+            //$scope.parametros.push($scope.parametro);*/
+
+            //$scope.parametros.push({'nombre': 'fechaDesde', 'valor': $scope.parametro.fechaDesde});
+            //$scope.parametros.push({'nombre': 'fechaHasta', 'valor': $scope.parametro.fechaHasta});
+            $scope.parametros.push({'nombre': 'codigoTipo', 'valor': $scope.tipoDocumentoVenta.codigo});
+            //$scope.parametros.push({'nombre': 'codigoEstado', 'valor': ($scope.parametro.estadoDocumentoVenta === null ? null : $scope.parametro.estadoDocumentoVenta.codigo)});
+            //$scope.parametros.push({'nombre': 'numero', 'valor': $scope.parametro.numero});
+            $scope.parametros.push({'nombre': 'fechaEmision', 'valor': $scope.fechaEmisionBaja});
+            //$scope.parametros.push({'nombre': 'documentoCliente', 'valor': $scope.parametro.documentoCliente});
+            //$scope.parametros.push({'nombre': 'nombreCliente', 'valor': $scope.parametro.nombreCliente});
+            //$scope.parametros.push({'nombre': 'currentPage', 'valor': (($scope.currentPage * $scope.itemsPerPage) - $scope.itemsPerPage).toString()});
+            //$scope.parametros.push({'nombre': 'itemsPerPage', 'valor': $scope.itemsPerPage.toString()});
+            
             $http({
                 method: 'POST',
                 url: '/transportes_gepp/controlador/documentoventa/listar',
@@ -353,8 +392,7 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
 
                 console.log("response.records " + response.records);
                 console.log("response.data " + response.data);
-                console.log("response.data.lista.numero " + response.data.lista.numero);
-                $scope.documentoVentas = response.data.lista;
+                $scope.documentoVentas = response.data.documentoVentas;
                 /*$scope.totalItems = response.data.total;//$scope.documentoVentas.length;
                  console.log($scope.totalItems);*/
             }, function myError(response) {
@@ -365,7 +403,7 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
         $scope.selectDocumentoVentasBaja = function () {
             //$scope.resumenVentasGrupos = [];
             $scope.comunicacionBajaGrupos = [];
-            
+
             //$scope.resumenVentasGrupo.serie = 
             var c1 = 0;
             var c2 = 0;
@@ -376,22 +414,29 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
             angular.forEach($scope.documentoVentas, function (selected) {
                 if (selected.selected) {
                     console.log("selected.$index " + selected.$index);
-                    console.log("selected.numero " + selected.puntoVentaSerie.codigo);
+                    console.log("selected.numero " + selected.serie);
                     console.log("selected.numero " + selected.numero);
                     console.log("selected.numero " + selected.totalGrabado);
                     console.log("selected.numero " + selected.totalIgv);
                     console.log("selected.numero " + selected.total);
 
-                    console.log("selected.puntoVentaSerie.codigo " + selected.puntoVentaSerie.codigo);
                     /*if ($scope.comunicacionBajaGrupo.serie === selected.puntoVentaSerie.codigo || $scope.comunicacionBajaGrupo.serie === undefined) {
                      console.log("104 ");
                      $scope.comunicacionBajaGrupo.serie = selected.puntoVentaSerie.codigo;*/
                     $scope.comunicacionBajaGrupo = {};
-                    //$scope.comunicacionBajaGrupo.resumenVentasGrupo.documentoVenta = selected.id;
-                    $scope.comunicacionBajaGrupo.tipoDocumentoVenta = selected.tipoDocumentoVenta.nombre;
-                    $scope.comunicacionBajaGrupo.puntoVentaSerie = selected.puntoVentaSerie.codigo;
+                    $scope.comunicacionBajaGrupo.tipoDocumentoVenta = {'codigo': selected.codigoTipo};
+                    $scope.comunicacionBajaGrupo.puntoVentaSerie = {'codigo': selected.serie};
                     $scope.comunicacionBajaGrupo.inicioDocumentoVenta = selected.numero;
                     $scope.comunicacionBajaGrupo.finDocumentoVenta = selected.numero;
+                    $scope.comunicacionBajaGrupo.fechaCreacion = new Date();
+                    $scope.comunicacionBajaGrupo.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
+                    $scope.resumenVentasGrupoVentas = [];
+                    $scope.resumenVentasGrupoVenta = {};
+                    $scope.resumenVentasGrupoVenta.documentoVenta = { 'id' : selected.id};
+                    $scope.resumenVentasGrupoVenta.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
+                    $scope.resumenVentasGrupoVenta.fechaCreacion = new Date();
+                    $scope.resumenVentasGrupoVentas.push($scope.resumenVentasGrupoVenta);
+                    $scope.comunicacionBajaGrupo.resumenVentasGrupoVentas = $scope.resumenVentasGrupoVentas;
                     $scope.comunicacionBajaGrupos.push($scope.comunicacionBajaGrupo);
 
                 }
@@ -400,12 +445,13 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
             //$scope.personalDetails = newDataList;
         };
         $scope.crearResumenVentasGrupos = function (resumenVenta) {
-            
+
             resumenVenta.tipo = "RSB";
             resumenVenta.estadoDocumentoVenta = {'codigo': 'CRE'};
             resumenVenta.numero = 1;
             resumenVenta.empresa = {'id': '1'};
             resumenVenta.usuarioByIdUsuarioCreacion = {'id': '3'};
+            
             //resumenVentas.resumenVentasGrupo = {'id': '1'};
             //producto.unidad = {'codigo': 'NIU'};
             console.log("resumenVentasGruposVenta " + $scope.resumenVenta);
@@ -413,6 +459,30 @@ ResumenVentaApp.controller("ResumenVentaController", ['$scope', '$http', '$windo
                 method: 'POST',
                 url: '/transportes_gepp/controlador/resumenventa/crear',
                 data: resumenVenta
+            }).then(function success(response) {
+                console.log(response.data);
+                $scope.listar();
+            }, function error(response) {
+                console.log(response.data);
+            });
+        };
+        $scope.crearResumenVentasGruposBaja = function (comunicacionBajaGrupos) {
+            $scope.resumenVenta = {};
+            //$scope.comunicacionBajaGrupos.push($scope.comunicacionBajaGrupo);
+            $scope.resumenVenta.tipo = "CDB";
+            $scope.resumenVenta.estadoDocumentoVenta = {'codigo': 'CRE'};
+            $scope.resumenVenta.numero = 1;
+            $scope.resumenVenta.empresa = {'id': '1'};
+            $scope.resumenVenta.usuarioByIdUsuarioCreacion = {'id': '3'};
+            $scope.resumenVenta.resumenVentasGrupos = comunicacionBajaGrupos;
+            $scope.resumenVenta.fechaCreacion = new Date();
+            //resumenVentas.resumenVentasGrupo = {'id': '1'};
+            //producto.unidad = {'codigo': 'NIU'};
+            console.log("resumenVentasGruposVenta " + $scope.resumenVenta);
+            $http({
+                method: 'POST',
+                url: '/transportes_gepp/controlador/resumenventa/crear',
+                data: $scope.resumenVenta
             }).then(function success(response) {
                 console.log(response.data);
                 $scope.listar();

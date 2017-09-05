@@ -95,9 +95,7 @@
                                             </div>
                                             <button type="button" class="btn btn-default elementRight" data-toggle="modal" data-target="#modalDocumentoVenta" ng-click="listarDocumentoVenta('03')"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Grupo</button>
                                         </div>
-                                        resumenVentas {{resumenVentas}}
-                                        resumenVenta {{resumenVenta}}
-                                        resumenVenta.resumenVentasGrupos {{resumenVenta.resumenVentasGrupos}}
+                                        
 
                                         <div class="row">
                                             <table class="table table-bordered">
@@ -152,9 +150,7 @@
                                                        ">Importe Total S/. {{resumenVentasGrupo||"0.00"}}</label>
                                             </div>
                                         </div>
-                                        listaResumenVentaGrupo {{listaResumenVentaGrupo}}
-                                        resumenVenta.resumenVentasGrupos {{resumenVenta.resumenVentasGrupos}}
-                                        resumenVenta.resumenVentasGrupo {{resumenVenta.resumenVentasGrupo}}
+                                        
                                     </form>
                                 </div>
 
@@ -200,8 +196,8 @@
                                                 <tbody>
                                                     <tr ng-repeat="documentoVenta in documentoVentas">
                                                         <td><input type="checkbox" ng-model="documentoVenta.selected"/></td>
-                                                        <td>{{documentoVenta.a.$index + 1}}</td>
-                                                        <td>{{documentoVenta.puntoVentaSerie.codigo}}</td>
+                                                        <td>{{$index + 1}}</td>
+                                                        <td>{{documentoVenta.serie}}</td>
                                                         <td>{{documentoVenta.numero}}</td>
                                                         <td>{{documentoVenta.total}}</td>
                                                         <!--td class="text-center">
@@ -220,6 +216,7 @@
                                         </div>
                                     </form>
                                 </div>
+                                
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formProducto.$invalid" ng-click="selectDocumentoVentas()">Guardar</button>
@@ -302,7 +299,7 @@
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formProducto.$invalid" ng-click="crearResumenVentasGrupos(comunicacionBajaGrupos)">Guardar</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formProducto.$invalid" ng-click="crearResumenVentasGruposBaja(comunicacionBajaGrupos)">Guardar</button>
                                 </div>
                             </div>
                         </div>
@@ -344,9 +341,9 @@
                                                 <tbody>
                                                     <tr ng-repeat="documentoVenta in documentoVentas">
                                                         <td><input type="checkbox" ng-model="documentoVenta.selected"/></td>
-                                                        <td>{{documentoVenta.a.$index + 1}}</td>
-                                                        <td>{{documentoVenta.tipoDocumentoVenta.nombre}}</td>
-                                                        <td>{{documentoVenta.puntoVentaSerie.codigo}}</td>
+                                                        <td>{{$index + 1}}</td>
+                                                        <td>{{documentoVenta.nombreTipo}}</td>
+                                                        <td>{{documentoVenta.serie}}</td>
                                                         <td>{{documentoVenta.numero}}</td>
                                                         <td>{{documentoVenta.total}}</td>
                                                         <!--td class="text-center">
@@ -365,6 +362,7 @@
                                         </div>
                                     </form>
                                 </div>
+                                
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal" ng-disabled="formProducto.$invalid" ng-click="selectDocumentoVentasBaja()">Guardar</button>

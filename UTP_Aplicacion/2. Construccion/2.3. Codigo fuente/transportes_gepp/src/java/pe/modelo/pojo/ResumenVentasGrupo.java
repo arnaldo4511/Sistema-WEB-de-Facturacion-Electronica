@@ -30,10 +30,13 @@ public class ResumenVentasGrupo  implements java.io.Serializable {
 
 
      private long id;
+     //@JsonIgnore
      private Usuario usuarioByIdUsuarioModificacion;
+     //@JsonIgnore
      private Usuario usuarioByIdUsuarioCreacion;
      private Moneda moneda;
      private PuntoVentaSerie puntoVentaSerie;
+     @JsonIgnore
      private ResumenVentas resumenVentas;
      private TipoDocumentoVenta tipoDocumentoVenta;
      private String inicioDocumentoVenta;
@@ -44,7 +47,7 @@ public class ResumenVentasGrupo  implements java.io.Serializable {
      private Double total;
      private Date fechaCreacion;
      private Date fechaModificacion;
-     @JsonIgnore
+     //@JsonIgnore
      private Set<ResumenVentasGrupoVenta> resumenVentasGrupoVentas = new HashSet<ResumenVentasGrupoVenta>(0);
 
     public ResumenVentasGrupo() {

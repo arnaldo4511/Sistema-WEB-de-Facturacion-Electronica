@@ -40,44 +40,44 @@ made subject to such option by the copyright holder.
 Contributor(s):
 -->
 <hibernate-configuration>
-    <session-factory>
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://192.168.0.221:5432/transportes_gepp</property>
-        <property name="hibernate.connection.username">postgres</property>
-        <property name="hibernate.connection.password">grupogepp</property>
-        <property name="hibernate.current_session_context_class">thread</property>
-        <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
-        <property name="hibernate.enable_lazy_load_no_trans" >true</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
-        <property name="hibernate.show_sql">true</property>
-        <property name="hbm2ddl.auto">update</property>
-        <mapping class="pe.modelo.pojo.Cliente"/>
-        <mapping class="pe.modelo.pojo.DocumentoVentaDetalle"/>
-        <mapping class="pe.modelo.pojo.PuntoVentaSerie"/>
-        <mapping class="pe.modelo.pojo.ResumenVentasGrupo"/>
-        <mapping class="pe.modelo.pojo.Rol"/>
-        <mapping class="pe.modelo.pojo.Entidad"/>
-        <mapping class="pe.modelo.pojo.EstadoDocumentoVenta"/>
-        <mapping class="pe.modelo.pojo.DocumentoVenta"/>
-        <mapping class="pe.modelo.pojo.Menu"/>
-        <mapping class="pe.modelo.pojo.PuntoVenta"/>
-        <mapping class="pe.modelo.pojo.Unidad"/>
-        <mapping class="pe.modelo.pojo.Usuario"/>
-        <mapping class="pe.modelo.pojo.UsuarioLog"/>
-        <mapping class="pe.modelo.pojo.ResumenVentasGrupoVenta"/>
-        <mapping class="pe.modelo.pojo.ResumenVentas"/>
-        <mapping class="pe.modelo.pojo.RolMenu"/>
-        <mapping class="pe.modelo.pojo.Producto"/>
-        <mapping class="pe.modelo.pojo.Empresa"/>
-        <mapping class="pe.modelo.pojo.RolMenuOperacion"/>
-        <mapping class="pe.modelo.pojo.TipoDocumentoVenta"/>
-        <mapping class="pe.modelo.pojo.Ubigeo"/>
-        <mapping class="pe.modelo.pojo.Operacion"/>
-        <mapping class="pe.modelo.pojo.Moneda"/>
-        <mapping class="pe.modelo.pojo.TipoDocumentoEntidad"/>
-        <mapping class="pe.modelo.pojo.TipoNotaCredito"/>
-        <mapping class="pe.modelo.pojo.TipoNotaDebito"/>
-        <mapping class="pe.modelo.pojo.VwSelDocumentoVenta"/>
-    </session-factory>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+    <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+    <property name="hibernate.connection.url">jdbc:postgresql://181.176.178.228:5432/transportes_gepp</property>
+    <property name="hibernate.connection.username">postgres</property>
+    <property name="hibernate.connection.password">grupogepp</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+    <property name="hibernate.enable_lazy_load_no_trans">true</property>
+    <property name="hibernate.hbm2ddl.auto">update</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hbm2ddl.auto">update</property>
+    <mapping class="pe.modelo.pojo.Cliente"/>
+    <mapping class="pe.modelo.pojo.DocumentoVentaDetalle"/>
+    <mapping class="pe.modelo.pojo.PuntoVentaSerie"/>
+    <mapping class="pe.modelo.pojo.ResumenVentasGrupo"/>
+    <mapping class="pe.modelo.pojo.Rol"/>
+    <mapping class="pe.modelo.pojo.Entidad"/>
+    <mapping class="pe.modelo.pojo.EstadoDocumentoVenta"/>
+    <mapping class="pe.modelo.pojo.DocumentoVenta"/>
+    <mapping class="pe.modelo.pojo.Menu"/>
+    <mapping class="pe.modelo.pojo.PuntoVenta"/>
+    <mapping class="pe.modelo.pojo.Unidad"/>
+    <mapping class="pe.modelo.pojo.Usuario"/>
+    <mapping class="pe.modelo.pojo.UsuarioLog"/>
+    <mapping class="pe.modelo.pojo.ResumenVentasGrupoVenta"/>
+    <mapping class="pe.modelo.pojo.ResumenVentas"/>
+    <mapping class="pe.modelo.pojo.RolMenu"/>
+    <mapping class="pe.modelo.pojo.Producto"/>
+    <mapping class="pe.modelo.pojo.Empresa"/>
+    <mapping class="pe.modelo.pojo.RolMenuOperacion"/>
+    <mapping class="pe.modelo.pojo.TipoDocumentoVenta"/>
+    <mapping class="pe.modelo.pojo.Ubigeo"/>
+    <mapping class="pe.modelo.pojo.Operacion"/>
+    <mapping class="pe.modelo.pojo.Moneda"/>
+    <mapping class="pe.modelo.pojo.TipoDocumentoEntidad"/>
+    <mapping class="pe.modelo.pojo.TipoNotaCredito"/>
+    <mapping class="pe.modelo.pojo.TipoNotaDebito"/>
+    <mapping class="pe.modelo.pojo.VwSelDocumentoVenta"/>
+  </session-factory>
 </hibernate-configuration>

@@ -39,7 +39,7 @@ public class ResumenVentas  implements java.io.Serializable {
      private String numero;
      private Date fechaCreacion;
      private Date fechaModificacion;
-     @JsonIgnore
+     //@JsonIgnore
      private Set<ResumenVentasGrupo> resumenVentasGrupos = new HashSet<ResumenVentasGrupo>(0);
 
     public ResumenVentas() {
