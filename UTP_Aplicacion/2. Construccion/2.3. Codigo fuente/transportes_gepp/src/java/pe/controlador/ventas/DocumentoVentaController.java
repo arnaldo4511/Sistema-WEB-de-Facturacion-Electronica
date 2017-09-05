@@ -30,7 +30,7 @@ import pe.modelo.dto.ventas.NotificacionDto;
 import pe.modelo.dto.ventas.AnulacionDto;
 import pe.modelo.pojo.DocumentoVenta;
 import pe.modelo.pojo.TipoDocumentoVenta;
-import pe.modelo.pojo.VwSelDocumentoVenta;
+import pe.modelo.pojo.vista.VwSelDocumentoVenta;
 
 @Controller
 public class DocumentoVentaController {

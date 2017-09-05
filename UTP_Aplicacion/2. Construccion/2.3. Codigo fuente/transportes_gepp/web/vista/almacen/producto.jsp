@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <%@include file="/WEB-INF/imports.jspf" %>
         <script src="<%= request.getContextPath()%>/js/almacen/producto.js" type="text/javascript"></script>
-        <title>Transportes :: Productos</title>
+        <title>Transportes :: Servicios</title>
     </head>
     <body ng-app='ProductoApp' ng-controller='ProductoController'>
         <div class="container">
@@ -25,7 +25,7 @@
                             <li class="list-group-item" ng-repeat="countrydata in filterCountry" ng-click="fillTextbox(countrydata)">{{countrydata}}</li>  
                         </ul--> 
                         <fieldset>
-                            <legend>PRODUCTOS</legend>
+                            <legend>SERVICIOS</legend>
                             <div class="row">
                                 <table class="table table-bordered">
                                     <thead>

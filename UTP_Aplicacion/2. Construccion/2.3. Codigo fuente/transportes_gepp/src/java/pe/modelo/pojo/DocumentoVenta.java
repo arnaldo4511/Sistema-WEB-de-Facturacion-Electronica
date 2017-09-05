@@ -67,6 +67,8 @@ public class DocumentoVenta implements java.io.Serializable {
     private Date fechaModificacion;
     private String tipoTargeta;
     private String totalLetras;
+    private String guiaRemisionTransportista;
+    private String placa;
     @JsonIgnore
     private Set<ResumenVentasGrupoVenta> resumenVentasGrupoVentas = new HashSet<ResumenVentasGrupoVenta>(0);
     //@JsonIgnore
@@ -400,6 +402,24 @@ public class DocumentoVenta implements java.io.Serializable {
 
     public void setTotalLetras(String totalLetras) {
         this.totalLetras = totalLetras;
+    }
+
+    @Column(name = "guia_remision_transportista")
+    public String getGuiaRemisionTransportista() {
+        return this.guiaRemisionTransportista;
+    }
+
+    public void setGuiaRemisionTransportista(String guiaRemisionTransportista) {
+        this.guiaRemisionTransportista = guiaRemisionTransportista;
+    }
+
+    @Column(name = "placa")
+    public String getPlaca() {
+        return this.placa;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

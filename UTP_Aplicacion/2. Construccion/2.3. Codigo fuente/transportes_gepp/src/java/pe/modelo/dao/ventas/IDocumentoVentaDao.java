@@ -14,7 +14,7 @@ import pe.modelo.dto.ParametroDto;
 import pe.modelo.dto.ventas.ListaDocumentoVentaDto;
 import pe.modelo.pojo.DocumentoVenta;
 import pe.modelo.pojo.TipoDocumentoVenta;
-import pe.modelo.pojo.VwSelDocumentoVenta;
+import pe.modelo.pojo.vista.VwSelDocumentoVenta;
 
 /**
  *

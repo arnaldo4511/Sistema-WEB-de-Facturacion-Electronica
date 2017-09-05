@@ -173,7 +173,10 @@ DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$f
             documentoVenta.tipoTargeta = $scope.tipoTargeta.codigo;
             documentoVenta.banco = $scope.banco.codigo;
             //$scope.documentoVenta.documentoVenta=undefined;
-            //documentoVenta.documentoVentaDetalles[0].producto = {};
+            if (documentoVenta.tipoDocumentoVenta.codigo === "07" || documentoVenta.tipoDocumentoVenta.codigo === "08")
+            {
+                documentoVenta.documentoVentaDetalles[0].producto = null;
+            }
             //documentoVenta.numero = '00000000';
             console.log(documentoVenta);
             //return;
@@ -187,8 +190,8 @@ DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$f
             }).then(function success(response) {
                 console.log(response.data.id);
                 if (response.data.id > 0) {
-                $window.open('/transportes_gepp/controlador/documentoventa/descargar/' + response.data.id, '_blank');
-                    $scope.cancelar();
+                    $window.open('/transportes_gepp/controlador/documentoventa/descargar/' + response.data.id, '_blank');
+                    //$scope.cancelar();
                 }
             }, function error(response) {
                 //console.log(response.data);
@@ -363,11 +366,14 @@ DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$f
             //$scope.clienteTmp.entidad.tipoDocumentoEntidad = $scope.tipoDocumentoEntidads[0];
             //console.log("$scope.entidadTmp.id " + $scope.entidadTmp.id);
         };
+        $scope.verCliente = function () {
+            $scope.clienteTmp = $scope.documentoVenta.cliente;
+        };
         $scope.guardarCliente = function (cliente) {
             if (cliente.id === 0) {
                 $scope.crearCliente(cliente);
             } else {
-                //$scope.editarCliente(cliente);
+                $scope.editarCliente(cliente);
             }
         };
         $scope.crearCliente = function (cliente) {
@@ -380,10 +386,27 @@ DocumentoVentaApp.controller("DocumentoVentaController", ['$scope', '$http', '$f
                 url: '/transportes_gepp/controlador/cliente/crear',
                 data: cliente
             }).then(function success(response) {
-                $scope.documentoVenta.cliente=response.data;
-                $scope.criterioCliente="";
+                $scope.documentoVenta.cliente = response.data;
+                $scope.criterioCliente = "";
                 //console.log(response.data);
                 //$scope.listar();
+            }, function error(response) {
+                //console.log(response.data);
+            });
+        };
+        $scope.editarCliente = function (cliente) {
+            cliente.entidad.usuarioByIdUsuarioModificacion = $scope.sesion.usuario;
+            cliente.usuarioByIdUsuarioModificacion = $scope.sesion.usuario;
+            console.log("cliente " + cliente.usuarioByIdUsuarioModificacion);
+            $http({
+                method: 'POST',
+                url: '/transportes_gepp/controlador/cliente/editar',
+                data: cliente
+            }).then(function success(response) {
+                //console.log(response.data);
+                //$scope.listar();
+                $scope.documentoVenta.cliente = response.data;
+                $scope.criterioCliente = "";
             }, function error(response) {
                 //console.log(response.data);
             });

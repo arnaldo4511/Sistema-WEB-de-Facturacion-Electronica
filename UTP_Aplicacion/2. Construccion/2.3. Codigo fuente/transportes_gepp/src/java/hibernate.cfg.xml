@@ -78,6 +78,7 @@ Contributor(s):
         <mapping class="pe.modelo.pojo.TipoDocumentoEntidad"/>
         <mapping class="pe.modelo.pojo.TipoNotaCredito"/>
         <mapping class="pe.modelo.pojo.TipoNotaDebito"/>
-        <mapping class="pe.modelo.pojo.VwSelDocumentoVenta"/>
+        <mapping class="pe.modelo.pojo.vista.VwSelDocumentoVenta"/>
+        <mapping class="pe.modelo.pojo.vista.VwAutCliente"/>
     </session-factory>
 </hibernate-configuration>

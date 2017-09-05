@@ -1,4 +1,4 @@
-package pe.modelo.pojo;
+package pe.modelo.pojo.vista;
 // Generated 29-ago-2017 18:25:42 by Hibernate Tools 4.3.1
 
 import java.util.Date;
