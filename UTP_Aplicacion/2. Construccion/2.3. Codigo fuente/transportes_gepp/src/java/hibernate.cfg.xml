@@ -43,11 +43,14 @@ Contributor(s):
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
     <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-    <property name="hibernate.connection.url">jdbc:postgresql://181.176.178.228:5432/transportes_gepp</property>
+    <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/transportes_gepp_20171002</property>
     <property name="hibernate.connection.username">postgres</property>
-    <property name="hibernate.connection.password">grupogepp</property>
+    <property name="hibernate.connection.password">postgres</property>
     <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
     <property name="hibernate.enable_lazy_load_no_trans">true</property>
+    <property name="hibernate.hbm2ddl.auto">update</property>
+    <property name="hibernate.show_sql">true</property>
     <mapping class="pe.modelo.pojo.Cliente"/>
     <mapping class="pe.modelo.pojo.DocumentoVentaDetalle"/>
     <mapping class="pe.modelo.pojo.PuntoVentaSerie"/>
@@ -72,5 +75,16 @@ Contributor(s):
     <mapping class="pe.modelo.pojo.Operacion"/>
     <mapping class="pe.modelo.pojo.Moneda"/>
     <mapping class="pe.modelo.pojo.TipoDocumentoEntidad"/>
+    <mapping class="pe.modelo.pojo.TipoNotaCredito"/>
+    <mapping class="pe.modelo.pojo.TipoNotaDebito"/>
+    <mapping class="pe.modelo.pojo.vista.VwSelDocumentoVenta"/>
+    <mapping class="pe.modelo.pojo.vista.VwSelResumenVentas"/>
+    <mapping class="pe.modelo.pojo.vista.VwSelUsuario"/>
+    <mapping class="pe.modelo.pojo.vista.VwSelRol"/>
+    <mapping class="pe.modelo.pojo.vista.VwAutCliente"/>
+    <mapping class="pe.modelo.pojo.vista.VwRptVentaXPlacaAnual"/>
+    <mapping class="pe.modelo.pojo.Vehiculo"/>
+    <mapping class="pe.modelo.pojo.funcion.FnConDocumentoVenta"/>
+    <mapping class="pe.modelo.pojo.funcion.FnVentaXPlacaAnual"/>
   </session-factory>
 </hibernate-configuration>

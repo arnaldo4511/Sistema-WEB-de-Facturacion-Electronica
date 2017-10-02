@@ -1,4 +1,3 @@
-
 <div class="nav-side-menu">
     <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
 
@@ -12,10 +11,10 @@
                 <a href="#"><i class="fa fa-edit fa-lg"></i>Administración<span class="arrow"></span></a>
             </li>
             <ul class="sub-menu collapse" id="administracion">
-                <li onclick='window.location.href="<%= request.getContextPath()%>/vista/administracion/rol.jsp"'>
+                <li onclick='window.location.href = "<%= request.getContextPath()%>/vista/administracion/rol.jsp"'>
                     <a><i class="fa fa-table fa-lg"></i>Roles</a>
                 </li>
-                <li onclick='window.location.href="<%= request.getContextPath()%>/vista/administracion/usuario.jsp"'>
+                <li onclick='window.location.href = "<%= request.getContextPath()%>/vista/administracion/usuario.jsp"'>
                     <a><i class="fa fa-table fa-lg"></i>Usuarios</a>
                 </li>
             </ul>
@@ -23,35 +22,33 @@
                 <a href="#"><i class="fa fa-edit fa-lg"></i> Mantenimientos <span class="arrow"></span></a>
             </li>  
             <ul class="sub-menu collapse" id="mantenimientos">
-                <li onclick='window.location.href="<%= request.getContextPath()%>/vista/mantenimiento/producto.jsp"'>
+                <li onclick='window.location.href = "<%= request.getContextPath()%>/vista/almacen/producto.jsp"'>
                     <a><i class="fa fa-table fa-lg"></i>Productos</a>
                 </li>
-                <li onclick='window.location.href="<%= request.getContextPath()%>/vista/mantenimiento/cliente.jsp"'>
+                <li onclick='window.location.href = "<%= request.getContextPath()%>/vista/ventas/cliente.jsp"'>
                     <a><i class="fa fa-table fa-lg"></i>Clientes</a>
                 </li>
             </ul>
             <li data-toggle="collapse" data-target="#facturacion" class="collapsed">
                 <a><i class="fa fa-edit fa-lg"></i> Facturación <span class="arrow"></span></a>
-            </li>  
+            </li>
             <ul class="sub-menu collapse" id="facturacion">
-                <li>
+                <li onclick='window.location.href = "<%= request.getContextPath()%>/vista/ventas/documentoventas.jsp"'>
                     <a><i class="fa fa-table fa-lg"></i>Ventas</a>
                 </li>
-                <li onclick='window.location.href="<%= request.getContextPath()%>/vista/facturacion/resumenventa.jsp"'>
+                <li onclick='window.location.href = "<%= request.getContextPath()%>/vista/ventas/resumenventa.jsp"'>
                     <a><i class="fa fa-table fa-lg"></i>Resumenes/Comunicaciones</a>
+                </li>
+                <li onclick='window.location.href = '>
+                    <a><i class="fa fa-table fa-lg"></i>Ventas</a>
                 </li>
             </ul>
             <li data-toggle="collapse" data-target="#reportes" class="collapsed">
                 <a><i class="fa fa-edit fa-lg"></i> Reportes <span class="arrow"></span></a>
-            </li>  
+            </li>
             <ul class="sub-menu collapse" id="reportes">
-                <li>
-                    <a><i class="fa fa-table fa-lg"></i>Ventas</a>
-                </li>
+                
             </ul>
         </ul>
     </div>
 </div>
-
-
-

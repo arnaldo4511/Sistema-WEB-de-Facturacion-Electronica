@@ -5,13 +5,14 @@
  */
 package pe.modelo.dao.administracion;
 
-import pe.modelo.pojo.CargaSesion;
-
+import java.util.List;
+import pe.modelo.dto.CargaSesionDto;
 /**
  *
  * @author octavio
  */
 public interface ICargaSesionDao {
 
-    public CargaSesion crear(long idUsuario);
+    public CargaSesionDto crear(long idUsuario);
+
 }

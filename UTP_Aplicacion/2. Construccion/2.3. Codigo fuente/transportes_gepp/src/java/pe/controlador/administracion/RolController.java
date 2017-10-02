@@ -19,6 +19,8 @@ import pe.controlador.BussinessException;
 import pe.controlador.BussinessMessage;
 import pe.controlador.JsonTransformer;
 import pe.modelo.dao.administracion.IRolDao;
+import pe.modelo.dao.administracion.ListaRol;
+import pe.modelo.dto.ParametroDto;
 import pe.modelo.pojo.Rol;
 import pe.modelo.pojo.Usuario;
 
@@ -31,16 +33,15 @@ public class RolController {
     @Autowired
     IRolDao rolDao;
 
-    @RequestMapping(value = "/rol/listar", method = RequestMethod.GET, produces = "application/json")
-    public void listar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
+    @RequestMapping(value = "/rol/listar", method = RequestMethod.POST, produces = "application/json")
+    public void listar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) throws IOException {
         PrintWriter out = httpServletResponse.getWriter();
         try {
-            List<Rol> lista = rolDao.listar();
-            String jsonSalida = jsonTransformer.toJson(lista);
+            ParametroDto[] parametros = (ParametroDto[]) jsonTransformer.fromJson(jsonEntrada, ParametroDto[].class);
+            ListaRol listaRol = rolDao.listar(parametros);
+            String jsonSalida = jsonTransformer.toJson(listaRol);
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
-            System.out.println("listaRol "+lista);
-            System.out.println("jsonSalida "+jsonSalida);
             out.println(jsonSalida);
 
         } catch (Exception ex) {
@@ -55,14 +56,11 @@ public class RolController {
     @RequestMapping(value = "/rol/crear", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public void crear(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) {
         try {
-            System.out.println("jsonEntrada "+jsonEntrada);
             Rol rol = (Rol) jsonTransformer.fromJson(jsonEntrada, Rol.class);
-            System.out.println("jsonEntradaTransform "+rol);
             HttpSession session = httpServletRequest.getSession();
             Usuario usuario = (Usuario) jsonTransformer.fromJson(session.getAttribute("session_usuario").toString(), Usuario.class);
             rol.setUsuarioByIdUsuarioCreacion(usuario);
             rol.setFechaCreacion(new Date());
-            System.out.println("rol "+rol);
             rolDao.crear(rol);
             if (rol.getId() > 0) {
                 String jsonSalida = jsonTransformer.toJson(rol);
@@ -77,6 +75,7 @@ public class RolController {
             }
 
         } catch (Exception ex) {
+            ex.printStackTrace();
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             httpServletResponse.setContentType("text/plain; charset=UTF-8");
             try {

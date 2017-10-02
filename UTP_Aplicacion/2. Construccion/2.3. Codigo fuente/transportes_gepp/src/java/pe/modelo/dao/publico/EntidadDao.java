@@ -82,7 +82,23 @@ public class EntidadDao implements IEntidadDao {
         try {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            Query query = sesion.createQuery("from Entidad order by id");
+            Query query = sesion.createQuery("FROM Entidad order by id");
+            lista = query.list();
+            sesion.getTransaction().commit();
+            sesion.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Entidad> autocompletar(String criterio) {
+        List<Entidad> lista = null;
+        try {
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            sesion.beginTransaction();
+            Query query = sesion.createQuery("FROM Entidad WHERE UPPER(nombre) LIKE UPPER(:criterio) OR UPPER(documento) LIKE UPPER(:criterio) order by id").setString("criterio", "%" + criterio + "%");
             lista = query.list();
             sesion.getTransaction().commit();
             sesion.close();

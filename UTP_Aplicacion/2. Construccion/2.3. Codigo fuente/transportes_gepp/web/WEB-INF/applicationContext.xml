@@ -11,11 +11,15 @@
     <bean class="pe.modelo.dao.administracion.UsuarioDao" />
     <bean class="pe.modelo.dao.administracion.RolDao" />
     <bean class="pe.modelo.dao.publico.EmpresaDao" />
-    <bean class="pe.modelo.dao.administracion.CargaSesionDao" /> 
-    <bean class="pe.modelo.dao.mantenimiento.ProductoDao" />
-    <bean class="pe.modelo.dao.mantenimiento.ClienteDao" />
+    <bean class="pe.modelo.dao.publico.EntidadDao" />
+    <bean class="pe.modelo.dao.administracion.CargaSesionDao" />
     <bean class="pe.modelo.dao.ventas.PuntoVentaDao" />
-    <bean class="pe.modelo.dao.facturacion.ResumenVentaDao" />
+    <bean class="pe.modelo.dao.ventas.DocumentoVentaDao" />
+    <bean class="pe.modelo.dao.almacen.ProductoDao" />
+    <bean class="pe.modelo.dao.ventas.ClienteDao" />
+    <bean class="pe.modelo.dao.ventas.ResumenVentaDao" />
+    <bean class="pe.modelo.dao.ventas.ReporteDao" />
+    
 
     <!--bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"

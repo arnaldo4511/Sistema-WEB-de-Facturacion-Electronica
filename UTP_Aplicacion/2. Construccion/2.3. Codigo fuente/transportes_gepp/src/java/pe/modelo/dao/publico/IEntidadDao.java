@@ -24,4 +24,6 @@ public interface IEntidadDao {
 
     public List<Entidad> listar();
 
+    public List<Entidad> autocompletar(String criterio);
+
 }
