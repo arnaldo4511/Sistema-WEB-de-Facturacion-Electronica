@@ -19,6 +19,8 @@ import pe.controlador.BussinessException;
 import pe.controlador.BussinessMessage;
 import pe.controlador.JsonTransformer;
 import pe.modelo.dao.ventas.IClienteDao;
+import pe.modelo.dto.ParametroDto;
+import pe.modelo.dto.ventas.ListaClientesDto;
 import pe.modelo.pojo.Cliente;
 import pe.modelo.pojo.vista.VwAutCliente;
 
@@ -50,19 +52,16 @@ public class ClienteController {
 
     }
 
-    @RequestMapping(value = "/cliente/listar", method = RequestMethod.GET, produces = "application/json")
-    public void listar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
+    @RequestMapping(value = "/cliente/listar", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public void listar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) throws IOException {
         System.out.println("listarrrrrrrrrrrrrrrrr");
         PrintWriter out = httpServletResponse.getWriter();
         try {
-            List<Cliente> lista = clienteDao.listar();
-            String jsonSalida = jsonTransformer.toJson(lista);
-            System.out.println("jsonSalida " + jsonSalida);
-            System.out.println("listaCliente " + lista);
+            ParametroDto[] parametros = (ParametroDto[]) jsonTransformer.fromJson(jsonEntrada, ParametroDto[].class);
+            ListaClientesDto listaClientesDto = clienteDao.listar(parametros);
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
-
-            out.println(jsonSalida);
+            out.println(jsonTransformer.toJson(listaClientesDto));
 
         } catch (Exception ex) {
             ex.printStackTrace();

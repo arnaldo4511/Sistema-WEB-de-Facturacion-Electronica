@@ -1,41 +1,13 @@
 package pe.controlador.ventas;
 
 import java.io.ByteArrayOutputStream;
-import pe.controlador.administracion.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import pe.controlador.BussinessException;
-import pe.controlador.BussinessMessage;
-import pe.controlador.JsonTransformer;
-import pe.modelo.dao.ventas.IResumenVentaDao;
-//import pe.modelo.pojo.Producto;
-import pe.modelo.pojo.ResumenVentas;
-import pe.modelo.pojo.ResumenVentasGrupoVenta;
-import pe.modelo.pojo.Usuario;
-
-import pe.controlador.administracion.*;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,16 +16,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import pe.controlador.BussinessException;
-import pe.controlador.BussinessMessage;
 import pe.controlador.JsonTransformer;
 import pe.modelo.dao.ventas.IResumenVentaDao;
 import pe.modelo.dto.ParametroDto;
 import pe.modelo.dto.ventas.ListaResumenesVentasDto;
 //import pe.modelo.pojo.Producto;
 import pe.modelo.pojo.ResumenVentas;
-import pe.modelo.pojo.ResumenVentasGrupoVenta;
-import pe.modelo.pojo.Usuario;
+
 
 @Controller
 public class ResumenVentaController {

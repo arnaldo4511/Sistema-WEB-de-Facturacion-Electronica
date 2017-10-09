@@ -44,12 +44,12 @@
                                     <th>
                                         Documento
                                         <br>
-                                        <input type="text" class="form-control" ng-model="search.documento" tabindex="1">
+                                        <input type="text" class="form-control" ng-model="parametro.documento" ng-enter="listar()" tabindex="1">
                                     </th>
                                     <th>
                                         Nombre
                                         <br>
-                                        <input type="text" class="form-control" ng-model="search.nombre" tabindex="2">
+                                        <input type="text" class="form-control" ng-model="parametro.nombre" ng-enter="listar()" tabindex="2">
                                     </th>
                                     <th>Direccion</th>
                                     <th>Editar</th>
@@ -57,12 +57,12 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="item in clientes.slice(((currentPage - 1) * itemsPerPage), ((currentPage) * itemsPerPage))| filter:search ">
+                                    <tr ng-repeat="item in clientes">
                                         <td>{{$index + 1}}</td>
-                                        <td>{{item.entidad.tipoDocumentoEntidad.nombre}}</td>
-                                        <td>{{item.entidad.documento}}</td>
-                                        <td>{{item.entidad.nombre}}</td>
-                                        <td>{{item.entidad.direccion}}</td>
+                                        <td>{{item.nombreTipo}}</td>
+                                        <td>{{item.documento}}</td>
+                                        <td>{{item.nombre}}</td>
+                                        <td>{{item.direccion}}</td>
                                         <td class="text-center">
                                             <button title="Editar Cliente" class="btn btn-default btn-xs" data-toggle="modal" data-target="#modalItem" ng-click="seleccionarItem(item)">
                                                 <span class="glyphicon glyphicon-pencil"></span>
@@ -76,8 +76,18 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <ul  uib-pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm " items-per-page="itemsPerPage" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-                            </ul>
+
+                            <div class="col-sm-7">
+                                <ul  uib-pagination max-size="maxSize" boundary-links="true" total-items="totalItemsListarClientes" ng-model="currentPageListarClientes" ng-change="pageChanged()" class="pagination-sm " items-per-page="itemsPerPageListarClientes" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"  rotate="false"  last-text="&raquo;"/>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="pull-right">
+                                    Ver <select style="width: auto;" class="feature-icon form-control"  ng-options="paginaListarClientes.value for paginaListarClientes in paginasListarClientes track by paginaListarClientes.value"  ng-model="paginaListarClientes" ng-change="setItemsPerPage(paginaListarClientes.value)" ng-init="paginasListarClientes[0].value">
+                                    </select> de <b>{{totalItemsListarClientes}}</b> Registro(s)
+                                </div>
+                            </div>
+                            clientes{{clientes}}
+                            item{{item}}
                         </form>
                         <!-- Modal -->
                         <div class="modal fade" id="modalItem" role="dialog">
@@ -97,6 +107,10 @@
                                                     </select>
                                                     <p ng-show="formItem.tipoDocumento.$invalid" class="help-block">Este campo es obligatorio.</p>
                                                 </div>
+                                                tiposDocumentosEntidads{{tiposDocumentosEntidads}}
+                                                tipoDocumentoEntidad{{tipoDocumentoEntidad}}
+                                                tipoDocumentoEntidad.codigo{{tipoDocumentoEntidad.codigo}}
+                                                tipoDocumentoEntidad.nombre{{tipoDocumentoEntidad.nombre}}
                                             </div>
                                             <div class="form-group" ng-class="{ 'has-error' : formItem.documento.$invalid}">
                                                 <label class="control-label col-sm-3" >Documento*</label>
@@ -161,6 +175,7 @@
                                         <button type="button" class="btn btn-default" data-dismiss="modal" >Cancelar</button>
                                         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalClienteConfirmacion" ng-disabled="formItem.$invalid" >Guardar</button>
                                     </div>
+                                    clienteTmp{{clienteTmp}}    
                                 </div>
 
                             </div>

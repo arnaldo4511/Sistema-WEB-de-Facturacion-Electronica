@@ -6,6 +6,8 @@
 package pe.modelo.dao.almacen;
 
 import java.util.List;
+import pe.modelo.dto.ParametroDto;
+import pe.modelo.dto.ventas.ListaProductosDto;
 import pe.modelo.pojo.Producto;
 
 /**
@@ -22,7 +24,7 @@ public interface IProductoDao {
 
     public void eliminar(long id);
 
-    public List<Producto> listar();
+    public ListaProductosDto listar(ParametroDto[] parametros);
 
     public List<Producto> autocompletar(String criterio);
 }

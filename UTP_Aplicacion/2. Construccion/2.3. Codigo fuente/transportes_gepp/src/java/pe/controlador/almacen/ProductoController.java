@@ -20,6 +20,8 @@ import pe.controlador.BussinessException;
 import pe.controlador.BussinessMessage;
 import pe.controlador.JsonTransformer;
 import pe.modelo.dao.almacen.IProductoDao;
+import pe.modelo.dto.ParametroDto;
+import pe.modelo.dto.ventas.ListaProductosDto;
 import pe.modelo.pojo.Producto;
 
 @Controller
@@ -31,19 +33,16 @@ public class ProductoController {
     @Autowired
     IProductoDao productoDao;
 
-    @RequestMapping(value = "/producto/listar", method = RequestMethod.GET, produces = "application/json")
-    public void listar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
+    @RequestMapping(value = "/producto/listar", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public void listar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) throws IOException {
         System.out.println("listarrrrrrrrrrrrrrrrr");
         PrintWriter out = httpServletResponse.getWriter();
         try {
-            List<Producto> lista = productoDao.listar();
-            String jsonSalida = jsonTransformer.toJson(lista);
-            System.out.println("jsonSalida " + jsonSalida);
-            System.out.println("listaProducto " + lista);
+            ParametroDto[] parametros = (ParametroDto[]) jsonTransformer.fromJson(jsonEntrada, ParametroDto[].class);
+            ListaProductosDto listaProductosDto = productoDao.listar(parametros);
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
-
-            out.println(jsonSalida);
+            out.println(jsonTransformer.toJson(listaProductosDto));
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -138,5 +137,23 @@ public class ProductoController {
             out.println("{\"RSP\":\"ERROR\",\"MSG\":\"" + ex.getMessage() + "\"}");
         }
 
+    }
+    
+    @RequestMapping(value = "/producto/buscar/{id}", method = RequestMethod.POST, produces = "application/json")
+    public void buscar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") long id) throws IOException {
+        try {
+            Producto cliente = productoDao.buscar(id);
+
+            String jsonSalida = jsonTransformer.toJson(cliente);
+            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+            httpServletResponse.setContentType("application/json; charset=UTF-8");
+            httpServletResponse.getWriter().println(jsonSalida);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            httpServletResponse.getWriter().println(ex.getMessage());
+        }
     }
 }

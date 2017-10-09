@@ -185,6 +185,8 @@ public class DocumentoVentaDao implements IDocumentoVentaDao {
             DetachedCriteria detachedCriteria6 = DetachedCriteria.forClass(VwSelDocumentoVenta.class);
             DetachedCriteria detachedCriteria7 = DetachedCriteria.forClass(VwSelDocumentoVenta.class);
             for (ParametroDto parametro : parametros) {
+                System.out.println("parametro.getNombre() "+parametro.getNombre());
+                System.out.println("parametro.getValor() "+parametro.getValor());
                 if (parametro.getNombre().equals("currentPage") && parametro.getValor() != null) {
                     currentPage = Integer.parseInt(parametro.getValor());
                 } else if (parametro.getNombre().equals("itemsPerPage") && parametro.getValor() != null) {
