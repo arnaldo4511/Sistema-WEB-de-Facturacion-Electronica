@@ -8,6 +8,7 @@ var PrincipalApp = angular.module("PrincipalApp", []);
 PrincipalApp.controller("PrincipalController", ['$scope', '$http', '$window', function ($scope, $http, $window) {
         $scope.sesion = {};
         $http({method: 'GET', url: '/transportes_gepp/controlador/usuario/buscarsesion'}).then(function success(response) {
+            console.log(response.data);
             $scope.sesion = response.data;
         }, function myError(response) {
         });

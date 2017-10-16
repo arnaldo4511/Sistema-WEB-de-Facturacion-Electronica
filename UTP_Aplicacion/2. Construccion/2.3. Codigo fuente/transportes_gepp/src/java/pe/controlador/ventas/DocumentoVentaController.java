@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,8 +15,13 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JRHtmlExporter;
+import net.sf.jasperreports.engine.export.JRHtmlExporterParameter;
+import net.sf.jasperreports.j2ee.servlets.ImageServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,11 +29,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import pe.controlador.JsonTransformer;
-import pe.modelo.dto.ventas.Parametro;
+import pe.modelo.dto.ParametroDto;
 import pe.modelo.dao.ventas.IDocumentoVentaDao;
-import pe.modelo.pojo.CargaSesion;
+import pe.modelo.dto.ventas.ListaDocumentoVentaDto;
+import pe.modelo.dto.ventas.NotificacionDto;
+import pe.modelo.dto.ventas.AnulacionDto;
 import pe.modelo.pojo.DocumentoVenta;
 import pe.modelo.pojo.TipoDocumentoVenta;
+import pe.modelo.pojo.vista.VwSelDocumentoVenta;
 
 @Controller
 public class DocumentoVentaController {
@@ -42,15 +51,13 @@ public class DocumentoVentaController {
     public void listar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) throws IOException {
         PrintWriter out = httpServletResponse.getWriter();
         try {
-            //List<Parametro> parametros = (List<Parametro>) jsonTransformer.fromJson(jsonEntrada,Parametro[].class);
-            Parametro[] parametros = (Parametro[]) jsonTransformer.fromJson(jsonEntrada, Parametro[].class);
-            List<DocumentoVenta> lista = documentoVentaDao.listar(parametros);
-            long total = documentoVentaDao.totalDocumentoVentas(parametros);
-            String jsonSalida = "{\"lista\":" + jsonTransformer.toJson(lista) + ",\"total\":" + total + "}";
-            System.out.println("jsonSalida:" + jsonSalida);
+            //List<Parametro> parametros = (List<Parametro>) jsonTransformer.fromJson(jsonEntrada,ParametroDto[].class);
+            //System.out.println("jsonEntrada:" + jsonEntrada);
+            ParametroDto[] parametros = (ParametroDto[]) jsonTransformer.fromJson(jsonEntrada, ParametroDto[].class);
+            ListaDocumentoVentaDto listaDocumentoVentaDto = documentoVentaDao.listar(parametros);
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
-            out.println(jsonSalida);
+            out.println(jsonTransformer.toJson(listaDocumentoVentaDto));
         } catch (Exception ex) {
             ex.printStackTrace();
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -63,21 +70,8 @@ public class DocumentoVentaController {
     public void descargar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") long id) throws IOException {
         //PrintWriter out = httpServletResponse.getWriter();
         try {
-            JasperPrint print = documentoVentaDao.generarReporte(id);
-            //byte[] bytes = new byte[1];
-            //bytes = JasperExportManager.exportReportToPdf(print);
-            /*httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-            httpServletResponse.setContentType("application/pdf; charset=UTF-8");
-            httpServletResponse.setContentLength(bytes.length);
-            ServletOutputStream ouputStream = httpServletResponse.getOutputStream();
-            ouputStream.write(bytes);
-            ouputStream.flush();
-            ouputStream.close();*/
- /*httpServletResponse.setContentType("application/x-pdf");
-            httpServletResponse.setHeader("Content-disposition", "inline; filename=helloWorldReport.pdf");
-
-            final OutputStream outStream = httpServletResponse.getOutputStream();
-            JasperExportManager.exportReportToPdfStream(print, outStream);*/
+            DocumentoVenta documentoVenta = documentoVentaDao.buscar(id);
+            JasperPrint print = documentoVentaDao.generarReporte(documentoVenta);
             ByteArrayOutputStream out = new ByteArrayOutputStream();
 
             JasperExportManager.exportReportToPdfStream(print, out);
@@ -99,11 +93,51 @@ public class DocumentoVentaController {
         }
     }
 
+    @RequestMapping(value = "/documentoventa/ver/{id}", method = RequestMethod.GET)
+    public void ver(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") long id) throws IOException {
+        //PrintWriter out = httpServletResponse.getWriter();
+        try {
+            DocumentoVenta documentoVenta = documentoVentaDao.buscar(id);
+            JasperPrint print = documentoVentaDao.generarReporte(documentoVenta);
+            OutputStream ouputStream = httpServletResponse.getOutputStream();
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            httpServletRequest.getSession().setAttribute(ImageServlet.DEFAULT_JASPER_PRINT_SESSION_ATTRIBUTE, print);
+            JRExporter exporter = new JRHtmlExporter();
+
+            exporter.setParameter(JRHtmlExporterParameter.IS_OUTPUT_IMAGES_TO_DIR, Boolean.TRUE);
+            exporter.setParameter(JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN, new Boolean(false));
+            exporter.setParameter(JRHtmlExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, true);
+            exporter.setParameter(JRHtmlExporterParameter.IMAGES_MAP, new HashMap());
+            exporter.setParameter(JRHtmlExporterParameter.JASPER_PRINT, print);
+            exporter.setParameter(JRHtmlExporterParameter.OUTPUT_STREAM, baos);
+            exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, ouputStream);
+            exporter.setParameter(JRHtmlExporterParameter.IMAGES_URI, httpServletRequest.getContextPath() + "/srvImagenReporte?image=");
+            exporter.exportReport();
+            ouputStream.close();
+            //ByteArrayOutputStream out = new ByteArrayOutputStream();
+            //JasperExportManager.exportReportToPdfStream(print, out);
+            //byte[] data = out.toByteArray();
+            //httpServletResponse.setContentType("application/pdf");
+            //To make it a download change "inline" to "attachment"
+            //httpServletResponse.setHeader("Content-disposition", "inline; filename=prueba.pdf");
+            //httpServletResponse.setContentLength(data.length);
+            //httpServletResponse.getOutputStream().write(data);
+            //httpServletResponse.getOutputStream().flush();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("application/json; charset=UTF-8");
+            httpServletResponse.getWriter().println("{\"RSP\":\"ERROR\",\"MSG\":\"" + ex.getMessage() + "\"}");
+        }
+    }
+
     @RequestMapping(value = "/documentoventa/crear", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public void crear(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) {
+    public void crear(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) throws IOException {
         try {
             DocumentoVenta documentoventa = (DocumentoVenta) jsonTransformer.fromJson(jsonEntrada, DocumentoVenta.class);
             documentoVentaDao.crear(documentoventa);
+
             if (documentoventa.getId() > 0) {
                 String jsonSalida = jsonTransformer.toJson(documentoventa);
                 httpServletResponse.setStatus(HttpServletResponse.SC_OK);
@@ -117,13 +151,44 @@ public class DocumentoVentaController {
             }
 
         } catch (Exception ex) {
+            ex.printStackTrace();
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             httpServletResponse.setContentType("text/plain; charset=UTF-8");
-            try {
-                ex.printStackTrace(httpServletResponse.getWriter());
-            } catch (IOException ex1) {
-                Logger.getLogger(DocumentoVentaController.class.getName()).log(Level.SEVERE, null, ex1);
-            }
+            httpServletResponse.getWriter().println(ex.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/documentoventa/enviarsunat/{id}", method = RequestMethod.GET)
+    public void enviarSunat(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") long id) throws IOException {
+        try {
+            DocumentoVenta documentoVenta = documentoVentaDao.buscar(id);
+            documentoVentaDao.enviarSunat(documentoVenta);
+            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+            httpServletResponse.setContentType("application/json; charset=UTF-8");
+            //httpServletResponse.getWriter().println(jsonSalida);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            httpServletResponse.getWriter().println(ex.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/documentoventa/enviarcliente", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public void enviarCliente(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) throws IOException {
+        NotificacionDto notificacionDto = (NotificacionDto) jsonTransformer.fromJson(jsonEntrada, NotificacionDto.class);
+        try {
+            documentoVentaDao.enviarCliente(notificacionDto);
+            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+            httpServletResponse.setContentType("application/json; charset=UTF-8");
+            //httpServletResponse.getWriter().println(jsonSalida);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            httpServletResponse.getWriter().println(ex.getMessage());
         }
     }
 
@@ -158,6 +223,41 @@ public class DocumentoVentaController {
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
             out.println("{\"RSP\":\"ERROR\",\"MSG\":\"" + ex.getMessage() + "\"}");
+        }
+    }
+
+    @RequestMapping(value = "/documentoventa/buscar/{id}", method = RequestMethod.POST, produces = "application/json")
+    public void buscar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") long id) throws IOException {
+        try {
+            DocumentoVenta documentoVenta = documentoVentaDao.buscar(id);
+
+            String jsonSalida = jsonTransformer.toJson(documentoVenta);
+            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+            httpServletResponse.setContentType("application/json; charset=UTF-8");
+            httpServletResponse.getWriter().println(jsonSalida);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            httpServletResponse.getWriter().println(ex.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/documentoventa/anular", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public void anular(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) throws IOException {
+        AnulacionDto anulacionDto = (AnulacionDto) jsonTransformer.fromJson(jsonEntrada, AnulacionDto.class);
+        try {
+            documentoVentaDao.anular(anulacionDto);
+            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+            httpServletResponse.setContentType("application/json; charset=UTF-8");
+            //httpServletResponse.getWriter().println(jsonSalida);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            httpServletResponse.setContentType("text/plain; charset=UTF-8");
+            httpServletResponse.getWriter().println(ex.getMessage());
         }
     }
 }

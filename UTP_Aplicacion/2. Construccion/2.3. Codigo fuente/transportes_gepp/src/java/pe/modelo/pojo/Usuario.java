@@ -148,6 +148,14 @@ public class Usuario implements java.io.Serializable {
     private Set<Cliente> clientesForIdUsuarioCreacion = new HashSet<Cliente>(0);
     @JsonIgnore
     private Set<Cliente> clientesForIdUsuarioModificacion = new HashSet<Cliente>(0);
+    @JsonIgnore
+    private Set<TipoNotaCredito> tipoNotaCreditosForIdUsuarioCreacion = new HashSet<TipoNotaCredito>(0);
+    @JsonIgnore
+    private Set<TipoNotaCredito> tipoNotaCreditosForIdUsuarioModificacion = new HashSet<TipoNotaCredito>(0);
+    @JsonIgnore
+    private Set<TipoNotaDebito> tipoNotaDebitosForIdUsuarioCreacion = new HashSet<TipoNotaDebito>(0);
+    @JsonIgnore
+    private Set<TipoNotaDebito> tipoNotaDebitosForIdUsuarioModificacion = new HashSet<TipoNotaDebito>(0);
 
     public Usuario() {
     }
@@ -159,7 +167,7 @@ public class Usuario implements java.io.Serializable {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public Usuario(long id, Rol rol, Usuario usuarioByIdUsuarioCreacion, Usuario usuarioByIdUsuarioModificacion, PuntoVenta puntoVenta, Empresa empresa, Entidad entidad, String nombre, Boolean activo, String clave, Date fechaCreacion, Date fechaModificacion, Set<Operacion> operacionsForIdUsuarioCreacion, Set<Ubigeo> ubigeosForIdUsuarioCreacion, Set<Operacion> operacionsForIdUsuarioModificacion, Set<Menu> menusForIdUsuarioModificacion, Set<Producto> productosForIdUsuarioModificacion, Set<Empresa> empresasForIdUsuarioModificacion, Set<Rol> rolsForIdUsuarioModificacion, Set<DocumentoVenta> documentoVentasForIdUsuarioModificacion, Set<Empresa> empresasForIdUsuarioCreacion, Set<TipoDocumentoEntidad> tipoDocumentoEntidadsForIdUsuarioModificacion, Set<RolMenu> rolMenusForIdUsuarioModificacion, Set<Unidad> unidadsForIdUsuarioCreacion, Set<ResumenVentasGrupoVenta> resumenVentasGrupoVentasForIdUsuarioCreacion, Set<Entidad> entidadsForIdUsuarioModificacion, Set<Usuario> usuariosForIdUsuarioCreacion, Set<TipoDocumentoEntidad> tipoDocumentoEntidadsForIdUsuarioCreacion, Set<EstadoDocumentoVenta> estadoDocumentoVentasForIdUsuarioCreacion, Set<Moneda> monedasForIdUsuarioCreacion, Set<Menu> menusForIdUsuarioCreacion, Set<RolMenuOperacion> rolMenuOperacionsForIdUsuarioCreacion, Set<Ubigeo> ubigeosForIdUsuarioModificacion, Set<DocumentoVentaDetalle> documentoVentaDetallesForIdUsuarioModificacion, Set<ResumenVentasGrupo> resumenVentasGruposForIdUsuarioModificacion, Set<TipoDocumentoVenta> tipoDocumentoVentasForIdUsuarioCreacion, Set<Rol> rolsForIdUsuarioCreacion, Set<ResumenVentasGrupoVenta> resumenVentasGrupoVentasForIdUsuarioModificacion, Set<TipoDocumentoVenta> tipoDocumentoVentasForIdUsuarioModificacion, Set<RolMenu> rolMenusForIdUsuarioCreacion, Set<RolMenuOperacion> rolMenuOperacionsForIdUsuarioModificacion, Set<PuntoVenta> puntoVentasForIdUsuarioModificacion, Set<Entidad> entidadsForIdUsuarioCreacion, Set<UsuarioLog> usuarioLogsForIdUsuarioCreacion, Set<PuntoVentaSerie> puntoVentaSeriesForIdUsuarioCreacion, Set<Moneda> monedasForIdUsuarioModificacion, Set<UsuarioLog> usuarioLogsForIdUsuarioModificacion, Set<ResumenVentas> resumenVentasesForIdUsuarioModificacion, Set<EstadoDocumentoVenta> estadoDocumentoVentasForIdUsuarioModificacion, Set<ResumenVentas> resumenVentasesForIdUsuarioCreacion, Set<ResumenVentasGrupo> resumenVentasGruposForIdUsuarioCreacion, Set<Unidad> unidadsForIdUsuarioModificacion, Set<Usuario> usuariosForIdUsuarioModificacion, Set<DocumentoVenta> documentoVentasForIdUsuarioCreacion, Set<PuntoVentaSerie> puntoVentaSeriesForIdUsuarioModificacion, Set<Producto> productosForIdUsuarioCreacion, Set<PuntoVenta> puntoVentasForIdUsuarioCreacion, Set<DocumentoVentaDetalle> documentoVentaDetallesForIdUsuarioCreacion, Set<Cliente> clientesForIdUsuarioCreacion, Set<Cliente> clientesForIdUsuarioModificacion) {
+    public Usuario(long id, Rol rol, Usuario usuarioByIdUsuarioCreacion, Usuario usuarioByIdUsuarioModificacion, PuntoVenta puntoVenta, Empresa empresa, Entidad entidad, String nombre, Boolean activo, String clave, Date fechaCreacion, Date fechaModificacion, Set<Operacion> operacionsForIdUsuarioCreacion, Set<Ubigeo> ubigeosForIdUsuarioCreacion, Set<Operacion> operacionsForIdUsuarioModificacion, Set<Menu> menusForIdUsuarioModificacion, Set<Producto> productosForIdUsuarioModificacion, Set<Empresa> empresasForIdUsuarioModificacion, Set<Rol> rolsForIdUsuarioModificacion, Set<DocumentoVenta> documentoVentasForIdUsuarioModificacion, Set<Empresa> empresasForIdUsuarioCreacion, Set<TipoDocumentoEntidad> tipoDocumentoEntidadsForIdUsuarioModificacion, Set<RolMenu> rolMenusForIdUsuarioModificacion, Set<Unidad> unidadsForIdUsuarioCreacion, Set<ResumenVentasGrupoVenta> resumenVentasGrupoVentasForIdUsuarioCreacion, Set<Entidad> entidadsForIdUsuarioModificacion, Set<Usuario> usuariosForIdUsuarioCreacion, Set<TipoDocumentoEntidad> tipoDocumentoEntidadsForIdUsuarioCreacion, Set<EstadoDocumentoVenta> estadoDocumentoVentasForIdUsuarioCreacion, Set<Moneda> monedasForIdUsuarioCreacion, Set<Menu> menusForIdUsuarioCreacion, Set<RolMenuOperacion> rolMenuOperacionsForIdUsuarioCreacion, Set<Ubigeo> ubigeosForIdUsuarioModificacion, Set<DocumentoVentaDetalle> documentoVentaDetallesForIdUsuarioModificacion, Set<ResumenVentasGrupo> resumenVentasGruposForIdUsuarioModificacion, Set<TipoDocumentoVenta> tipoDocumentoVentasForIdUsuarioCreacion, Set<Rol> rolsForIdUsuarioCreacion, Set<ResumenVentasGrupoVenta> resumenVentasGrupoVentasForIdUsuarioModificacion, Set<TipoDocumentoVenta> tipoDocumentoVentasForIdUsuarioModificacion, Set<RolMenu> rolMenusForIdUsuarioCreacion, Set<RolMenuOperacion> rolMenuOperacionsForIdUsuarioModificacion, Set<PuntoVenta> puntoVentasForIdUsuarioModificacion, Set<Entidad> entidadsForIdUsuarioCreacion, Set<UsuarioLog> usuarioLogsForIdUsuarioCreacion, Set<PuntoVentaSerie> puntoVentaSeriesForIdUsuarioCreacion, Set<Moneda> monedasForIdUsuarioModificacion, Set<UsuarioLog> usuarioLogsForIdUsuarioModificacion, Set<ResumenVentas> resumenVentasesForIdUsuarioModificacion, Set<EstadoDocumentoVenta> estadoDocumentoVentasForIdUsuarioModificacion, Set<ResumenVentas> resumenVentasesForIdUsuarioCreacion, Set<ResumenVentasGrupo> resumenVentasGruposForIdUsuarioCreacion, Set<Unidad> unidadsForIdUsuarioModificacion, Set<Usuario> usuariosForIdUsuarioModificacion, Set<DocumentoVenta> documentoVentasForIdUsuarioCreacion, Set<PuntoVentaSerie> puntoVentaSeriesForIdUsuarioModificacion, Set<Producto> productosForIdUsuarioCreacion, Set<PuntoVenta> puntoVentasForIdUsuarioCreacion, Set<DocumentoVentaDetalle> documentoVentaDetallesForIdUsuarioCreacion, Set<Cliente> clientesForIdUsuarioCreacion, Set<Cliente> clientesForIdUsuarioModificacion, Set<TipoNotaDebito> tipoNotaDebitosForIdUsuarioCreacion, Set<TipoNotaDebito> tipoNotaDebitosForIdUsuarioModificacion, Set<TipoNotaCredito> tipoNotaCreditosForIdUsuarioCreacion, Set<TipoNotaCredito> tipoNotaCreditosForIdUsuarioModificacion) {
         this.id = id;
         this.rol = rol;
         this.usuarioByIdUsuarioCreacion = usuarioByIdUsuarioCreacion;
@@ -220,6 +228,10 @@ public class Usuario implements java.io.Serializable {
         this.documentoVentaDetallesForIdUsuarioCreacion = documentoVentaDetallesForIdUsuarioCreacion;
         this.clientesForIdUsuarioCreacion = clientesForIdUsuarioCreacion;
         this.clientesForIdUsuarioModificacion = clientesForIdUsuarioModificacion;
+        this.tipoNotaDebitosForIdUsuarioCreacion = tipoNotaDebitosForIdUsuarioCreacion;
+        this.tipoNotaDebitosForIdUsuarioModificacion = tipoNotaDebitosForIdUsuarioModificacion;
+        this.tipoNotaCreditosForIdUsuarioCreacion = tipoNotaCreditosForIdUsuarioCreacion;
+        this.tipoNotaCreditosForIdUsuarioModificacion = tipoNotaCreditosForIdUsuarioModificacion;
     }
 
     @Id
@@ -787,4 +799,39 @@ public class Usuario implements java.io.Serializable {
         this.clientesForIdUsuarioModificacion = clientesForIdUsuarioModificacion;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuarioByIdUsuarioModificacion")
+    public Set<TipoNotaDebito> getTipoNotaDebitosForIdUsuarioModificacion() {
+        return this.tipoNotaDebitosForIdUsuarioModificacion;
+    }
+
+    public void setTipoNotaDebitosForIdUsuarioModificacion(Set<TipoNotaDebito> tipoNotaDebitosForIdUsuarioModificacion) {
+        this.tipoNotaDebitosForIdUsuarioModificacion = tipoNotaDebitosForIdUsuarioModificacion;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuarioByIdUsuarioCreacion")
+    public Set<TipoNotaDebito> getTipoNotaDebitosForIdUsuarioCreacion() {
+        return this.tipoNotaDebitosForIdUsuarioCreacion;
+    }
+
+    public void setTipoNotaDebitosForIdUsuarioCreacion(Set<TipoNotaDebito> tipoNotaDebitosForIdUsuarioCreacion) {
+        this.tipoNotaDebitosForIdUsuarioCreacion = tipoNotaDebitosForIdUsuarioCreacion;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuarioByIdUsuarioCreacion")
+    public Set<TipoNotaCredito> getTipoNotaCreditosForIdUsuarioCreacion() {
+        return this.tipoNotaCreditosForIdUsuarioCreacion;
+    }
+
+    public void setTipoNotaCreditosForIdUsuarioCreacion(Set<TipoNotaCredito> tipoNotaCreditosForIdUsuarioCreacion) {
+        this.tipoNotaCreditosForIdUsuarioCreacion = tipoNotaCreditosForIdUsuarioCreacion;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuarioByIdUsuarioModificacion")
+    public Set<TipoNotaCredito> getTipoNotaCreditosForIdUsuarioModificacion() {
+        return this.tipoNotaCreditosForIdUsuarioModificacion;
+    }
+
+    public void setTipoNotaCreditosForIdUsuarioModificacion(Set<TipoNotaCredito> tipoNotaCreditosForIdUsuarioModificacion) {
+        this.tipoNotaCreditosForIdUsuarioModificacion = tipoNotaCreditosForIdUsuarioModificacion;
+    }
 }

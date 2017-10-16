@@ -5,7 +5,6 @@
  */
 package pe.modelo.dao.administracion;
 
-import java.security.MessageDigest;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,9 +13,15 @@ import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import pe.modelo.dao.HibernateUtil;
+import pe.modelo.dto.ParametroDto;
 import pe.modelo.pojo.Usuario;
+import pe.modelo.pojo.vista.VwSelUsuario;
 
 /**
  *
@@ -27,10 +32,6 @@ public class UsuarioDao implements IUsuarioDao {
     @Override
     public void crear(Usuario usuario) {
         try {
-            MessageDigest digest = MessageDigest.getInstance("MD5");
-            digest.update(usuario.getClave().getBytes());
-            byte hash[] = digest.digest();
-            System.out.println(hash);
             usuario.setFechaCreacion(new Date());
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
@@ -87,19 +88,50 @@ public class UsuarioDao implements IUsuarioDao {
     }
 
     @Override
-    public List<Usuario> listar() {
-        List<Usuario> lista = null;
+    public ListaUsuario listar(ParametroDto[] parametros) {
+        ListaUsuario listaUsuario = new ListaUsuario();
+        List<VwSelUsuario> lista = null;
+        Integer currentPage = 0;
+        Integer itemsPerPage = 0;
+        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(VwSelUsuario.class);
+        DetachedCriteria detachedCriteria1 = DetachedCriteria.forClass(VwSelUsuario.class);
+        Long nroUsuarios = new Long(0);
         try {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            Query query = sesion.createQuery("from Usuario order by id");
-            lista = query.list();
+            for (ParametroDto parametro : parametros) {
+                if (parametro.getNombre().equals("currentPage") && parametro.getValor() != null) {
+                    currentPage = Integer.parseInt(parametro.getValor());
+                } else if (parametro.getNombre().equals("itemsPerPage") && parametro.getValor() != null) {
+                    itemsPerPage = Integer.parseInt(parametro.getValor());
+                } else if (parametro.getNombre().equals("nombre") && parametro.getValor() != null) {
+                    detachedCriteria.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%"));
+                    detachedCriteria1.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%"));
+                } else if (parametro.getNombre().equals("clave") && parametro.getValor() != null) {
+                    detachedCriteria.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%"));
+                    detachedCriteria1.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%"));
+                } else if (parametro.getNombre().equals("idRol") && parametro.getValor() != null) {
+                    detachedCriteria.add(Property.forName(parametro.getNombre()).eq(Integer.parseInt(parametro.getValor())));
+                    detachedCriteria1.add(Property.forName(parametro.getNombre()).eq(Integer.parseInt(parametro.getValor())));
+                } else if (parametro.getNombre().equals("idPuntoVenta") && parametro.getValor() != null) {
+                    detachedCriteria.add(Property.forName(parametro.getNombre()).eq(Integer.parseInt(parametro.getValor())));
+                    detachedCriteria1.add(Property.forName(parametro.getNombre()).eq(Integer.parseInt(parametro.getValor())));
+                } else if (parametro.getNombre().equals("activo") && parametro.getValor() != null) {
+                    detachedCriteria.add(Property.forName(parametro.getNombre()).eq(Boolean.parseBoolean(parametro.getValor())));
+                    detachedCriteria1.add(Property.forName(parametro.getNombre()).eq(Boolean.parseBoolean(parametro.getValor())));
+                }
+            }
+            lista = detachedCriteria.getExecutableCriteria(sesion).setFirstResult(currentPage).setMaxResults(itemsPerPage).addOrder(Order.desc("id")).list();
+            nroUsuarios = (long) detachedCriteria1.getExecutableCriteria(sesion).setProjection(Projections.rowCount()).uniqueResult();
+
             sesion.getTransaction().commit();
             sesion.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return lista;
+        listaUsuario.setUsuarios(lista);
+        listaUsuario.setNroUsuarios(nroUsuarios);
+        return listaUsuario;
     }
 
     @Override
@@ -108,7 +140,7 @@ public class UsuarioDao implements IUsuarioDao {
         try {
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             Criteria criteria = sesion.createCriteria(Usuario.class);
-            usuario = (Usuario) criteria.add(Restrictions.eq("nombre", nombre)).add(Restrictions.eq("clave", clave)).uniqueResult();
+            usuario = (Usuario) criteria.add(Restrictions.eq("nombre", nombre)).add(Restrictions.eq("clave", clave)).add(Restrictions.eq("activo", true)).uniqueResult();
             sesion.beginTransaction();
             sesion.getTransaction().commit();
             sesion.close();

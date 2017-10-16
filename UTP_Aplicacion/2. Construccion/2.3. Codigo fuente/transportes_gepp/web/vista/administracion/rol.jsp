@@ -18,44 +18,38 @@
             <div class="row clearfix">
                 <header>
                     <aside>
-                    <ng-include src="'<%= request.getContextPath()%>/vista/cabecera.jsp'"></ng-include>
+                        <ng-include src="'<%= request.getContextPath()%>/vista/cabecera.jsp'"></ng-include>
                     </aside>
                 </header>
             </div>
             <div class="row clearfix">
-                <div class="col-md-3">
-                    <aside>
-                        <ng-include src="'<%= request.getContextPath()%>/vista/menu.jsp'"></ng-include>
-                    </aside>
-                </div>
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <section>
-                        <form>
                             <table class="table table-bordered">
                                 <thead>
                                 <th colspan="5" >
-                                    <h2>ROLES
-                                        <button style="float:right" class="btn btn-default btn-lg " data-toggle="modal" data-target="#modalRol" tabindex="4" >
-                                            <span class="glyphicon glyphicon-plus" ng-click="nuevoRol()"> Nuevo</span>
-                                        </button>
-                                    </h2>
+                                <h2>ROLES
+                                    <button style="float:right" class="btn btn-default btn-lg " data-toggle="modal" data-target="#modalRol" tabindex="4" >
+                                        <span class="glyphicon glyphicon-plus" ng-click="nuevoRol()"> Nuevo</span>
+                                    </button>
+                                </h2>
                                 </th>
                                 <tr>
                                     <th>#</th>
                                     <th>
                                         Nombre
                                         <br>
-                                        <input type="text" class="form-control" ng-model="search.nombre" tabindex="1">
+                                        <input type="text" class="form-control" ng-model="parametro.nombre" tabindex="1" ng-enter="listar()">
                                     </th>
                                     <th>
                                         Descripción
                                         <br>
-                                        <input type="text" class="form-control" ng-model="search.descripcion" tabindex="2">
+                                        <input type="text" class="form-control" ng-model="parametro.descripcion" tabindex="2" ng-enter="listar()">
                                     </th>
                                     <th>
                                         Administrador
                                         <br>
-                                        <select class="form-control" ng-model="search.admin" tabindex="3">
+                                        <select class="form-control" ng-model="parametro.admin" tabindex="3" ng-change="listar()">
                                             <option value="" >Todos</option>
                                             <option value="true">Si</option>
                                             <option value="false">No</option>
@@ -66,7 +60,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="rol in roles.slice(((currentPage - 1) * itemsPerPage), ((currentPage) * itemsPerPage))| filter:search ">
+                                    <tr ng-repeat="rol in roles" ng-click="setSelected($index, item)" ng-class="{activeItem:$index == selectedRow}">
                                         <td>{{$index + 1}}</td>
                                         <td>{{rol.nombre}}</td>
                                         <td>{{rol.descripcion}}</td>
@@ -83,9 +77,17 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <ul  uib-pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm " items-per-page="itemsPerPage" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-                            </ul>
-                        </form>
+                            <div class="row clearfix">
+                                <div class="col-sm-7">
+                                    <ul  uib-pagination max-size="maxSize" boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm " items-per-page="itemsPerPage" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"  rotate="false"  last-text="&raquo;"/>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="pull-right">
+                                        Ver <select style="width: auto;" class="feature-icon form-control"  ng-options="pagina.value for pagina in paginas track by pagina.value"  ng-model="pagina" ng-change="setItemsPerPage(pagina.value)" ng-init="paginas[0].value">
+                                        </select> de <b>{{totalItems}}</b> Registro(s)
+                                    </div>
+                                </div>
+                            </div>
                         <!-- Modal -->
                         <div class="modal fade" id="modalRol" role="dialog">
                             <div class="modal-dialog">

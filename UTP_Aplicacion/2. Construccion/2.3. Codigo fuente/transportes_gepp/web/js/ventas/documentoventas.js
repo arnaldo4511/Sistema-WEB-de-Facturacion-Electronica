@@ -26,7 +26,6 @@ DocumentoVentasApp.directive('ngEnter', function () {
                 scope.$apply(function () {
                     scope.$eval(attrs.ngEnter);
                 });
-
                 event.preventDefault();
             }
         });
@@ -34,45 +33,6 @@ DocumentoVentasApp.directive('ngEnter', function () {
 });
 DocumentoVentasApp.controller("DocumentoVentasController", ['$scope', '$http', '$filter', '$window', function ($scope, $http, $filter, $window) {
         $scope.sesion = {};
-        $scope.documentoVenta = {};
-        $scope.producto = {};
-        $scope.formaPago = {};
-        $scope.condicion = {};
-        $scope.documentoVentaDetalle = {};
-        $scope.tipoTargeta = {};
-        $scope.banco = {};
-
-
-        $scope.productos = [];
-        $scope.usuarios = [];
-        $scope.roles = [];
-        $scope.puntoVentas = [];
-        $scope.documentoVentaDetalles = [];
-
-        $scope.tipoDocumentoEntidades = [
-            {'codigo': '1', 'nombre': 'DNI'},
-            {'codigo': '9', 'nombre': 'RUC'}];
-        $scope.tipoDocumentoVentas = [
-            {'codigo': '', 'nombre': 'Todos'},
-            {'codigo': '01', 'nombre': 'FACTURA'},
-            {'codigo': '03', 'nombre': 'BOLETA DE VENTA'}];
-        $scope.condiciones = [
-            {'codigo': 'CON', 'nombre': 'CONTADO'},
-            {'codigo': 'CRE', 'nombre': 'CRÉDITO'}];
-        $scope.formaPagos = [
-            {'codigo': 'EFE', 'nombre': 'EFECTIVO'},
-            {'codigo': 'TAR', 'nombre': 'TARGETA'},
-            {'codigo': 'DEP', 'nombre': 'DEPÓSITO'},
-            {'codigo': 'CRE', 'nombre': 'CRÉDITO'}];
-        $scope.tipoTargetas = [
-            {'codigo': 'VIS', 'nombre': 'VISA'},
-            {'codigo': 'MAS', 'nombre': 'MASTERCAD'}];
-        $scope.bancos = [
-            {'codigo': 'BCP', 'nombre': 'BCP'},
-            {'codigo': 'BBVA', 'nombre': 'BBVA'},
-            {'codigo': 'BNA', 'nombre': 'BN'},
-            {'codigo': 'SCO', 'nombre': 'SCOTIABANCK'},
-            {'codigo': 'INT', 'nombre': 'INTERBANCK'}];
         $scope.paginas = [
             {value: 5},
             {value: 10},
@@ -80,22 +40,53 @@ DocumentoVentasApp.controller("DocumentoVentasController", ['$scope', '$http', '
             {value: 40},
             {value: 50}];
         $scope.pagina = {value: 5};
-        $scope.fechaDesde = new Date();
-        //$scope.fechaDesde =Date.now();//$filter('date')('2017-01-01','yyyy-MM-dd');
+        $scope.parametro = {};
+        //$scope.parametro.fechaDesde = new Date();
+        //$scope.parametro.fechaHasta = new Date(2017,01,01);
+        $scope.parametro.fechaHasta = new Date(); //$filter('date')(new Date(), 'yyyy-MM-dd');
+        $scope.parametro.fechaDesde = new Date(new Date().getFullYear(), 0, 01);
+        //new ;//$filter('date')(new Date(), 'yyyy-MM-dd');
         //$scope.fechaDesde = $filter('date')(Date.now(), 'yyyy-MM-dd');
 
-        $scope.tipoDocumentoVenta = {'codigo': '', 'nombre': ''};
-        $scope.condicion = {'codigo': 'CON', 'nombre': 'CONTADO'};
-        $scope.formaPago = {'codigo': 'EFE', 'nombre': 'EFECTIVO'};
+
+        $scope.tipoNotificacions = [{'codigo': 'CLI', 'nombre': 'CLIENTE'}, {'codigo': 'PER', 'nombre': 'PERSONALIZADO'}];
+        $scope.tipoNotificacion = {'codigo': 'CLI', 'nombre': 'CLIENTE'};
+        $scope.tipoAnulacions = [{'codigo': 'CTI', 'nombre': 'CONTROL INTERNO'}, {'codigo': 'COB', 'nombre': 'COMUNICACIÓN DE BAJA'}];
+        $scope.tipoAnulacion = {'codigo': 'CTI'};
         //alert($filter('date')(Date.now(), 'dd-MM-yyyy'));
         //$scope.documentoVenta.fechaEmision = $filter('date')(Date.now(), 'dd-MM-yyyy');//'yyyy-MM-dd'
-        $scope.clientes = [];
 
+        $scope.enviarBloqueClientes = function () {
+            var cont = 1;
+            angular.forEach($scope.documentoVentas, function (value) {
+
+                if (value.documentoRef !== " - ") {
+                    $scope.notificacion = {};
+                    $scope.notificacion.idDocumentoVenta = value.id;
+                    $scope.notificacion.tipo = 'CLI';
+                    //console.log($scope.notificacion);
+                    $http({
+                        method: 'POST',
+                        url: '/transportes_gepp/controlador/documentoventa/enviarcliente',
+                        data: $scope.notificacion
+                    }).then(function success(response) {
+                        console.log(cont);
+                        cont += 1;
+                        //console.log(response.data);
+                        //$scope.listar();
+                    }, function error(response) {
+                        //console.log(response.data);
+                    });
+                }
+            });
+            console.log("fin");
+        };
         $http({method: 'GET', url: '/transportes_gepp/controlador/usuario/buscarsesion'}).then(function success(response) {
             //console.log(response.data);
             $scope.sesion = response.data;
-            $scope.roles = $scope.sesion.roles;
-            $scope.puntoVentas = $scope.sesion.puntoVentas;
+            $scope.tipoDocumentoVentas = $scope.sesion.tipoDocumentoVentas;
+            $scope.estadoDocumentoVentas = $scope.sesion.estadoDocumentoVentas;
+            //console.log($scope.sesion.vwSelDocumentoVentas);
         }, function myError(response) {
         });
         $scope.pagina.value = 5;
@@ -104,108 +95,174 @@ DocumentoVentasApp.controller("DocumentoVentasController", ['$scope', '$http', '
         $scope.itemsPerPage = $scope.pagina.value;
         $scope.maxSize = 5;
         $scope.numero = "";
-        $scope.documentoVentaSeleccionado = {};
+        $scope.documentoVentaSeleccionado = undefined;
         $scope.descargarDocumentoVenta = function () {
             if ($scope.documentoVentaSeleccionado !== {})
             {
-                $window.open('/transportes_gepp/controlador/documentoventa/descargar/' + $scope.documentoVentaSeleccionado.id), '_blank';
+                $window.open('/transportes_gepp/controlador/documentoventa/descargar/' + $scope.documentoVentaSeleccionado.id, '_blank');
             }
         };
-        $scope.setSelected = function (item) {
-            //alert(item.id);
-            if (this.selected === "") {
-                this.selected = "selected";
-                $scope.documentoVentaSeleccionado = item;
-            } else {
-                this.selected = "";
-                $scope.documentoVentaSeleccionado = {};
+        $scope.ocultarBotones = function () {
+            if ($scope.documentoVentaSeleccionado === undefined) {
+                $scope.hideButtonEnviarSunat = true;
+                $scope.hideButtonDescargar = true;
+                $scope.hideButtonAnular = true;
+                $scope.hideButtonNotificar = true;
+                $scope.hideButtonHacerNotaCredito = true;
+                $scope.hideButtonHacerNotaDebito = true;
+            } else if ($scope.documentoVentaSeleccionado.codigoEstado === "ANU") {//ANULADO
+                $scope.hideButtonEnviarSunat = true;
+                $scope.hideButtonDescargar = false;
+                $scope.hideButtonAnular = true;
+                $scope.hideButtonNotificar = false;
+                $scope.hideButtonHacerNotaCredito = true;
+                $scope.hideButtonHacerNotaDebito = true;
+            } else if ($scope.documentoVentaSeleccionado.codigoEstado === "PCB") {//PENDIENTE BAJA
+                $scope.hideButtonEnviarSunat = true;
+                $scope.hideButtonDescargar = false;
+                $scope.hideButtonAnular = false;
+                $scope.hideButtonNotificar = false;
+                $scope.hideButtonHacerNotaCredito = true;
+                $scope.hideButtonHacerNotaDebito = true;
+            } else if ($scope.documentoVentaSeleccionado.codigoEstado === "PES") {//PENDIENTE ENVIO
+                $scope.hideButtonEnviarSunat = false;
+                $scope.hideButtonDescargar = false;
+                $scope.hideButtonAnular = true;
+                $scope.hideButtonNotificar = false;
+                $scope.hideButtonHacerNotaCredito = true;
+                $scope.hideButtonHacerNotaDebito = true;
+            } else if ($scope.documentoVentaSeleccionado.codigoEstado === "REC") {//RECHAZADO
+                $scope.hideButtonEnviarSunat = true;
+                $scope.hideButtonDescargar = false;
+                $scope.hideButtonAnular = true;
+                $scope.hideButtonNotificar = false;
+                $scope.hideButtonHacerNotaCredito = true;
+                $scope.hideButtonHacerNotaDebito = true;
+            } else if ($scope.documentoVentaSeleccionado.codigoEstado === "VAL") {//VALIDO
+                $scope.hideButtonEnviarSunat = true;
+                $scope.hideButtonDescargar = false;
+                $scope.hideButtonAnular = false;
+                $scope.hideButtonNotificar = false;
+                if ($scope.documentoVentaSeleccionado.codigoTipo === "01" || $scope.documentoVentaSeleccionado.codigoTipo === "03") {
+                    $scope.hideButtonHacerNotaCredito = false;
+                    $scope.hideButtonHacerNotaDebito = false;
+                } else {
+                    $scope.hideButtonHacerNotaCredito = true;
+                    $scope.hideButtonHacerNotaDebito = true;
+                }
             }
+        };
+        $scope.setSelected = function (row, item) {
+            $scope.selectedRow = row;
+            $scope.documentoVentaSeleccionado = item;
+            $scope.ocultarBotones();
         }
+        $scope.showPleaseWait = function () {
+            $('#modalNotificacion').modal();
+        };
+        $scope.hidePleaseWait = function () {
+            $('#modalNotificacion').modal('hide');
+        };
+        //$scope.parametro = {};
+        $scope.parametro.tipoDocumentoVenta = {};
+        $scope.parametro.estadoDocumentoVenta = {};
         $scope.listar = function () {
+
+            //alert("listar");
             $scope.documentoVentas = [];
+            //$scope.totalItems = 0;
+            $scope.totalFacturas = 0;
+            $scope.totalBoletas = 0;
+            $scope.totalNotaCreditos = 0;
+            $scope.totalNotaDebitos = 0;
             $scope.parametros = [];
-            $scope.parametro = {};
-            $scope.parametro.nombre = "tipoDocumentoVenta.codigo";
-            $scope.parametro.valor = $scope.tipoDocumentoVenta.codigo;
-            $scope.parametros.push($scope.parametro);
-            $scope.parametro = {};
-            $scope.parametro.nombre = "currentPage";
-            $scope.parametro.valor = (($scope.currentPage * $scope.itemsPerPage) - $scope.itemsPerPage).toString();
-            $scope.parametros.push($scope.parametro);
-            $scope.parametro = {};
-            $scope.parametro.nombre = "itemsPerPage";
-            $scope.parametro.valor = $scope.itemsPerPage.toString();
-            $scope.parametros.push($scope.parametro);
-            $scope.parametro = {};
-            $scope.parametro.nombre = "numero";
-            $scope.parametro.valor = $scope.numero;
-            $scope.parametros.push($scope.parametro);
-            console.log($scope.parametros);
+            if ($scope.parametro === {}) {
+            } else
+            {
+                $scope.parametros.push({'nombre': 'fechaDesde', 'valor': $scope.parametro.fechaDesde});
+                $scope.parametros.push({'nombre': 'fechaHasta', 'valor': $scope.parametro.fechaHasta});
+                $scope.parametros.push({'nombre': 'codigoTipo', 'valor': ($scope.parametro.tipoDocumentoVenta === null ? null : $scope.parametro.tipoDocumentoVenta.codigo)});
+                $scope.parametros.push({'nombre': 'codigoEstado', 'valor': ($scope.parametro.estadoDocumentoVenta === null ? null : $scope.parametro.estadoDocumentoVenta.codigo)});
+                $scope.parametros.push({'nombre': 'numero', 'valor': $scope.parametro.numero});
+                $scope.parametros.push({'nombre': 'documentoRef', 'valor': $scope.parametro.documentoRef});
+                $scope.parametros.push({'nombre': 'fechaEmision', 'valor': $scope.parametro.fechaEmision});
+                $scope.parametros.push({'nombre': 'documentoCliente', 'valor': $scope.parametro.documentoCliente});
+                $scope.parametros.push({'nombre': 'nombreCliente', 'valor': $scope.parametro.nombreCliente});
+            }
+
+            //alert("listar2");
+            $scope.parametros.push({'nombre': 'currentPage', 'valor': (($scope.currentPage * $scope.itemsPerPage) - $scope.itemsPerPage).toString()});
+            //alert("listar3");
+            $scope.parametros.push({'nombre': 'itemsPerPage', 'valor': $scope.itemsPerPage.toString()});
+            //alert("listar4");
+            //console.log($scope.parametros);
             //$scope.parametros.push($scope.parametro);
+            //$scope.showPleaseWait();
             $http({
                 method: 'POST',
                 url: '/transportes_gepp/controlador/documentoventa/listar',
                 data: $scope.parametros
             }).then(function success(response) {
-                console.log(response.data);
-                $scope.documentoVentas = response.data.lista;
-                $scope.totalItems = response.data.total;//$scope.documentoVentas.length;
-                console.log($scope.totalItems);
+                //console.log(response.data);
+                //$scope.hidePleaseWait();
+                //alert("listar-fin");
+                $scope.documentoVentas = response.data.documentoVentas;
+                $scope.totalItems = response.data.nroDocumentoVentas; //$scope.documentoVentas.length;
+                $scope.totalFacturas = response.data.totalFacturas;
+                $scope.totalBoletas = response.data.totalBoletas;
+                $scope.totalNotaCreditos = response.data.totalNotaCreditos;
+                $scope.totalNotaDebitos = response.data.totalNotaDebitos;
+                $scope.totalPendienteEnvioSunats = response.data.totalPendienteEnvioSunats;
+                $scope.totalPendienteComunicacionBajas = response.data.totalPendienteComunicacionBajas;
+                $scope.selectedRow = undefined;
+                $scope.documentoVentaSeleccionado = undefined;
+                $scope.ocultarBotones();
+                //console.log($scope.totalItems);
             }, function myError(response) {
-                console.log(response.data);
+                //console.log(response.data);
             });
         };
         $scope.setPage = function (pageNo) {
             $scope.currentPage = pageNo;
             $scope.listar();
         };
-
         $scope.pageChanged = function () {
+            //alert("pageChanged:" + $scope.currentPage);
             //console.log('Page changed to: ' + $scope.currentPage);
             $scope.listar();
         };
-
         $scope.setItemsPerPage = function (num) {
+            //alert("setItemsPerPage:" + $scope.currentPage);
             $scope.itemsPerPage = num;
             $scope.currentPage = 1; //reset to first paghe
             $scope.listar();
         }
         $scope.crear = function () {
-            $window.location.href = 'documentoventa.jsp';
+            $window.open('documentoventa.jsp', "_self");
+            //$window.location.href = 'documentoventa.jsp';
+        }
+        $scope.hacerNotaCredito = function () {
+            $window.open('documentoventa.jsp?id=' + $scope.documentoVentaSeleccionado.id + "&codigoTipo=07", "_self");
+            //$window.location.href = 'documentoventa.jsp';
+        }
+        $scope.hacerNotaDebito = function () {
+            $window.open('documentoventa.jsp?id=' + $scope.documentoVentaSeleccionado.id + "&codigoTipo=08", "_self");
+            //$window.location.href = 'documentoventa.jsp';
         }
 
-        $scope.validar = function () {
-            //var valPro=($scope.documentoVenta.documentoVentaDetalles.length === 0);
-            //var valCli=($scope.documentoVenta.tipoDocumentoVenta.codigo === '03' && $scope.condicion.codigo==='CRE' && $scope.documentoVenta.total<700 && $scope.documentoVenta.cliente === {});
-            //return ( valPro && valCli);
+
+        $scope.nuevaNotificacion = function () {
+            $scope.notificacion = {};
+            $scope.notificacion.idDocumentoVenta = $scope.documentoVentaSeleccionado.id;
         };
-        $scope.cancelarCliente = function () {
-            $scope.clientes = [];
-            $scope.ocultarEntidadesAuto = false;
-            $scope.documentoVenta.cliente = {};
-            $scope.criterioCliente = '';
-        };
-        $scope.guardar = function (documentoVenta) {
-            documentoVenta.empresa = $scope.sesion.usuario.empresa;
-            documentoVenta.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
-            documentoVenta.formaPago = $scope.formaPago.codigo;
-            documentoVenta.condicion = $scope.condicion.codigo;
-            documentoVenta.moneda = {'codigo': 'PEN', 'nombre': 'Soles'};
-            documentoVenta.estadoDocumentoVenta = {'codigo': 'CRE', 'nombre': 'CREADO'};
-            documentoVenta.puntoVenta = $scope.sesion.usuario.puntoVenta;
-            documentoVenta.puntoVentaSerie = {'codigo': 'F001'};
-            documentoVenta.tipoTargeta = $scope.tipoTargeta.codigo;
-            documentoVenta.banco = $scope.banco.codigo;
-            documentoVenta.numero = '00000000';
-            //console.log(documentoVenta);
-            //return;
-            //return;
-            //usuario.usuarioByIdDocumentoVentaCreacion = $scope.sesion.usuario;
-            //usuario.empresa = $scope.sesion.usuario.empresa;
+        $scope.notificacion = {};
+        $scope.notificar = function () {
+            $scope.notificacion.tipo = $scope.tipoNotificacion.codigo;
+            console.log($scope.notificacion);
             $http({
                 method: 'POST',
-                url: '/transportes_gepp/controlador/documentoventa/crear',
-                data: documentoVenta
+                url: '/transportes_gepp/controlador/documentoventa/enviarcliente',
+                data: $scope.notificacion
             }).then(function success(response) {
                 console.log(response.data);
                 //$scope.listar();
@@ -213,113 +270,58 @@ DocumentoVentasApp.controller("DocumentoVentasController", ['$scope', '$http', '
                 //console.log(response.data);
             });
         };
-        $scope.completarCliente = function (criterio) {
-            if (criterio === undefined || criterio.trim() === "")
-            {
-                $scope.clientes = [];
-                return;
-            }
-            //console.log(criterio);
-            $http({method: 'GET', url: '/transportes_gepp/controlador/cliente/autocompletar/' + criterio
-            }).then(function mySucces(response) {
-                //console.log(response.data);
-                $scope.clientes = response.data;
-                $scope.ocultarEntidadesAuto = false;
-            }, function myError(response) {
-
-            });
-        };
-        $scope.criterioCliente = '';
-        $scope.seleccionarEntidad = function (item) {
-            $scope.documentoVenta.cliente = item;
-            $scope.ocultarEntidadesAuto = true;
-            $scope.criterioCliente = item.entidad.nombre;
-        };
-        $scope.completarProducto = function (criterio) {
-            //console.log(criterio);
-            if (criterio === undefined || criterio.trim() === "")
-            {
-                $scope.productos = [];
-                return;
-            }
-            $http({method: 'GET', url: '/transportes_gepp/controlador/producto/autocompletar/' + criterio
-            }).then(function mySucces(response) {
-                //console.log(response.data);
-                $scope.productos = response.data;
-                $scope.ocultarProductosAuto = false;
-            }, function myError(response) {
-
-                //console.log(response);
-            });
-        };
-        $scope.criterioProducto = '';
-        $scope.seleccionarProducto = function (item) {
-            $scope.documentoVentaDetalle.producto = item;
-            $scope.criterioProducto = item.nombre;
-            $scope.ocultarProductosAuto = true;
-        };
-        $scope.documentoVenta.documentoVentaDetalles = [];
-        $scope.agregarProducto = function (item) {
-            //
-            item.precioToten = item.producto.precioVenta;
-            item.unidad = item.producto.unidad;
-            if (item.gratuito) {
-                item.fleteUnitario = 0;
-                item.bonificacionUnitario = 0;
-                item.precioUnitario = 0;
-                item.valorUnitario = 0;
-                item.costoUnitario = 0;
-                item.precioFinal = 0;
-                item.codigoPrecio = '02';
-                item.codigoIgv = '11';
-                item.totalGratuito = item.precioToten * item.cantidad;
+        $scope.nuevaAnulacion = function () {
+            $scope.anulacion = {};
+            $scope.anulacion.idDocumentoVenta = $scope.documentoVentaSeleccionado.id;
+            $scope.anulacion.fechaEmisionDocumentoVenta = $scope.documentoVentaSeleccionado.fechaEmision;
+            //alert($scope.documentoVentaSeleccionado.codigoEstado);
+            if ($scope.documentoVentaSeleccionado.codigoEstado === 'VAL' || $scope.documentoVentaSeleccionado.codigoEstado === 'PCB') {
+                $scope.tipoAnulacion = {'codigo': 'COB'};
             } else {
-                item.fleteUnitario = 0;
-                item.bonificacionUnitario = 0;
-                item.precioUnitario = (item.precioToten + item.fleteUnitario + item.bonificacionUnitario)
-                item.valorUnitario = item.precioUnitario / 1.18;
-                item.costoUnitario = (item.fleteUnitario + item.bonificacionUnitario) - item.descuentoUnitario;
-                item.precioFinal = item.precioToten + item.costoUnitario;
-                item.codigoPrecio = '01';
-                item.codigoIgv = '10';
-                item.totalGratuito = 0;
+                $scope.tipoAnulacion = {'codigo': 'CTI'};
             }
-            //
-            item.ventaBruta = item.valorUnitario * item.cantidad;
-            item.totalDescuento = item.descuentoUnitario * item.cantidad;
-            item.descuento = item.totalDescuento > 0 ? true : false;
-            item.total = item.precioFinal * item.cantidad;
-            item.totalIgv = item.total * 0.18;
-            item.totalGrabado = item.total - item.totalIgv;
-            item.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
-            $scope.documentoVenta.documentoVentaDetalles.push(item);
-            $scope.calcularMontos();
-            $scope.nuevoDocumentoVentaDetalle();
         };
-        $scope.nuevoDocumentoVentaDetalle = function () {
-            $scope.criterioProducto = '';
-            $scope.documentoVentaDetalle = {};
-            $scope.documentoVentaDetalle.descuentoUnitario = 0;
-            $scope.documentoVentaDetalle.cantidad = 1;
-        };
-        $scope.calcularMontos = function () {
-            $scope.documentoVenta.totalGratuito = 0;
-            $scope.documentoVenta.totalDescuento = 0;
-            $scope.documentoVenta.totalGrabado = 0;
-            $scope.documentoVenta.totalIgv = 0;
-            $scope.documentoVenta.total = 0;
-            angular.forEach($scope.documentoVenta.documentoVentaDetalles, function (value) {
-                $scope.documentoVenta.totalGratuito += value.totalGratuito;
-                $scope.documentoVenta.totalDescuento += value.totalDescuento;
-                $scope.documentoVenta.totalGrabado += value.totalGrabado;
-                $scope.documentoVenta.totalIgv += value.totalIgv;
-                $scope.documentoVenta.total += value.total;
+        $scope.anularDocumentoVenta = function () {
+            $scope.anulacion.tipo = $scope.tipoAnulacion.codigo;
+            console.log($scope.anulacion);
+            $http({
+                method: 'POST',
+                url: '/transportes_gepp/controlador/documentoventa/anular',
+                data: $scope.anulacion
+            }).then(function success(response) {
+                $scope.listar();
+            }, function error(response) {
+                //console.log(response.data);
             });
         };
-        $scope.eliminarProducto = function (item) {
-            //$scope.users.splice($scope.users.indexOf($scope.clickedUser),1);
-            $scope.documentoVenta.documentoVentaDetalles.splice(item, 1);
-            $scope.calcularMontos();
+        $scope.enviarSunat = function () {
+            $http({
+                method: 'GET',
+                url: '/transportes_gepp/controlador/documentoventa/enviarsunat/' + $scope.documentoVentaSeleccionado.id
+            }).then(function success(response) {
+                $scope.listar();
+            }, function error(response) {
+                //console.log(response.data);
+            });
+        };
+        $scope.limpiarParametros = function () {
+            $scope.parametro = {};
+            $scope.parametro.estadoDocumentoVenta = null;
+            $scope.parametro.tipoDocumentoVenta = {};
+            $scope.parametro.fechaHasta = new Date(); //$filter('date')(new Date(), 'yyyy-MM-dd');
+            $scope.parametro.fechaDesde = new Date(new Date().getFullYear(), 0, 01);
+        };
+        $scope.listarPendienteEnvioSunat = function () {
+            $scope.limpiarParametros();
+            $scope.parametro.estadoDocumentoVenta = {"codigo": "PES"};
+            $scope.listar();
+        };
+        $scope.listarPendienteComunicacionBaja = function () {
+            $scope.limpiarParametros();
+            $scope.parametro.estadoDocumentoVenta = {"codigo": "PCB"};
+            $scope.listar();
         };
         $scope.listar();
+
+        //$scope.ocultarBotones();
     }]);

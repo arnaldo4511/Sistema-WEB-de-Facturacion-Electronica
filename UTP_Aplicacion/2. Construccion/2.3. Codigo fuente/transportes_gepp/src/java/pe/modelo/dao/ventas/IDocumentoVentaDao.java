@@ -8,9 +8,13 @@ package pe.modelo.dao.ventas;
 import pe.modelo.dao.publico.*;
 import java.util.List;
 import net.sf.jasperreports.engine.JasperPrint;
-import pe.modelo.dto.ventas.Parametro;
+import pe.modelo.dto.ventas.NotificacionDto;
+import pe.modelo.dto.ventas.AnulacionDto;
+import pe.modelo.dto.ParametroDto;
+import pe.modelo.dto.ventas.ListaDocumentoVentaDto;
 import pe.modelo.pojo.DocumentoVenta;
 import pe.modelo.pojo.TipoDocumentoVenta;
+import pe.modelo.pojo.vista.VwSelDocumentoVenta;
 
 /**
  *
@@ -24,13 +28,17 @@ public interface IDocumentoVentaDao {
 
     public DocumentoVenta buscar(long id);
 
-    public JasperPrint generarReporte(long id);
+    public JasperPrint generarReporte(DocumentoVenta documentoVenta);
+
+    public void enviarCliente(NotificacionDto notificacionDto);
+
+    public void enviarSunat(DocumentoVenta documentoVenta);
+
+    public void anular(AnulacionDto anulacionDto);
 
     public void eliminar(long id);
 
-    public List<DocumentoVenta> listar(Parametro[] parametros);
-
-    public long totalDocumentoVentas(Parametro[] parametros);
+    public ListaDocumentoVentaDto listar(ParametroDto[] parametros);
 
     public List<DocumentoVenta> autocompletar(String criterio);
 

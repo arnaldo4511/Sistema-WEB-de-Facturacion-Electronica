@@ -2,12 +2,15 @@ package pe.modelo.pojo;
 // Generated 17-ago-2017 14:14:43 by Hibernate Tools 4.3.1
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -31,6 +34,7 @@ public class ResumenVentasGrupo  implements java.io.Serializable {
      private Usuario usuarioByIdUsuarioCreacion;
      private Moneda moneda;
      private PuntoVentaSerie puntoVentaSerie;
+	 @JsonIgnore
      private ResumenVentas resumenVentas;
      private TipoDocumentoVenta tipoDocumentoVenta;
      private String inicioDocumentoVenta;
@@ -41,6 +45,7 @@ public class ResumenVentasGrupo  implements java.io.Serializable {
      private Double total;
      private Date fechaCreacion;
      private Date fechaModificacion;
+     //@JsonIgnore
      private Set<ResumenVentasGrupoVenta> resumenVentasGrupoVentas = new HashSet<ResumenVentasGrupoVenta>(0);
 
     public ResumenVentasGrupo() {
@@ -76,7 +81,7 @@ public class ResumenVentasGrupo  implements java.io.Serializable {
        this.resumenVentasGrupoVentas = resumenVentasGrupoVentas;
     }
    
-     @Id 
+     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     
     @Column(name="id", unique=true, nullable=false)

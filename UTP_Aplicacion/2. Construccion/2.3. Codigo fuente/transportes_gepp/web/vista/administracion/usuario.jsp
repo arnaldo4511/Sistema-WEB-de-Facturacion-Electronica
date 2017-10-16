@@ -21,75 +21,70 @@
                 </aside>
             </div>
             <div class='row clearfix'>
-                <div class="col-sm-3">
-                    <aside>
-                        <ng-include src="'<%= request.getContextPath()%>/vista/menu.jsp'"></ng-include>
-                    </aside>
-                </div>
-                <div class="col-sm-9">
+                <div class="col-sm-12">
                     <section>
                         <form>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th colspan="9" >
-                                            <h2>USUARIOS
-                                                <button style="float:right" class="btn btn-default btn-lg " data-toggle="modal" data-target="#modalItem" tabindex="4" >
-                                                    <span class="glyphicon glyphicon-plus" ng-click="nuevo()"> Nuevo</span>
-                                                </button>
-                                            </h2>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>
-                                            Nombre Completo
-                                        </th>
-                                        <th>
-                                            Nombre
-                                            <br>
-                                            <input type="text" class="form-control" ng-model="search.nombre" tabindex="1">
-                                        </th>
-                                        <th>
-                                            clave
-                                            <br>
-                                            <input type="text" class="form-control" ng-model="search.clave" tabindex="2">
-                                        </th>
-                                        <th>
-                                            Rol
-                                            <br>
-                                            <select class="form-control" ng-model="search.rol" ng-options="rol.nombre for rol in roles track by rol.id" tabindex="3">
-                                                <option value="">Todos</option>
-                                            </select>
-                                        </th>
-                                        <th>
-                                            Punto de Venta
-                                            <br>
-                                            <select class="form-control" ng-model="search.puntoVenta" ng-options="puntoVenta.nombre for puntoVenta in puntoVentas track by puntoVenta.nombre" tabindex="3">
-                                                <option value="">Todos</option>
-                                            </select>
-                                        </th>
-                                        <th>
-                                            Estado
-                                            <br>
-                                            <select class="form-control" ng-model="search.activo" tabindex="4">
-                                                <option value="" selected>Todos</option>
-                                                <option value="true">Activo</option>
-                                                <option value="false">Desactivo</option>
-                                            </select>
-                                        </th>
-                                        <th colspan="2">
-                                        </th>
-                                    </tr>
+                                <h2>USUARIOS
+                                    <button style="float:right" class="btn btn-default btn-lg " data-toggle="modal" data-target="#modalItem" tabindex="4" >
+                                        <span class="glyphicon glyphicon-plus" ng-click="nuevo()"> Nuevo</span>
+                                    </button>
+                                </h2>
+                                </th>
+                                </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>
+                                        Nombre Completo
+                                    </th>
+                                    <th>
+                                        Nombre
+                                        <br>
+                                        <input type="text" class="form-control" ng-model="parametro.nombre" ng-enter="listar()" tabindex="1">
+                                    </th>
+                                    <th>
+                                        clave
+                                        <br>
+                                        <input type="text" class="form-control" ng-model="parametro.clave" ng-enter="listar()" tabindex="2">
+                                    </th>
+                                    <th>
+                                        Rol
+                                        <br>
+                                        <select class="form-control" ng-model="parametro.rol" ng-enter="listar()" ng-options="rol.nombre for rol in roles track by rol.id" tabindex="3">
+                                            <option value="">Todos</option>
+                                        </select>
+                                    </th>
+                                    <th>
+                                        Punto de Venta
+                                        <br>
+                                        <select class="form-control" ng-model="parametro.puntoVenta" ng-enter="listar()" ng-options="puntoVenta.nombre for puntoVenta in puntoVentas track by puntoVenta.nombre" tabindex="3">
+                                            <option value="">Todos</option>
+                                        </select>
+                                    </th>
+                                    <th>
+                                        Estado
+                                        <br>
+                                        <select class="form-control" ng-model="parametro.activo" ng-enter="listar()" tabindex="4">
+                                            <option value="" selected>Todos</option>
+                                            <option value="true">Activo</option>
+                                            <option value="false">Desactivo</option>
+                                        </select>
+                                    </th>
+                                    <th colspan="2">
+                                    </th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="item in usuarios.slice(((currentPage - 1) * itemsPerPage), ((currentPage) * itemsPerPage))| filter:search ">
+                                    <tr ng-repeat="item in usuarios" ng-click="setSelected($index, item)" ng-class="{activeItem:$index == selectedRow}">
                                         <td>{{$index + 1}}</td>
-                                        <td>{{item.entidad.documento + " - " + item.entidad.nombre}}</td>
+                                        <td>{{item.nombreEntidad}}</td>
                                         <td>{{item.nombre}}</td>
                                         <td>{{item.clave}}</td>
-                                        <td>{{item.rol.nombre}}</td>
-                                        <td>{{item.puntoVenta.nombre}}</td>
+                                        <td>{{item.nombreRol}}</td>
+                                        <td>{{item.nombrePuntoVenta}}</td>
                                         <td>{{item.activo?'Activo':'Desactivo'}}</td>
                                         <td class="text-center">
                                             <button class="btn btn-default btn-xs " data-toggle="modal" data-target="#modalItem" ng-click="seleccionarItem(item)">
@@ -104,8 +99,17 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <ul  uib-pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm " items-per-page="itemsPerPage" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-                            </ul>
+                            <div class="row clearfix">
+                                <div class="col-sm-7">
+                                    <ul  uib-pagination max-size="maxSize" boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm " items-per-page="itemsPerPage" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"  rotate="false"  last-text="&raquo;"/>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="pull-right">
+                                        Ver <select style="width: auto;" class="feature-icon form-control"  ng-options="pagina.value for pagina in paginas track by pagina.value"  ng-model="pagina" ng-change="setItemsPerPage(pagina.value)" ng-init="paginas[0].value">
+                                        </select> de <b>{{totalItems}}</b> Registro(s)
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                         <!-- Modal -->
                         <div class="modal fade" id="modalItem" role="dialog">

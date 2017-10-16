@@ -25,34 +25,56 @@ ProductoApp.controller("ProductoController", ['$scope', '$http', '$window', func
             $scope.unidades = $scope.sesion.unidades;
         }, function myError(response) {
         });
-        $scope.setPage = function (pageNo) {
-            $scope.currentPage = pageNo;
-        };
-        $scope.pageChanged = function () {
-            console.log('Page changed to: ' + $scope.currentPage);
-        };
-        $scope.setItemsPerPage = function (num) {
-            $scope.itemsPerPage = num;
-            $scope.currentPage = 1; //reset to first paghe
-        };
+        
+        
+        $scope.totalItemsListarProductos = 0;
+        $scope.currentPageListarProductos = 1;
+        $scope.paginasListarProductos = [
+            {value: 5},
+            {value: 10},
+            {value: 20},
+            {value: 40},
+            {value: 50}];
+        $scope.paginaListarProductos  = {value: 5};
+        $scope.itemsPerPageListarProductos = $scope.paginaListarProductos .value;
 
         $scope.mensajeTituloProducto = "";
+        $scope.mensajeConfirmacion = "";
+        
+        $scope.parametro = {};
         $scope.listar = function () {
+            $scope.parametros = [];
+            $scope.parametros.push({'nombre': 'nombre', 'valor': $scope.parametro.nombre});
+            $scope.parametros.push({'nombre': 'descripcion', 'valor': $scope.parametro.descripcion});
+            $scope.parametros.push({'nombre': 'currentPage', 'valor': (($scope.currentPageListarProductos * $scope.itemsPerPageListarProductos) - $scope.itemsPerPageListarProductos).toString()});
+            $scope.parametros.push({'nombre': 'itemsPerPage', 'valor': $scope.itemsPerPageListarProductos.toString()});
+            
             $http({
-                method: 'GET',
-                url: '/transportes_gepp/controlador/producto/listar'
+                method: 'POST',
+                url: '/transportes_gepp/controlador/producto/listar',
+                data: $scope.parametros
             }).then(function success(response) {
                 console.log(response);
                 console.log("response.data "+response.data);
-                $scope.productos = response.data;
-                $scope.viewby = 5;
-                $scope.totalItems = $scope.productos.length;
-                $scope.currentPage = 1;
-                $scope.itemsPerPage = $scope.viewby;
-                $scope.maxSize = 5; //Number of pager buttons to show
+                $scope.productos = response.data.productos;
+                $scope.totalItemsListarProductos = response.data.nroProductos;
             }, function myError(response) {
             });
         };
+        
+        $scope.setPage = function (pageNo) {
+            $scope.currentPageListarProductos = pageNo;
+            $scope.listar();
+        };
+        $scope.pageChanged = function () {
+            $scope.listar();
+        };
+        $scope.setItemsPerPage = function (num) {
+            $scope.itemsPerPageListarProductos = num;
+            $scope.currentPageListarProductos = 1; //reset to first paghe
+            $scope.listar();
+        };
+        
         $scope.crearProducto = function (producto) {
             producto.usuarioByIdUsuarioCreacion = $scope.sesion.usuario;
             producto.empresa = $scope.sesion.usuario.empresa;
@@ -63,7 +85,8 @@ ProductoApp.controller("ProductoController", ['$scope', '$http', '$window', func
                 url: '/transportes_gepp/controlador/producto/crear',
                 data: producto
             }).then(function success(response) {
-                console.log(response.data);
+                $("#modalProducto").modal("hide");
+                console.log("CREAR");
                 $scope.listar();
             }, function error(response) {
                 console.log(response.data);
@@ -77,6 +100,7 @@ ProductoApp.controller("ProductoController", ['$scope', '$http', '$window', func
                 url: '/transportes_gepp/controlador/producto/editar',
                 data: producto
             }).then(function success(response) {
+                $("#modalProducto").modal("hide");
                 console.log(response);
                 $scope.listar();
             }, function error(response) {
@@ -95,14 +119,20 @@ ProductoApp.controller("ProductoController", ['$scope', '$http', '$window', func
             });
         };
         $scope.nuevoProducto = function () {
-            $scope.mensajeTituloProducto = "Crear Producto";
+            $scope.mensajeTituloProducto = "Crear Servicio";
+            $scope.mensajeConfirmacion = "¿Desea crear el servicio?";
             $scope.productoTmp = {};
             $scope.productoTmp.id = 0;
-            console.log($scope.productoTmp.id);
+            console.log("nuevo "+$scope.productoTmp.id);
         };
         $scope.seleccionarProducto = function (producto) {
-            $scope.mensajeTituloProducto = "Editar Producto";
-            $scope.productoTmp = producto;
+            $http({method: 'POST', url: '/transportes_gepp/controlador/producto/buscar/' + producto.id
+            }).then(function mySucces(response) {
+                $scope.productoTmp = response.data;
+                $scope.mensajeTituloProducto = "Editar Servicio";
+                $scope.mensajeConfirmacion = "¿Desea editar el servicio?";
+            }, function myError(response) {
+            });
         };
 
         $scope.guardarProducto = function (producto) {

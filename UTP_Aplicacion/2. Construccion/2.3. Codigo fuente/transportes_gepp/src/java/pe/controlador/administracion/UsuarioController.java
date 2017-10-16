@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import pe.controlador.JsonTransformer;
 import pe.modelo.dao.administracion.ICargaSesionDao;
 import pe.modelo.dao.administracion.IUsuarioDao;
-import pe.modelo.pojo.CargaSesion;
+import pe.modelo.dao.administracion.ListaUsuario;
+import pe.modelo.dto.CargaSesionDto;
+import pe.modelo.dto.ParametroDto;
 import pe.modelo.pojo.Usuario;
 
 @Controller
@@ -40,7 +42,10 @@ public class UsuarioController {
             Long id = usuarioDao.ingresarSistema(nombre, clave);
             if (id > 0) {
                 HttpSession session = httpServletRequest.getSession();
-                session.setAttribute("idUsuario", id);
+                CargaSesionDto cargaSesion = cargaSesionDao.crear(id);
+                String carga = jsonTransformer.toJson(cargaSesion);
+                System.out.println("carga:" + carga);
+                session.setAttribute("carga", carga);
             }
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
@@ -64,23 +69,23 @@ public class UsuarioController {
     @RequestMapping(value = "/usuario/buscarsesion", method = RequestMethod.GET, produces = "application/json")
     public void buscarsesion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
         HttpSession session = httpServletRequest.getSession();
-        if (session.getAttribute("idUsuario") == null) {
+        if (session.getAttribute("carga") == null) {
             session.invalidate();
             httpServletResponse.sendRedirect(httpServletRequest.getContextPath());
         } else {
-            Long id = Long.parseLong(session.getAttribute("idUsuario").toString());
-            CargaSesion cargaSesion = cargaSesionDao.crear(id);
+            String carga = session.getAttribute("carga").toString();
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
-            httpServletResponse.getWriter().println(jsonTransformer.toJson(cargaSesion));
+            httpServletResponse.getWriter().println(carga);
         }
     }
 
-    @RequestMapping(value = "/usuario/listar", method = RequestMethod.GET, produces = "application/json")
-    public void listar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
+    @RequestMapping(value = "/usuario/listar", method = RequestMethod.POST, produces = "application/json")
+    public void listar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) throws IOException {
         PrintWriter out = httpServletResponse.getWriter();
         try {
-            List<Usuario> lista = usuarioDao.listar();
+            ParametroDto[] parametros = (ParametroDto[]) jsonTransformer.fromJson(jsonEntrada, ParametroDto[].class);
+            ListaUsuario lista = usuarioDao.listar(parametros);
             String jsonSalida = jsonTransformer.toJson(lista);
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
@@ -135,6 +140,21 @@ public class UsuarioController {
             ex.printStackTrace();
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
+            out.println("{\"RSP\":\"ERROR\",\"MSG\":\"" + ex.getMessage() + "\"}");
+        }
+    }
+
+    @RequestMapping(value = "/usuario/buscar/{id}", method = RequestMethod.POST, produces = "application/json")
+    public void buscar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @PathVariable("id") long id) throws IOException {
+        PrintWriter out = httpServletResponse.getWriter();
+        try {
+            Usuario usuario = usuarioDao.buscar(id);
+            String jsonSalida = jsonTransformer.toJson(usuario);
+            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+            out.println(jsonSalida);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             out.println("{\"RSP\":\"ERROR\",\"MSG\":\"" + ex.getMessage() + "\"}");
         }
     }

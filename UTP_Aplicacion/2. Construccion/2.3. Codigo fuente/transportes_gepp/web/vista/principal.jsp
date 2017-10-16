@@ -23,12 +23,7 @@
                 </header>
             </div>
             <div class='row clearfix'>
-                <div class="col-sm-2">
-                    <aside>
-                        <ng-include src="'<%= request.getContextPath()%>/vista/menu.jsp'"></ng-include>
-                    </aside>
-                </div>
-                <div class="col-sm-10">
+                <div class="col-sm-12">
                     <section>
                     </section>
                 </div>

@@ -35,11 +35,11 @@ public class PuntoVentaController {
     public void listar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
         PrintWriter out = httpServletResponse.getWriter();
         try {
-            List<Rol> lista = rolDao.listar();
-            String jsonSalida = jsonTransformer.toJson(lista);
+            //List<Rol> lista = rolDao.listar();
+            //String jsonSalida = jsonTransformer.toJson(lista);
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
-            out.println(jsonSalida);
+            //out.println(jsonSalida);
 
         } catch (Exception ex) {
             ex.printStackTrace();

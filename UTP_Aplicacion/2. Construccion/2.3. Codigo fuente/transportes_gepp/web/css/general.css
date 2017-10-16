@@ -28,3 +28,9 @@ legend.scheduler-border {
 .footer {
     background-color: #ededed;
 }
+.activeItem{
+    border:2px solid;
+}
+.anulado{
+    background-color: rgba(255, 35, 0, 0.25);
+}

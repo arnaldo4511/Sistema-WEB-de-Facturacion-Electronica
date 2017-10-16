@@ -19,6 +19,8 @@ import pe.controlador.BussinessException;
 import pe.controlador.BussinessMessage;
 import pe.controlador.JsonTransformer;
 import pe.modelo.dao.administracion.IRolDao;
+import pe.modelo.dao.administracion.ListaRol;
+import pe.modelo.dto.ParametroDto;
 import pe.modelo.pojo.Rol;
 import pe.modelo.pojo.Usuario;
 
@@ -31,12 +33,13 @@ public class RolController {
     @Autowired
     IRolDao rolDao;
 
-    @RequestMapping(value = "/rol/listar", method = RequestMethod.GET, produces = "application/json")
-    public void listar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
+    @RequestMapping(value = "/rol/listar", method = RequestMethod.POST, produces = "application/json")
+    public void listar(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, @RequestBody String jsonEntrada) throws IOException {
         PrintWriter out = httpServletResponse.getWriter();
         try {
-            List<Rol> lista = rolDao.listar();
-            String jsonSalida = jsonTransformer.toJson(lista);
+            ParametroDto[] parametros = (ParametroDto[]) jsonTransformer.fromJson(jsonEntrada, ParametroDto[].class);
+            ListaRol listaRol = rolDao.listar(parametros);
+            String jsonSalida = jsonTransformer.toJson(listaRol);
             httpServletResponse.setStatus(HttpServletResponse.SC_OK);
             httpServletResponse.setContentType("application/json; charset=UTF-8");
             out.println(jsonSalida);
@@ -72,6 +75,7 @@ public class RolController {
             }
 
         } catch (Exception ex) {
+            ex.printStackTrace();
             httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             httpServletResponse.setContentType("text/plain; charset=UTF-8");
             try {
