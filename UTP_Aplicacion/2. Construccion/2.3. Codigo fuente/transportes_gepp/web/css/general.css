@@ -8,15 +8,29 @@ and open the template in the editor.
     Author     : octavio
 */
 
-#rowMenu{
-    height: 644px;
+fieldset.scheduler-border {
+    border: 1px groove #ddd !important;
+    border: solid 1px #DDD !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+    box-shadow:  0px 0px 0px 0px #000;
 }
-#colMenu{
-    width: 301px;
+legend.scheduler-border {
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    width:auto;
+    padding:0 10px;
+    border-bottom:none;
+    border: none;
 }
-#rowPie{
+.footer {
     background-color: #ededed;
 }
-#divForm{
-    margin: 27px 0px 0px 41px;
+.activeItem{
+    border:2px solid;
+}
+.anulado{
+    background-color: rgba(255, 35, 0, 0.25);
 }

@@ -2,6 +2,7 @@ package pe.modelo.pojo;
 // Generated 17-ago-2017 14:14:43 by Hibernate Tools 4.3.1
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +28,9 @@ public class PuntoVentaSerie  implements java.io.Serializable {
 
 
      private String codigo;
+     @JsonIgnore
      private Usuario usuarioByIdUsuarioCreacion;
+     @JsonIgnore
      private Usuario usuarioByIdUsuarioModificacion;
      private PuntoVenta puntoVenta;
      private TipoDocumentoVenta tipoDocumentoVenta;
@@ -35,7 +38,9 @@ public class PuntoVentaSerie  implements java.io.Serializable {
      private boolean activo;
      private Date fechaCreacion;
      private Date fechaModificacion;
+     @JsonIgnore
      private Set<ResumenVentasGrupo> resumenVentasGrupos = new HashSet<ResumenVentasGrupo>(0);
+     @JsonIgnore
      private Set<DocumentoVenta> documentoVentas = new HashSet<DocumentoVenta>(0);
 
     public PuntoVentaSerie() {

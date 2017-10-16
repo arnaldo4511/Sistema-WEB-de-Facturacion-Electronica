@@ -17,13 +17,21 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>srvImagenReporte</servlet-name>
+        <servlet-class>net.sf.jasperreports.j2ee.servlets.ImageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>srvImagenReporte</servlet-name>
+        <url-pattern>/srvImagenReporte</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/controlador/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
-            30
+            1440
         </session-timeout>
     </session-config>
     <welcome-file-list>

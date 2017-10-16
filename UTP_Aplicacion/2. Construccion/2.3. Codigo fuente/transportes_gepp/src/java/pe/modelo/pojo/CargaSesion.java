@@ -5,12 +5,10 @@
  */
 package pe.modelo.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
-//import pe.modelo.pojo.Empresa;
+import pe.modelo.pojo.Empresa;
 import pe.modelo.pojo.Rol;
 import pe.modelo.pojo.Usuario;
-import pe.modelo.pojo.PuntoVenta;
 
 /**
  *
@@ -20,19 +18,9 @@ public class CargaSesion {
 
     private Usuario usuario;
     private List<Rol> roles;
-    private List<PuntoVenta> puntoVentas;
-    private List<Unidad> unidades;
-    private List<TipoDocumentoEntidad> tiposDocumentosEntidades;
+    private List<Empresa> empresas;
 
     public CargaSesion() {
-    }
-
-    public CargaSesion(Usuario usuario, List<Rol> roles, List<PuntoVenta> puntoVentas, List<Unidad> unidades, List<TipoDocumentoEntidad> tiposDocumentosEntidades) {
-        this.usuario = usuario;
-        this.roles = roles;
-        this.puntoVentas = puntoVentas;
-        this.unidades = unidades;
-        this.tiposDocumentosEntidades = tiposDocumentosEntidades;
     }
 
     public Usuario getUsuario() {
@@ -51,27 +39,11 @@ public class CargaSesion {
         this.roles = roles;
     }
 
-    public List<PuntoVenta> getPuntoVentas() {
-        return this.puntoVentas;
+    public List<Empresa> getEmpresas() {
+        return this.empresas;
     }
 
-    public void setPuntoVentas(List<PuntoVenta> puntoVentas) {
-        this.puntoVentas = puntoVentas;
-    }
-    
-    public List<Unidad> getUnidades() {
-        return this.unidades;
-    }
-
-    public void setUnidades(List<Unidad> unidades) {
-        this.unidades = unidades;
-    }
-    
-    public List<TipoDocumentoEntidad> getTiposDocumentosEntidades() {
-        return this.tiposDocumentosEntidades;
-    }
-
-    public void setTiposDocumentosEntidades(List<TipoDocumentoEntidad> tiposDocumentosEntidades) {
-        this.tiposDocumentosEntidades = tiposDocumentosEntidades;
+    public void setEmpresas(List<Empresa> empresas) {
+        this.empresas = empresas;
     }
 }

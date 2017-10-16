@@ -6,7 +6,9 @@
 package pe.modelo.dao.administracion;
 
 import java.util.List;
+import pe.modelo.dto.ParametroDto;
 import pe.modelo.pojo.Rol;
+import pe.modelo.pojo.RolMenu;
 
 /**
  *
@@ -22,6 +24,8 @@ public interface IRolDao {
 
     public void eliminar(long id);
 
-    public List<Rol> listar();
+    public ListaRol listar(ParametroDto[] parametros);
+
+    public List<RolMenu> listarRolMenu();
 
 }

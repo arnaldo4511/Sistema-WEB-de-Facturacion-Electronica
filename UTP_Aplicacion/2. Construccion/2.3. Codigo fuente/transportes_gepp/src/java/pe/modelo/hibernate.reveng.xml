@@ -45,7 +45,7 @@ Contributor(s):
     <table-filter match-schema="public" match-name="entidad"/>
     <table-filter match-schema="public" match-name="ubigeo"/>
     <table-filter match-schema="ventas" match-name="punto_venta"/>
-    <table-filter match-schema="public" match-name="cliente"/>
+    <table-filter match-schema="ventas" match-name="cliente"/>
     <table-filter match-schema="ventas" match-name="tipo_documento_venta"/>
     <table-filter match-schema="administracion" match-name="rol_menu"/>
     <table-filter match-schema="public" match-name="tipo_documento_entidad"/>

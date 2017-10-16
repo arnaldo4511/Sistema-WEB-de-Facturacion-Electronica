@@ -6,6 +6,7 @@
 package pe.modelo.dao.administracion;
 
 import java.util.List;
+import pe.modelo.dto.ParametroDto;
 import pe.modelo.pojo.Usuario;
 
 /**
@@ -22,7 +23,7 @@ public interface IUsuarioDao {
 
     public void eliminar(long id);
 
-    public List<Usuario> listar();
+    public ListaUsuario listar(ParametroDto[] parametros);
 
     public long ingresarSistema(String nombre, String clave);
 

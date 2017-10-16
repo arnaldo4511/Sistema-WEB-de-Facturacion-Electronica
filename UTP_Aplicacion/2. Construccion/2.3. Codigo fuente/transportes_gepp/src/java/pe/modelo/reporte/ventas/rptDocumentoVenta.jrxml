@@ -1,0 +1,726 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="36499892-48dd-410f-a621-adb20b767988">
+	<property name="ireport.zoom" value="1.0000000000000007"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="184"/>
+	<queryString language="hql">
+		<![CDATA[from DocumentoVentaDetalle]]>
+	</queryString>
+	<field name="bonificacionUnitario" class="java.lang.Double"/>
+	<field name="cantidad" class="java.lang.Double"/>
+	<field name="codigoIgv" class="java.lang.String"/>
+	<field name="codigoPrecio" class="java.lang.String"/>
+	<field name="costoUnitario" class="java.lang.Double"/>
+	<field name="descuento" class="java.lang.Boolean"/>
+	<field name="descuentoUnitario" class="java.lang.Double"/>
+	<field name="documentoVenta" class="pe.modelo.pojo.DocumentoVenta"/>
+	<field name="fechaCreacion" class="java.util.Date"/>
+	<field name="fechaModificacion" class="java.util.Date"/>
+	<field name="fleteUnitario" class="java.lang.Double"/>
+	<field name="gratuito" class="java.lang.Boolean"/>
+	<field name="id" class="java.lang.Long"/>
+	<field name="precioFinal" class="java.lang.Double"/>
+	<field name="precioToten" class="java.lang.Double"/>
+	<field name="precioUnitario" class="java.lang.Double"/>
+	<field name="producto" class="pe.modelo.pojo.Producto"/>
+	<field name="total" class="java.lang.Double"/>
+	<field name="totalDescuento" class="java.lang.Double"/>
+	<field name="totalGrabado" class="java.lang.Double"/>
+	<field name="totalGratuito" class="java.lang.Double"/>
+	<field name="totalIgv" class="java.lang.Double"/>
+	<field name="unidad" class="pe.modelo.pojo.Unidad"/>
+	<field name="usuarioByIdUsuarioCreacion" class="pe.modelo.pojo.Usuario"/>
+	<field name="usuarioByIdUsuarioModificacion" class="pe.modelo.pojo.Usuario"/>
+	<field name="valorUnitario" class="java.lang.Double"/>
+	<field name="ventaBruta" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="108" splitType="Stretch">
+			<image onErrorType="Blank">
+				<reportElement x="236" y="29" width="87" height="65" uuid="8cc37fc9-9feb-4a1c-a8c6-adbf2834f8c5"/>
+				<imageExpression><![CDATA["D:\\QR facturación GEPP.jpg"]]></imageExpression>
+			</image>
+			<rectangle radius="10">
+				<reportElement x="314" y="0" width="241" height="107" uuid="70840043-2924-4080-b68c-6da3c4f124fe"/>
+				<graphicElement>
+					<pen lineWidth="1.75"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="344" y="6" width="74" height="25" uuid="2c5cbd56-ed44-4544-a973-6c94a67e684d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[R.U.C. N° ]]></text>
+			</staticText>
+			<image onErrorType="Blank">
+				<reportElement x="99" y="0" width="66" height="46" isRemoveLineWhenBlank="true" uuid="51011f46-0b55-4c5f-8d17-373f43ebdb1c"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<imageExpression><![CDATA["//192.168.0.220/Public/logotransmap.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="323" y="68" width="219" height="28" uuid="04ffb59a-73f5-4da3-9281-fd26873f2184"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["N° "+$F{documentoVenta}.getPuntoVentaSerie().getCodigo()+"-"+$F{documentoVenta}.getNumero()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="417" y="6" width="100" height="25" uuid="155b51aa-c039-4517-b62c-400eb4485427"/>
+				<textElement verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getEmpresa().getEntidad().getDocumento()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="46" width="236" height="15" uuid="a4fb11e8-7c67-4d05-a180-2f1084f91f9b"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getEmpresa().getEntidad().getNombre()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="61" width="236" height="39" uuid="ff6f6a74-b989-4836-bfcd-426470e3c494"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getEmpresa().getEntidad().getDireccion()+"\n"+
+$F{documentoVenta}.getEmpresa().getEntidad().getZona()+ "\n"+
+$F{documentoVenta}.getEmpresa().getEntidad().getUbigeo().getNombreDepartamento()+" - "+
+$F{documentoVenta}.getEmpresa().getEntidad().getUbigeo().getNombreProvincia()+" - "+
+$F{documentoVenta}.getEmpresa().getEntidad().getUbigeo().getNombre()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="314" y="31" width="241" height="36" backcolor="#CCCCCC" uuid="8c3064d2-a7a2-402a-8da3-f3f13912403b"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getTipoDocumentoVenta().getNombre()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="236" y="94" width="78" height="10" uuid="cdcde877-1c95-4a30-83d3-8e318d114358"/>
+				<box leftPadding="2" rightPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getEstadoDocumentoVenta().getNombre()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="125" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="30" width="77" height="15" uuid="58006496-50ba-4dde-bac3-726d8dedd577"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECCION:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="346" y="0" width="109" height="15" uuid="4246ea97-4e3c-4a56-9002-4c277a037ad0"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA DE EMISION:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="140" y="105" width="145" height="20" backcolor="#CCCCCC" uuid="0bc30d12-5a7a-4203-8b63-04bf1571443f"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="500" y="105" width="55" height="20" backcolor="#CCCCCC" uuid="4464d92e-da38-499b-bd9a-8d3c7a32ba6b"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="77" y="105" width="63" height="20" backcolor="#CCCCCC" uuid="42a641ab-0d0f-49ca-bd17-ee7371a40082"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Unid.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="450" y="105" width="50" height="20" backcolor="#CCCCCC" uuid="02df4e2f-7cc3-4b93-b44e-665b022411a0"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IGV]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="27" y="105" width="50" height="20" backcolor="#CCCCCC" uuid="d838c3cb-fd77-4953-abd2-097d7d300a60"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cant.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="395" y="105" width="55" height="20" backcolor="#CCCCCC" uuid="271593f5-d9d3-409b-a63c-81d59957d88d"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="105" width="27" height="20" backcolor="#CCCCCC" uuid="443e09ed-e902-4dae-b1ad-310688ec244f"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nro.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="45" width="77" height="15" isRemoveLineWhenBlank="true" uuid="137d57df-cf8b-442b-bfee-963119833170">
+					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("01") ||
+$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONDICION:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="285" y="105" width="65" height="20" backcolor="#CCCCCC" uuid="3b688f05-2917-47a6-9d6b-1f09ba44162d"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Prec. Unit.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="350" y="105" width="45" height="20" backcolor="#CCCCCC" uuid="73eda446-fb82-4878-a95b-c9c6f6811ecf"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dscto.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="77" y="0" width="235" height="15" uuid="0d44cd61-c977-46a1-8b3f-17d0e484b3ae"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getCliente().getEntidad().getDocumento()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="77" y="15" width="478" height="15" uuid="9a3977d3-e953-4fbe-ae5e-f747aaede931"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getCliente().getEntidad().getNombre()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="77" y="30" width="478" height="15" uuid="a7a5ad92-869c-4dbb-8f8e-da575ce8ec52"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getCliente().getEntidad().getDireccion()]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy-MM-dd">
+				<reportElement x="455" y="0" width="100" height="15" uuid="398b7906-1670-4599-bde7-19f5c2dc10a1"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getFechaEmision()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="60" width="121" height="15" isRemoveLineWhenBlank="true" uuid="fdd8d489-7716-45b0-bcba-093d34570aaf">
+					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("01") ||
+$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NRO. GUIA REMISIÓN:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="165" y="45" width="98" height="15" isRemoveLineWhenBlank="true" uuid="afce2281-957c-4911-9e02-c734cf8258ec">
+					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("01") ||
+$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA DE VENC.:]]></text>
+			</staticText>
+			<textField pattern="yyyy-MM-dd" isBlankWhenNull="true">
+				<reportElement x="263" y="45" width="81" height="15" isRemoveLineWhenBlank="true" uuid="6cad4625-af38-42d7-b76c-d42172f64f79">
+					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("01") ||
+$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getFechaVencimiento()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="77" y="45" width="88" height="15" isRemoveLineWhenBlank="true" uuid="92875c64-71f6-4e75-b974-c4bf348483c9">
+					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("01") ||
+$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getCondicion().equals("CRE") ? "CREDITO" :"CONTADO"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="121" y="60" width="434" height="15" isRemoveLineWhenBlank="true" uuid="683078e9-8ee7-4e69-8c22-809a8fa632a9">
+					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("01") ||
+$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getGuiaRemision()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="77" height="15" uuid="35aa3be3-5ed6-4910-a2d3-9a4db1399893"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NRO. DOC.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="15" width="77" height="15" uuid="f6412da7-1163-419a-a3cf-013a1884bd23"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="75" width="164" height="15" isRemoveLineWhenBlank="true" uuid="f8a15dc8-cf70-448d-9224-78fa66e2f2f7">
+					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("01") ||
+$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NRO. GUIA TRANSPORTISTA:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="75" width="391" height="15" isRemoveLineWhenBlank="true" uuid="ee5ba293-580c-4c74-b2f4-c3c1bf4798f7">
+					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("01") ||
+$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("03"))]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getGuiaRemisionTransportista()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="90" width="76" height="15" isRemoveLineWhenBlank="true" uuid="5d80d95b-4947-49a2-b697-e86742799313">
+					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("07") ||
+$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("08"))]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DOC. REF. :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="165" y="90" width="98" height="15" isRemoveLineWhenBlank="true" uuid="8fbb40cc-43d3-4ab2-b180-13bdad082daf">
+					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("07") ||
+$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("08"))]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MOTIVO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="77" y="90" width="88" height="15" isRemoveLineWhenBlank="true" uuid="12d5c8a6-8a1b-4ba0-80e5-10db1ab6b8fb">
+					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("07") ||
+$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("08"))]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getDocumentoVenta().getPuntoVentaSerie().getCodigo()+" - "+
+$F{documentoVenta}.getDocumentoVenta().getNumero()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="263" y="90" width="292" height="15" isRemoveLineWhenBlank="true" uuid="7458f2d9-692e-4039-ae25-a8d65816b296">
+					<printWhenExpression><![CDATA[($F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("07") ||
+$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("08"))]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getDescripcionNota()]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="###0.00">
+				<reportElement x="395" y="0" width="55" height="20" uuid="9efc1310-ff71-45c6-8d0a-a31f97048fa9"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalGrabado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="27" height="20" uuid="086cc59b-8609-4d14-a23d-4485a8663a6d"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="27" y="0" width="50" height="20" uuid="e0b4a208-5d29-43a3-8308-8f33b9602713"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="77" y="0" width="63" height="20" uuid="18df40cb-f54c-415d-a6b8-68a6cc948073"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{unidad}.getNombre()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="0" width="145" height="20" uuid="5f0ce35e-259b-452c-afa5-9456afbce73c"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("07")?
+$F{documentoVenta}.getTipoNotaCredito().getNombre():
+$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("08")?
+$F{documentoVenta}.getTipoNotaDebito().getNombre():$F{producto}.getDescripcion()]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="350" y="0" width="45" height="20" uuid="806b1e39-a620-465b-ad56-4a644e0f8a6a"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalDescuento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="450" y="0" width="50" height="20" uuid="74d07c73-100a-4371-b02a-4d5e24333557"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalIgv}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="500" y="0" width="55" height="20" uuid="8de9eaca-392c-4c3e-ba68-d57a6b1f77a0"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="285" y="0" width="65" height="20" uuid="b70ce76d-a68c-492a-aba9-9e5be65cc782"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{precioUnitario}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="155">
+			<rectangle radius="10">
+				<reportElement x="0" y="92" width="555" height="45" uuid="e1a6fc86-4c2d-499f-ba67-de44072658a1"/>
+			</rectangle>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="500" y="32" width="55" height="15" uuid="eb1fa39c-7bcf-49ee-911d-92b16dc7060c"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getTotalGrabado()]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="500" y="47" width="55" height="15" uuid="774a4fab-eafa-4330-8263-29ea798ab32b"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getTotalIgv()]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="500" y="62" width="55" height="15" uuid="4632326d-a3ec-4217-81a9-61599c969072"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getTotal()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="45" y="92" width="497" height="15" uuid="149dd1c6-84b8-4d6c-be22-44263adc3157"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getCodigoHash()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="435" y="32" width="65" height="15" uuid="081e6411-6050-425e-a4b1-3252bb7d8a6a"/>
+				<box leftPadding="0" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL GRAV.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="435" y="47" width="65" height="15" uuid="1ce1ed59-7be6-4ddc-8f0a-ab6f5230b97d"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IGV]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="435" y="62" width="65" height="15" uuid="0209541d-ac2c-4210-bbfe-b22e1133ee16"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="107" width="395" height="15" uuid="0b83422d-5b2f-4c91-a34b-ca296fcec594"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Representación impresa de este documento de venta electronica se encuentra en:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="92" width="45" height="15" uuid="c38b957e-f3ca-4cc9-b178-ffde1cb54b36"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[C.Hash:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="395" y="107" width="160" height="15" uuid="e08d8089-a7aa-451c-b648-563958a84938"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[http://www.gepp.pe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="120" width="395" height="15" uuid="6456f218-b493-45c4-8005-ef7b591541c1"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Autorizado mediante resolución: 0520050000036/SUNAT   ]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="285" y="140" width="270" height="15" uuid="28625e63-a68a-46cf-991a-c9214a8550b0"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuarioByIdUsuarioCreacion}.getNombre()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="555" height="15" uuid="76df1985-3551-4f99-9ced-3eaca65ac1a3"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["SON: "+$F{documentoVenta}.getTotalLetras()]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss ">
+				<reportElement x="0" y="140" width="155" height="15" uuid="faff15ac-e83c-4f3f-b054-7d11557c2150"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="435" y="17" width="65" height="15" uuid="f30e7d7b-fbff-4286-a555-5757428d931c"/>
+				<box leftPadding="0" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL DESC.]]></text>
+			</staticText>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement x="500" y="17" width="55" height="15" uuid="4ea21637-2bf1-4785-99d6-a0e3192be47b"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{documentoVenta}.getTotalDescuento()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="17" width="395" height="60" isRemoveLineWhenBlank="true" uuid="20d7014b-9955-4e47-9469-91cde91784a8">
+					<printWhenExpression><![CDATA[$F{documentoVenta}.getTipoDocumentoVenta().getCodigo().equals("01")?
+$F{documentoVenta}.getTotal()>400:false]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OPERAC. SUJETAS AL SISTEMA DE OPERAC. TRIBUTARIAS DEL GOBIERNO CENTRAL CTA. BCO DE LA NACIÓN  N° 00-101-121488]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
