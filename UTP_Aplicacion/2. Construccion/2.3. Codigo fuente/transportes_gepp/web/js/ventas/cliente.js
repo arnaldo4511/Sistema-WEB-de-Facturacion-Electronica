@@ -27,37 +27,57 @@ ClienteApp.controller("ClienteController", ['$scope', '$http', '$window', functi
             $scope.sesion = response.data;
             //$scope.tiposDocumentosEntidades = $scope.sesion.tiposDocumentosEntidades;
             $scope.tiposDocumentosEntidads = $scope.sesion.tipoDocumentoEntidads;
+            console.log("response.data "+response.data);
+            console.log("$scope.sesion.tipoDocumentoEntidads "+$scope.sesion.tipoDocumentoEntidads);
         }, function myError(response) {
         });
-        $scope.setPage = function (pageNo) {
-            $scope.currentPage = pageNo;
-        };
-        $scope.pageChanged = function () {
-            console.log('Page changed to: ' + $scope.currentPage);
-        };
-        $scope.setItemsPerPage = function (num) {
-            $scope.itemsPerPage = num;
-            $scope.currentPage = 1; //reset to first paghe
-        };
+        
+        $scope.totalItemsListarClientes = 0;
+        $scope.currentPageListarClientes = 1;
+        $scope.paginasListarClientes = [
+            {value: 5},
+            {value: 10},
+            {value: 20},
+            {value: 40},
+            {value: 50}];
+        $scope.paginaListarClientes  = {value: 5};
+        $scope.itemsPerPageListarClientes = $scope.paginaListarClientes .value;
 
         $scope.mensajeTituloProducto = "";
+        $scope.parametro = {};
+        $scope.parametro.estadoDocumentoVenta = {};
         $scope.listar = function () {
+            $scope.parametros = [];
+            $scope.parametros.push({'nombre': 'documento', 'valor': $scope.parametro.documento});
+            $scope.parametros.push({'nombre': 'nombre', 'valor': $scope.parametro.nombre});
+            $scope.parametros.push({'nombre': 'currentPage', 'valor': (($scope.currentPageListarClientes * $scope.itemsPerPageListarClientes) - $scope.itemsPerPageListarClientes).toString()});
+            $scope.parametros.push({'nombre': 'itemsPerPage', 'valor': $scope.itemsPerPageListarClientes.toString()});
             $http({
-                method: 'GET',
-                url: '/transportes_gepp/controlador/cliente/listar'
+                method: 'POST',
+                url: '/transportes_gepp/controlador/cliente/listar',
+                data: $scope.parametros
             }).then(function mySucces(response) {
+                
+                $scope.clientes = response.data.clientes;
+                $scope.totalItemsListarClientes = response.data.nroClientes;
                 console.log('response :' + response);
-                console.log('response.data :' + response.data);
-                $scope.clientes = response.data;
-                $scope.viewby = 5;
-                $scope.totalItems = $scope.clientes.length;
-                $scope.currentPage = 1;
-                $scope.itemsPerPage = $scope.viewby;
-                $scope.maxSize = 5; //Number of pager buttons to show
+                console.log('response.data.clientes :' + response.data.clientes);
                 console.log('$scope.clientes ' + $scope.clientes);
             }, function myError(response) {
                 console.log('error :' + response);
             });
+        };
+        $scope.setPage = function (pageNo) {
+            $scope.currentPageListarClientes = pageNo;
+            $scope.listar();
+        };
+        $scope.pageChanged = function () {
+            $scope.listar();
+        };
+        $scope.setItemsPerPage = function (num) {
+            $scope.itemsPerPageListarClientes = num;
+            $scope.currentPageListarClientes = 1; //reset to first paghe
+            $scope.listar();
         };
         $scope.clienteTmp = {};
         $scope.nuevoCliente = function () {
@@ -95,11 +115,14 @@ ClienteApp.controller("ClienteController", ['$scope', '$http', '$window', functi
         };
         $scope.seleccionarItem = function (item) {
             //$("[name='documento']").removeAttr('disabled');
-            
-            $scope.mensajeTituloCliente = "Editar Cliente";
-            $scope.mensajeConfirmacion = "¿Desea editar el cliente?";
-            $scope.clienteTmp = item;
-            $scope.cambioTipoDocumentoVenta();
+            $http({method: 'POST', url: '/transportes_gepp/controlador/cliente/buscar/' + item.id
+            }).then(function mySucces(response) {
+                $scope.clienteTmp = response.data;
+                $scope.mensajeTituloCliente = "Editar Cliente";
+                $scope.mensajeConfirmacion = "¿Desea editar el cliente?";
+                $scope.cambioTipoDocumentoVenta();
+            }, function myError(response) {
+            });
             console.log("item " + item);
             console.log("entidadTmp " + $scope.entidadTmp);
         };

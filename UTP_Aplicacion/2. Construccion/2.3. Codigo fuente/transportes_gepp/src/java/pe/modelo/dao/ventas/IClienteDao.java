@@ -7,6 +7,8 @@ package pe.modelo.dao.ventas;
 
 import pe.modelo.dao.publico.*;
 import java.util.List;
+import pe.modelo.dto.ParametroDto;
+import pe.modelo.dto.ventas.ListaClientesDto;
 import pe.modelo.pojo.Cliente;
 import pe.modelo.pojo.vista.VwAutCliente;
 
@@ -24,7 +26,7 @@ public interface IClienteDao {
 
     public void eliminar(long id);
 
-    public List<Cliente> listar();
+    public ListaClientesDto listar(ParametroDto[] parametros);
 
     List<VwAutCliente> autocompletar(String criterio, String codigoTipoDocumentoEntidad);
 

@@ -5,21 +5,10 @@
  */
 package pe.modelo.dao.ventas;
 
-import java.util.List;
-import org.hibernate.Hibernate;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
-import pe.modelo.dao.HibernateUtil;
-import pe.modelo.dto.ventas.facturacion.Factura;
-import pe.modelo.dto.ventas.facturacion.ResumenBoletas;
-import pe.modelo.pojo.ResumenVentas;
-import pe.modelo.pojo.ResumenVentasGrupo;
-import pe.modelo.pojo.ResumenVentasGrupoVenta;
 
+import pe.modelo.dto.ventas.facturacion.ResumenBoletas;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -31,20 +20,17 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 import org.hibernate.Hibernate;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
-import org.hibernate.criterion.Restrictions;
 import pe.modelo.dao.HibernateUtil;
 import pe.modelo.dto.ParametroDto;
 import pe.modelo.dto.ventas.ListaResumenesVentasDto;
 import pe.modelo.dto.ventas.facturacion.ComunicacionBaja;
 import pe.modelo.pojo.DocumentoVenta;
 import pe.modelo.pojo.EstadoDocumentoVenta;
-import pe.modelo.pojo.Producto;
 import pe.modelo.pojo.ResumenVentas;
 import pe.modelo.pojo.ResumenVentasGrupo;
 import pe.modelo.pojo.ResumenVentasGrupoVenta;

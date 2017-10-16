@@ -13,10 +13,17 @@ import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import pe.modelo.dao.HibernateUtil;
+import pe.modelo.dto.ParametroDto;
+import pe.modelo.dto.ventas.ListaProductosDto;
 import pe.modelo.pojo.Producto;
+import pe.modelo.pojo.vista.VwSelProductos;
 
 /**
  *
@@ -90,21 +97,46 @@ public class ProductoDao implements IProductoDao {
     }
 
     @Override
-    public List<Producto> listar() {
-        List<Producto> lista = null;
+    public ListaProductosDto listar(ParametroDto[] parametros) {
+        ListaProductosDto listaProductosDto = new ListaProductosDto();
+        List<VwSelProductos> lista = null;
+        long nroProductos = 0;
+        Integer currentPage = 0;
+        Integer itemsPerPage = 0;
+        
         try {
+            DetachedCriteria detachedCriteria = DetachedCriteria.forClass(VwSelProductos.class);
+            DetachedCriteria detachedCriteria1 = DetachedCriteria.forClass(VwSelProductos.class);
+            
+            for (ParametroDto parametro : parametros) {
+                System.out.println("parametro.getNombre() "+parametro.getNombre());
+                System.out.println("parametro.getValor() "+parametro.getValor());
+                if (parametro.getNombre().equals("currentPage") && parametro.getValor() != null) {
+                    currentPage = Integer.parseInt(parametro.getValor());
+                } else if (parametro.getNombre().equals("itemsPerPage") && parametro.getValor() != null) {
+                    itemsPerPage = Integer.parseInt(parametro.getValor());
+                } else if (parametro.getNombre().equals("nombre") && parametro.getValor() != null) {
+                    detachedCriteria.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%").ignoreCase());
+                    detachedCriteria1.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%").ignoreCase());
+                } else if (parametro.getNombre().equals("descripcion") && parametro.getValor() != null) {
+                    detachedCriteria.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%"));
+                    detachedCriteria1.add(Property.forName(parametro.getNombre()).like("%" + parametro.getValor() + "%"));
+                }
+            }
             Session sesion = HibernateUtil.getSessionFactory().openSession();
             sesion.beginTransaction();
-            Query query = sesion.createQuery("from Producto order by id");
-            lista = query.list();
+            lista = detachedCriteria.getExecutableCriteria(sesion).setFirstResult(currentPage).setMaxResults(itemsPerPage).addOrder(Order.desc("id")).list();
+            System.out.println("lista "+lista);
+            nroProductos = (long) detachedCriteria1.getExecutableCriteria(sesion).setProjection(Projections.rowCount()).uniqueResult();
             sesion.getTransaction().commit();
             sesion.close();
-            System.out.println("query " + query);
-            System.out.println("listar " + lista);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return lista;
+        listaProductosDto.setProductos(lista);
+        listaProductosDto.setNroProductos(nroProductos);
+        
+        return listaProductosDto;
     }
 
     @Override

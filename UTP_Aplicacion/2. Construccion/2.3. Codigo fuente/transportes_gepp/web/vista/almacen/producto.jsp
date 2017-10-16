@@ -55,11 +55,11 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="producto in productos.slice(((currentPage - 1) * itemsPerPage), ((currentPage) * itemsPerPage))| filter:search ">
+                                    <tr ng-repeat="producto in productos">
                                         <td>{{$index + 1}}</td>
                                         <td>{{producto.nombre}}</td>
                                         <td>{{producto.descripcion}}</td>
-                                        <td>{{producto.unidad.codigo}}</td>
+                                        <td>{{producto.nombreUnidad}}</td>
                                         <td>{{producto.precioVenta}}</td>
                                         <td>{{producto.precioCompra}}</td>
                                         <td class="text-center">
@@ -77,6 +77,8 @@
                             </table>
                             <ul  uib-pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm " items-per-page="itemsPerPage" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
                             </ul>
+                            productos{{productos}}
+                            producto{{producto}}
                         </form>
                         <!-- Modal -->
                         <div class="modal fade" id="modalProducto" role="dialog">

@@ -79,6 +79,8 @@ Contributor(s):
     <mapping class="pe.modelo.pojo.TipoNotaDebito"/>
     <mapping class="pe.modelo.pojo.vista.VwSelDocumentoVenta"/>
     <mapping class="pe.modelo.pojo.vista.VwSelResumenVentas"/>
+    <mapping class="pe.modelo.pojo.vista.VwSelClientes"/>
+    <mapping class="pe.modelo.pojo.vista.VwSelProductos"/>
     <mapping class="pe.modelo.pojo.vista.VwSelUsuario"/>
     <mapping class="pe.modelo.pojo.vista.VwSelRol"/>
     <mapping class="pe.modelo.pojo.vista.VwAutCliente"/>
